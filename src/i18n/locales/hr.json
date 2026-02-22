@@ -1,0 +1,141 @@
+{
+    "nav": {
+        "features": "Što gradimo",
+        "philosophy": "Filozofija",
+        "protocol": "Proces",
+        "projects": "Platforme",
+        "consultation": "Konzultacije"
+    },
+    "hero": {
+        "subtitle": "Web stranice koje vam donose klijente",
+        "title": "i olakšavaju poslovanje.",
+        "description": "Za uslužne djelatnosti, ugostiteljstvo, beauty sektor i rastuće lokalne tvrtke u Hrvatskoj. Dizajniramo i gradimo moderne web stranice, sustave za rezervacije i digitalne alate koji pomažu vašem poslovanju da brzo raste.",
+        "cta": "Rezervirajte besplatne konzultacije",
+        "cta2": "Zatražite procjenu projekta",
+        "trust": "Izgrađeno za stvarne tvrtke. Bez predložaka. Bez odgoda."
+    },
+    "who_we_are": {
+        "title": "S kim radimo",
+        "subtitle": "Izgrađeno za tvrtke koje ovise o klijentima i dnevnim operacijama",
+        "item1": "Restorani i HoReCa",
+        "item2": "Brijačnice, saloni i wellness",
+        "item3": "Klinike i pružatelji usluga",
+        "item4": "Turizam, nautika i lokalne tvrtke",
+        "item5": "Tvrtke koje trebaju rezervacije, rasporede ili upravljanje klijentima"
+    },
+    "features": {
+        "label": "Što gradimo",
+        "card1": {
+            "title": "Strategija, dizajn i razvoj — na jednom mjestu",
+            "desc": "Od koncepta do lansiranja, jedan tim preuzima sve.",
+            "c1_title": "Strateško planiranje",
+            "c1_desc": "Razumijevanje vašeg poslovanja, klijenata i ciljeva rasta",
+            "c2_title": "Prilagođeni dizajn",
+            "c2_desc": "Moderan, premium dizajn prilagođen vašem brendu",
+            "c3_title": "Razvoj sustava",
+            "c3_desc": "Brze, pouzdane web stranice i poslovni sustavi"
+        },
+        "card2": {
+            "title": "Izgrađeno za stvarne poslovne operacije",
+            "desc": "Naši sustavi vam pomažu da:",
+            "c1_title": "Prihvatite online rezervacije",
+            "c2_title": "Upravljate klijentima i rasporedima",
+            "c3_title": "Profesionalno predstavite svoje usluge",
+            "c4_title": "Uštedite vrijeme na dnevnoj administraciji",
+            "c5_title": "Skalirate bez promjene platformi"
+        },
+        "card3": {
+            "title": "Brzo lansiranje. Dugoročna podrška.",
+            "desc": "Većina projekata lansira se unutar 3–5 dana. Nakon lansiranja, nastavljamo podržavati, poboljšavati i proširivati vaš sustav kako vaše poslovanje raste."
+        }
+    },
+    "philosophy": {
+        "line1": "Većina agencija isporuči web stranicu i {{focus}}.",
+        "focus1": "nestane",
+        "line2": "Mi gradimo dugoročne digitalne sustave i ostajemo s vama {{focus}}.",
+        "focus2": "kako vaše poslovanje raste"
+    },
+    "protocol": {
+        "label": "Protokol",
+        "phase1": {
+            "name": "Otkrivanje i nacrt",
+            "desc": "Mapiramo cijeli vaš operativni krajolik prije pisanja ijedne linije koda."
+        },
+        "phase2": {
+            "name": "Precizna arhitektura",
+            "desc": "Razvoj skalabilnih sustava koji se savršeno usklađuju s vašim poslovnim ciljevima."
+        },
+        "phase3": {
+            "name": "Trajna podrška",
+            "desc": "Kontinuirano praćenje, ažuriranje i strateške prilagodbe tijekom vremena."
+        }
+    },
+    "projects": {
+        "title": "Platforme i projekti",
+        "subtitle": "Naš ekosustav",
+        "proj1": {
+            "name": "iOwnChair",
+            "subtitle": "Gospodarite svojim rasporedom, gradite svoj brend.",
+            "desc": "Platforma za rezervacije i upravljanje poslovanjem za brijačnice i salone.",
+            "link": "Posjetite platformu"
+        },
+        "proj2": {
+            "name": "Prilagođeni poslovni sustavi",
+            "subtitle": "Prilagođena digitalna arhitektura za jedinstvene procese.",
+            "desc": "Raspoređivanje, nadzorne ploče, automatizacija i operativni alati izgrađeni za specifične industrije.",
+            "link": "Rezervirajte konzultacije"
+        },
+        "proj3": {
+            "name": "HoReCa-Optimizer",
+            "subtitle": "Planiranje radne snage i operativna kontrola za restorane i ugostiteljstvo.",
+            "desc": "Optimizirajte rasporede osoblja, kontrolirajte troškove rada i ostvarite jasan uvid u svakodnevno poslovanje — izgrađeno posebno za HoReCa tvrtke.",
+            "link": "Zatražite rani pristup"
+        }
+    },
+    "pricing": {
+        "title": "Investicija u projekt",
+        "subtitle": "Transparentne investicije za precizno projektirane rezultate.",
+        "tier1": {
+            "name": "Web stranice",
+            "price": "1.500 €",
+            "period": "Počevši od",
+            "feat1": "Strateško planiranje",
+            "feat2": "Osnovni razvoj",
+            "feat3": "Premium dizajn"
+        },
+        "tier2": {
+            "name": "Web stranice + Rezervacije / Sustavi",
+            "price": "2.500 €",
+            "period": "Počevši od",
+            "feat1": "Napredna arhitektura",
+            "feat2": "Booking Engine",
+            "feat3": "Upravljanje klijentima",
+            "feat4": "Prilagođene automatizacije"
+        },
+        "tier3": {
+            "name": "Prilagođene poslovne platforme",
+            "price": "Na",
+            "period": "Upit",
+            "feat1": "Potpuno posvećen tim",
+            "feat2": "Multi-regionalna infra",
+            "feat3": "Kompleksna logika"
+        },
+        "ongoing": "Stalna podrška od 100 €/mjesečno",
+        "select": "Zatražite procjenu",
+        "contact": "Kontaktirajte nas"
+    },
+    "final_cta": {
+        "title": "Izgradimo vaš digitalni temelj",
+        "subtitle": "Rezervirajte besplatne 30-minutne konzultacije. Dobit ćete:",
+        "list1": "Preporuku za web stranicu ili sustav",
+        "list2": "Vremenski raspored",
+        "list3": "Procjenu cijene",
+        "btn": "Rezervirajte besplatne konzultacije"
+    },
+    "footer": {
+        "tagline": "Web stranice i digitalni sustavi za uslužne djelatnosti, ugostiteljstvo i rastuće tvrtke u Hrvatskoj.",
+        "status": "Sustav u radu",
+        "nav_label": "Navigacija",
+        "legal_label": "Pravno"
+    }
+}

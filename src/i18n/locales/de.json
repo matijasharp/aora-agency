@@ -1,0 +1,141 @@
+{
+    "nav": {
+        "features": "Was wir bauen",
+        "philosophy": "Philosophie",
+        "protocol": "Prozess",
+        "projects": "Plattformen",
+        "consultation": "Beratung"
+    },
+    "hero": {
+        "subtitle": "Webseiten, die Ihnen Kunden bringen",
+        "title": "und Prozesse unterstützen.",
+        "description": "Für Dienstleistungsunternehmen, Gastronomie, Beauty und wachsende lokale Unternehmen in Kroatien. Wir entwerfen und bauen moderne Webseiten, Buchungssysteme und digitale Werkzeuge, die Ihrem Unternehmen helfen, schnell zu wachsen.",
+        "cta": "Kostenlose Beratung buchen",
+        "cta2": "Projektangebot einholen",
+        "trust": "Gebaut für echte Unternehmen. Keine Vorlagen. Keine Verzögerungen."
+    },
+    "who_we_are": {
+        "title": "Mit wem wir arbeiten",
+        "subtitle": "Gebaut für Unternehmen, die auf Kunden und tägliche Abläufe angewiesen sind",
+        "item1": "Restaurants & HoReCa",
+        "item2": "Friseure, Salons & Wellness",
+        "item3": "Kliniken & Dienstleister",
+        "item4": "Tourismus, Marine & lokale Unternehmen",
+        "item5": "Unternehmen, die Buchungen, Terminplanung oder Kundenverwaltung benötigen"
+    },
+    "features": {
+        "label": "Was wir bauen",
+        "card1": {
+            "title": "Strategie, Design und Entwicklung — aus einer Hand",
+            "desc": "Vom Konzept bis zum Start wird alles von einem Team erledigt.",
+            "c1_title": "Strategische Planung",
+            "c1_desc": "Wir verstehen Ihr Geschäft, Ihre Kunden und Wachstumsziele",
+            "c2_title": "Maßgeschneidertes Design",
+            "c2_desc": "Modernes, Premium-Design zugeschnitten auf Ihre Marke",
+            "c3_title": "Systementwicklung",
+            "c3_desc": "Schnelle, zuverlässige Webseiten und Geschäftssysteme"
+        },
+        "card2": {
+            "title": "Gebaut für echte Geschäftsprozesse",
+            "desc": "Unsere Systeme helfen Ihnen:",
+            "c1_title": "Online-Buchungen entgegennehmen",
+            "c2_title": "Kunden und Termine verwalten",
+            "c3_title": "Ihre Dienstleistungen professionell präsentieren",
+            "c4_title": "Zeit bei der täglichen Verwaltung sparen",
+            "c5_title": "Skalieren ohne Plattformwechsel"
+        },
+        "card3": {
+            "title": "Schneller Start. Langfristiger Support.",
+            "desc": "Die meisten Projekte starten innerhalb von 3–5 Tagen. Nach dem Start unterstützen, verbessern und erweitern wir Ihr System weiter, während Ihr Unternehmen wächst."
+        }
+    },
+    "philosophy": {
+        "line1": "Die meisten Agenturen liefern eine Webseite und {{focus}}.",
+        "focus1": "verschwinden",
+        "line2": "Wir bauen langfristige digitale Systeme und bleiben an Ihrer Seite, {{focus}}.",
+        "focus2": "während Ihr Unternehmen wächst"
+    },
+    "protocol": {
+        "label": "Der Prozess",
+        "phase1": {
+            "name": "Entdeckung & Konzept",
+            "desc": "Wir kartographieren Ihre gesamte operative Landschaft, bevor wir eine einzige Zeile Code schreiben."
+        },
+        "phase2": {
+            "name": "Präzisionsarchitektur",
+            "desc": "Entwicklung skalierbarer Systeme, die perfekt auf Ihre Geschäftsziele abgestimmt sind."
+        },
+        "phase3": {
+            "name": "Dauerhafter Support",
+            "desc": "Kontinuierliche Überwachung, Updates und strategische Anpassungen im Laufe der Zeit."
+        }
+    },
+    "projects": {
+        "title": "Plattformen & Projekte",
+        "subtitle": "Unser Ökosystem",
+        "proj1": {
+            "name": "iOwnChair",
+            "subtitle": "Beherrschen Sie Ihren Zeitplan, bauen Sie Ihre Marke aus.",
+            "desc": "Buchungs- und Business-Management-Plattform für Barbiere und Salons.",
+            "link": "Plattform besuchen"
+        },
+        "proj2": {
+            "name": "Maßgeschneiderte Geschäftssysteme",
+            "subtitle": "Individuelle digitale Architektur für einzigartige Arbeitsabläufe.",
+            "desc": "Terminplanung, Dashboards, Automatisierung und Betriebstools, die für spezifische Branchen entwickelt wurden.",
+            "link": "Beratung buchen"
+        },
+        "proj3": {
+            "name": "HoReCa-Optimizer",
+            "subtitle": "Personalplanung und operative Kontrolle für Gastronomie und Hotellerie.",
+            "desc": "Optimieren Sie Personalpläne, kontrollieren Sie Arbeitskosten und erhalten Sie klare Einblicke in den täglichen Betrieb — speziell für HoReCa-Unternehmen entwickelt.",
+            "link": "Frühzeitigen Zugang anfordern"
+        }
+    },
+    "pricing": {
+        "title": "Projektinvestition",
+        "subtitle": "Transparente Investitionen für präzise Ergebnisse.",
+        "tier1": {
+            "name": "Webseiten",
+            "price": "1.500 €",
+            "period": "Ab",
+            "feat1": "Strategische Planung",
+            "feat2": "Basis-Entwicklung",
+            "feat3": "Premium Design"
+        },
+        "tier2": {
+            "name": "Webseiten + Buchung / Systeme",
+            "price": "2.500 €",
+            "period": "Ab",
+            "feat1": "Fortgeschrittene Architektur",
+            "feat2": "Buchungsmaschine",
+            "feat3": "Kundenverwaltung",
+            "feat4": "Individuelle Automatisierung"
+        },
+        "tier3": {
+            "name": "Individuelle Plattformen",
+            "price": "Nach",
+            "period": "Angebot",
+            "feat1": "Engagiertes Team",
+            "feat2": "Multi-regionale Infra",
+            "feat3": "Komplexe Logik"
+        },
+        "ongoing": "Laufender Support ab 100 €/Monat",
+        "select": "Angebot einholen",
+        "contact": "Kontaktieren Sie uns"
+    },
+    "final_cta": {
+        "title": "Lassen Sie uns Ihr digitales Fundament bauen",
+        "subtitle": "Buchen Sie eine kostenlose 30-minütige Beratung. Sie erhalten:",
+        "list1": "Webseiten- oder Systemempfehlung",
+        "list2": "Zeitlicher Ablauf",
+        "list3": "Preiseinschätzung",
+        "btn": "Kostenlose Beratung buchen"
+    },
+    "footer": {
+        "tagline": "Webseiten und digitale Systeme für Dienstleistungsunternehmen, Gastronomie und wachsende Unternehmen in Kroatien.",
+        "status": "System Betriebsbereit",
+        "nav_label": "Navigation",
+        "legal_label": "Rechtliches"
+    }
+}

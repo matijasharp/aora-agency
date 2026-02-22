@@ -1,0 +1,141 @@
+{
+    "nav": {
+        "features": "What We Build",
+        "philosophy": "Philosophy",
+        "protocol": "Protocol",
+        "projects": "Platforms",
+        "consultation": "Consultation"
+    },
+    "hero": {
+        "subtitle": "Websites that bring you clients",
+        "title": "and support operations.",
+        "description": "For service businesses, hospitality, beauty and growing local companies in Croatia. We design and build modern websites, booking systems and digital tools that help your business grow — fast.",
+        "cta": "Book a Free Consultation",
+        "cta2": "Get a Project Estimate",
+        "trust": "Built for real businesses. No templates. No delays."
+    },
+    "who_we_are": {
+        "title": "Who We Work With",
+        "subtitle": "Built for businesses that depend on customers and daily operations",
+        "item1": "Restaurants & HoReCa",
+        "item2": "Barbers, salons & wellness",
+        "item3": "Clinics & service providers",
+        "item4": "Tourism, marine & local businesses",
+        "item5": "Companies that need booking, scheduling or client management"
+    },
+    "features": {
+        "label": "What We Build",
+        "card1": {
+            "title": "Strategy, design and development — in one place",
+            "desc": "From concept to launch, everything is handled by one team.",
+            "c1_title": "Strategic Planning",
+            "c1_desc": "Understanding your business, clients and growth goals",
+            "c2_title": "Bespoke Design",
+            "c2_desc": "Modern, premium design tailored to your brand",
+            "c3_title": "System Development",
+            "c3_desc": "Fast, reliable websites and business systems"
+        },
+        "card2": {
+            "title": "Built for real business operations",
+            "desc": "Our systems help you:",
+            "c1_title": "Accept online bookings",
+            "c2_title": "Manage clients and schedules",
+            "c3_title": "Present your services professionally",
+            "c4_title": "Save time on daily administration",
+            "c5_title": "Scale without changing platforms"
+        },
+        "card3": {
+            "title": "Fast launch. Long-term support.",
+            "desc": "Most projects launch within 3–5 days. After launch, we continue to support, improve and expand your system as your business grows."
+        }
+    },
+    "philosophy": {
+        "line1": "Most agencies deliver a website and {{focus}}.",
+        "focus1": "disappear",
+        "line2": "We build long-term digital systems and stay with you {{focus}}.",
+        "focus2": "as your business grows"
+    },
+    "protocol": {
+        "label": "The Protocol",
+        "phase1": {
+            "name": "Discovery & Blueprint",
+            "desc": "We map your entire operational landscape before writing a single line of code."
+        },
+        "phase2": {
+            "name": "Precision Architecture",
+            "desc": "Developing scalable systems that align perfectly with your business goals."
+        },
+        "phase3": {
+            "name": "Perpetual Support",
+            "desc": "Continuous monitoring, updates, and strategic adjustments over time."
+        }
+    },
+    "projects": {
+        "title": "Platforms & Projects",
+        "subtitle": "Our Ecosystem",
+        "proj1": {
+            "name": "iOwnChair",
+            "subtitle": "Master your schedule, grow your brand.",
+            "desc": "Booking and business management platform for barbers and salons.",
+            "link": "Visit platform"
+        },
+        "proj2": {
+            "name": "Custom Business Systems",
+            "subtitle": "Bespoke digital architecture for unique workflows.",
+            "desc": "Scheduling, dashboards, automation and operational tools built for specific industries.",
+            "link": "Book a Consultation"
+        },
+        "proj3": {
+            "name": "HoReCa-Optimizer",
+            "subtitle": "Workforce planning and operational control for restaurants and hospitality.",
+            "desc": "Optimize staff schedules, control labor costs and get clear insights into daily operations — built specifically for HoReCa businesses.",
+            "link": "Request Early Access"
+        }
+    },
+    "pricing": {
+        "title": "Project Investment",
+        "subtitle": "Transparent investments for precision-engineered outcomes.",
+        "tier1": {
+            "name": "Websites",
+            "price": "€1,500",
+            "period": "Starting from",
+            "feat1": "Strategic Planning",
+            "feat2": "Base Development",
+            "feat3": "Premium Design"
+        },
+        "tier2": {
+            "name": "Websites + Booking / Systems",
+            "price": "€2,500",
+            "period": "Starting from",
+            "feat1": "Advanced Architecture",
+            "feat2": "Booking Engine",
+            "feat3": "Client Management",
+            "feat4": "Custom Automations"
+        },
+        "tier3": {
+            "name": "Custom Business Platforms",
+            "price": "Custom",
+            "period": "Quote",
+            "feat1": "Full Dedicated Team",
+            "feat2": "Multi-regional Infra",
+            "feat3": "Complex Logic"
+        },
+        "ongoing": "Ongoing Support from €100/month",
+        "select": "Get Estimate",
+        "contact": "Contact Us"
+    },
+    "final_cta": {
+        "title": "Let’s build your digital foundation",
+        "subtitle": "Book a free 30-minute consultation. You’ll get:",
+        "list1": "Website or system recommendation",
+        "list2": "Timeline",
+        "list3": "Price estimate",
+        "btn": "Book a Free Consultation"
+    },
+    "footer": {
+        "tagline": "Websites and digital systems for service businesses, hospitality and growing companies in Croatia.",
+        "status": "System Operational",
+        "nav_label": "Navigation",
+        "legal_label": "Legal"
+    }
+}
