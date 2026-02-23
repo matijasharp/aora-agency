@@ -83,7 +83,7 @@ const Loader = ({ onComplete }) => {
 
   return (
     <div ref={containerRef} className="fixed inset-0 z-[100] bg-[#030304] flex flex-col items-center justify-center cursor-wait bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/loading-bg.png')" }}>
-      <div className="absolute inset-0 bg-[#030304]/40 z-0"></div>
+      <div className="absolute inset-0 bg-[#030304]/80 z-0"></div>
       <div className="relative z-10 flex flex-col items-center justify-center">
         <div className="font-heading font-bold text-5xl md:text-7xl tracking-tight flex items-center overflow-hidden drop-shadow-2xl">
           <span className="text-accent inline-block logo-a">A</span>
@@ -126,12 +126,12 @@ const ContactModal = ({ isOpen, onClose }) => {
       <div className="absolute inset-0 bg-[#030304]/80 backdrop-blur-md" onClick={onClose} />
 
       {/* Modal Container */}
-      <div ref={containerRef} className="relative z-10 w-full max-w-2xl bg-[#0D0D12]/90 backdrop-blur-3xl border border-white/10 rounded-[2rem] p-8 md:p-12 shadow-[0_0_80px_rgba(201,168,76,0.1)]">
+      <div ref={containerRef} className="relative z-10 w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#0D0D12]/90 backdrop-blur-3xl border border-white/10 rounded-[2rem] p-6 md:p-12 shadow-[0_0_80px_rgba(201,168,76,0.1)]">
         <button onClick={onClose} className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors">
           <X size={24} />
         </button>
 
-        <h2 className="font-drama italic text-4xl md:text-5xl text-white mb-2">{t('contact.title')}</h2>
+        <h2 className="font-drama italic text-3xl md:text-5xl text-white mb-2">{t('contact.title')}</h2>
         <p className="font-heading text-white/50 mb-8">{t('contact.desc')}</p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 font-heading">
@@ -162,7 +162,7 @@ const ContactModal = ({ isOpen, onClose }) => {
             <textarea required rows="4" className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-accent/50 transition-colors resize-none" placeholder={t('contact.details_placeholder')}></textarea>
           </div>
 
-          <button type="submit" className="btn-magnetic mt-4 bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg w-full hover:shadow-[0_0_30px_rgba(201,168,76,0.3)] transition-shadow">
+          <button type="submit" className="btn-magnetic mt-4 bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg w-full hover:shadow-[0_0_30px_rgba(201,168,76,0.3)] transition-shadow whitespace-nowrap">
             {t('contact.submit')}
           </button>
         </form>
@@ -278,7 +278,7 @@ const Navbar = ({ onConsultationClick }) => {
             )}
           </div>
 
-          <button onClick={onConsultationClick} className="hidden md:block btn-magnetic bg-accent text-primary px-5 py-2 rounded-full font-heading font-semibold text-sm shrink-0">
+          <button onClick={onConsultationClick} className="hidden md:block btn-magnetic bg-accent text-primary px-5 py-2 rounded-full font-heading font-semibold text-sm shrink-0 whitespace-nowrap">
             {t('nav.consultation')}
           </button>
 
@@ -304,7 +304,7 @@ const Navbar = ({ onConsultationClick }) => {
           <a href="#projects" onClick={handleMenuClick} className="mobile-menu-link font-drama italic text-5xl text-white hover:text-accent transition-colors w-full">{t('nav.projects')}</a>
           <a href="#protocol" onClick={handleMenuClick} className="mobile-menu-link font-drama italic text-5xl text-white hover:text-accent transition-colors w-full">{t('nav.protocol')}</a>
 
-          <button onClick={() => { handleMenuClick(); onConsultationClick(); }} className="mobile-menu-link mt-8 btn-magnetic w-full max-w-xs bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg flex items-center justify-center gap-3">
+          <button onClick={() => { handleMenuClick(); onConsultationClick(); }} className="mobile-menu-link mt-8 btn-magnetic w-full max-w-xs bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg flex items-center justify-center gap-3 whitespace-nowrap">
             {t('nav.consultation')}
             <ArrowRight size={20} />
           </button>
@@ -360,7 +360,7 @@ const Hero = ({ appLoaded, onConsultationClick }) => {
         </p>
 
         <div className="hero-elem mt-12 flex flex-col sm:flex-row gap-4 items-start sm:items-center pointer-events-auto">
-          <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg flex items-center justify-center gap-3 group w-full sm:w-auto">
+          <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg flex items-center justify-center gap-3 group w-full sm:w-auto whitespace-nowrap">
             <span>{t('hero.cta')}</span>
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </button>
@@ -421,7 +421,7 @@ const InlineCta = ({ variant, theme = 'light', onConsultationClick }) => {
         <h3 className="font-heading font-medium text-2xl md:text-3xl max-w-lg text-balance text-center md:text-left">
           {t(`inline_cta.${variant}.title`)}
         </h3>
-        <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg flex items-center gap-3 transition-transform hover:scale-105 shrink-0">
+        <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg flex items-center gap-3 transition-transform hover:scale-105 shrink-0 whitespace-nowrap">
           <span>{t(`inline_cta.${variant}.btn`)}</span>
           <ArrowRight size={20} />
         </button>
@@ -772,7 +772,7 @@ const Pricing = ({ onConsultationClick }) => {
             <ul className="flex flex-col gap-6 mb-12 flex-1 font-heading text-lg">
               {[1, 2, 3].map(i => <li key={i} className="flex items-center gap-4"><Check size={20} className="text-accent" /> {t(`pricing.tier1.feat${i}`)}</li>)}
             </ul>
-            <button onClick={onConsultationClick} className="w-full py-5 rounded-full border border-slate/20 font-heading font-bold hover:bg-primary hover:text-white transition-all">{t('pricing.select')}</button>
+            <button onClick={onConsultationClick} className="w-full py-5 rounded-full border border-slate/20 font-heading font-bold hover:bg-primary hover:text-white transition-all whitespace-nowrap">{t('pricing.select')}</button>
           </div>
           <div className="bg-primary rounded-[3rem] p-12 text-background lg:scale-110 shadow-2xl relative overflow-hidden flex flex-col z-10 border border-white/5">
             <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-[100px] -mr-20 -mt-20" />
@@ -782,7 +782,7 @@ const Pricing = ({ onConsultationClick }) => {
             <ul className="flex flex-col gap-6 mb-12 flex-1 font-heading text-lg text-white/80">
               {[1, 2, 3, 4].map(i => <li key={i} className="flex items-center gap-4"><Check size={20} className="text-accent" /> {t(`pricing.tier2.feat${i}`)}</li>)}
             </ul>
-            <button onClick={onConsultationClick} className="btn-magnetic w-full py-5 bg-accent text-primary rounded-full font-heading font-bold shadow-xl">{t('pricing.select')}</button>
+            <button onClick={onConsultationClick} className="btn-magnetic w-full py-5 bg-accent text-primary rounded-full font-heading font-bold shadow-xl whitespace-nowrap">{t('pricing.select')}</button>
           </div>
           <div className="bg-white/80 backdrop-blur-md border border-slate/10 shadow-sm rounded-[3rem] p-12 flex flex-col">
             <h3 className="font-heading font-bold text-2xl mb-4">{t('pricing.tier3.name')}</h3>
@@ -790,7 +790,7 @@ const Pricing = ({ onConsultationClick }) => {
             <ul className="flex flex-col gap-6 mb-12 flex-1 font-heading text-lg">
               {[1, 2, 3].map(i => <li key={i} className="flex items-center gap-4"><Check size={20} className="text-accent" /> {t(`pricing.tier3.feat${i}`)}</li>)}
             </ul>
-            <button onClick={onConsultationClick} className="w-full py-5 rounded-full border border-slate/20 font-heading font-bold hover:bg-primary hover:text-white transition-all">{t('pricing.contact')}</button>
+            <button onClick={onConsultationClick} className="w-full py-5 rounded-full border border-slate/20 font-heading font-bold hover:bg-primary hover:text-white transition-all whitespace-nowrap">{t('pricing.contact')}</button>
           </div>
         </div>
       </div>
@@ -809,7 +809,7 @@ const FinalCta = ({ onConsultationClick }) => {
         <div className="flex flex-wrap justify-center gap-6 mb-20 max-w-3xl pointer-events-auto">
           {[1, 2, 3].map(i => <div key={i} className="bg-white/5 px-8 py-5 rounded-2xl border border-white/10 flex items-center gap-4 font-heading text-lg"><Check size={24} className="text-accent" /> {t(`final_cta.list${i}`)}</div>)}
         </div>
-        <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-12 py-6 rounded-full font-heading font-bold text-2xl flex items-center gap-4 group pointer-events-auto">
+        <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-12 py-6 rounded-full font-heading font-bold text-2xl flex items-center gap-4 group pointer-events-auto whitespace-nowrap">
           <span>{t('final_cta.btn')}</span>
           <ArrowRight size={32} className="group-hover:translate-x-2 transition-transform" />
         </button>
@@ -875,7 +875,7 @@ const CustomPointer = () => {
   return (
     <div
       ref={dotRef}
-      className="fixed top-0 left-0 w-4 h-4 bg-accent rounded-full border border-primary pointer-events-none z-[9999] -mt-2 -ml-2 shadow-sm"
+      className="fixed top-0 left-0 w-4 h-4 bg-accent rounded-full border border-primary pointer-events-none z-[9999] -mt-2 -ml-2 shadow-sm hidden md:block"
       style={{ transform: 'translate(-100px, -100px)' }}
     ></div>
   );
