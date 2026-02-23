@@ -53,13 +53,14 @@
         "line1": "Većina agencija isporuči web stranicu i {{focus}}.",
         "focus1": "nestane",
         "line2": "Mi gradimo dugoročne digitalne sustave i ostajemo s vama {{focus}}.",
-        "focus2": "kako vaše poslovanje raste"
+        "focus2": "kako vaše poslovanje raste",
+        "supporting": "Radimo s tvrtkama u Hrvatskoj koje žele dugoročno rasti."
     },
     "protocol": {
         "label": "Protokol",
         "phase1": {
             "name": "Otkrivanje i nacrt",
-            "desc": "Mapiramo cijeli vaš operativni krajolik prije pisanja ijedne linije koda."
+            "desc": "Razumijemo vaše poslovanje, procese i ciljeve prije razvoja."
         },
         "phase2": {
             "name": "Precizna arhitektura",
@@ -95,6 +96,7 @@
     "pricing": {
         "title": "Investicija u projekt",
         "subtitle": "Transparentne investicije za precizno projektirane rezultate.",
+        "duration": "Većina projekata završava unutar 7–14 dana.",
         "tier1": {
             "name": "Web stranice",
             "price": "1.500 €",
@@ -110,7 +112,8 @@
             "feat1": "Napredna arhitektura",
             "feat2": "Booking Engine",
             "feat3": "Upravljanje klijentima",
-            "feat4": "Prilagođene automatizacije"
+            "feat4": "Prilagođene automatizacije",
+            "choice": "Najčešći izbor za tvrtke koje trebaju rezervacije ili sustav."
         },
         "tier3": {
             "name": "Prilagođene poslovne platforme",
@@ -150,7 +153,10 @@
         "tagline": "Web stranice i digitalni sustavi za uslužne djelatnosti, ugostiteljstvo i rastuće tvrtke u Hrvatskoj.",
         "status": "Sustav u radu",
         "nav_label": "Navigacija",
-        "legal_label": "Pravno"
+        "legal_label": "Pravno",
+        "address": "Zagreb, Hrvatska",
+        "email": "hello@aoraagency.com",
+        "region": "Radimo s tvrtkama u Hrvatskoj i regiji."
     },
     "contact": {
         "title": "Razgovarajmo",

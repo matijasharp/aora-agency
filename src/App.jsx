@@ -743,6 +743,9 @@ const Philosophy = () => {
         <p className="phil-line font-drama italic text-6xl md:text-8xl leading-none text-primary pr-10">
           {t('philosophy.line2', { focus: t('philosophy.focus2') })}
         </p>
+        <p className="phil-line font-heading text-xl text-slate/50 max-w-xl">
+          {t('philosophy.supporting')}
+        </p>
       </div>
     </section>
   );
@@ -759,7 +762,8 @@ const Pricing = ({ onConsultationClick }) => {
       <div className="max-w-7xl mx-auto relative z-10 w-full">
         <div className="text-center mb-24">
           <h2 className="font-drama italic text-6xl md:text-8xl text-primary mb-8">{t('pricing.title')}</h2>
-          <p className="font-heading text-slate/50 text-xl max-w-xl mx-auto">{t('pricing.subtitle')}</p>
+          <p className="font-heading text-slate/50 text-xl max-w-xl mx-auto mb-4">{t('pricing.subtitle')}</p>
+          <p className="font-data text-accent text-sm uppercase tracking-widest">{t('pricing.duration')}</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-stretch">
           <div className="bg-white/80 backdrop-blur-md border border-slate/10 shadow-sm rounded-[3rem] p-12 flex flex-col">
@@ -773,7 +777,8 @@ const Pricing = ({ onConsultationClick }) => {
           <div className="bg-primary rounded-[3rem] p-12 text-background lg:scale-110 shadow-2xl relative overflow-hidden flex flex-col z-10 border border-white/5">
             <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-[100px] -mr-20 -mt-20" />
             <h3 className="font-heading font-bold text-2xl mb-4 text-white">{t('pricing.tier2.name')}</h3>
-            <p className="font-data text-accent text-sm mb-10">{t('pricing.tier2.period')} <span className="text-4xl text-white font-heading ml-2">{t('pricing.tier2.price')}</span></p>
+            <p className="font-data text-accent text-sm mb-2">{t('pricing.tier2.period')} <span className="text-4xl text-white font-heading ml-2">{t('pricing.tier2.price')}</span></p>
+            <p className="font-heading text-white/50 text-sm mb-8 leading-relaxed italic">{t('pricing.tier2.choice')}</p>
             <ul className="flex flex-col gap-6 mb-12 flex-1 font-heading text-lg text-white/80">
               {[1, 2, 3, 4].map(i => <li key={i} className="flex items-center gap-4"><Check size={20} className="text-accent" /> {t(`pricing.tier2.feat${i}`)}</li>)}
             </ul>
@@ -823,6 +828,11 @@ const Footer = () => {
             <span className="text-accent">A</span>or<span className="text-accent">AA</span>gency
           </div>
           <p className="font-heading text-lg text-white/40 mb-12 leading-relaxed">{t('footer.tagline')}</p>
+          <div className="flex flex-col gap-2 mb-12">
+            <p className="font-heading text-white/60">{t('footer.address')}</p>
+            <a href={`mailto:${t('footer.email')}`} className="font-heading text-accent hover:underline">{t('footer.email')}</a>
+            <p className="font-data text-xs text-white/30 uppercase tracking-widest mt-4">{t('footer.region')}</p>
+          </div>
           <div className="flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/10 w-fit">
             <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-[pulse_2s_ease-in-out_infinite]" />
             <span className="font-data text-xs text-white/60 uppercase tracking-widest">{t('footer.status')}</span>
@@ -831,9 +841,9 @@ const Footer = () => {
         <div className="grid grid-cols-2 gap-24 font-heading">
           <div className="flex flex-col gap-6">
             <div className="text-white/20 uppercase tracking-[0.2em] text-xs font-bold">{t('footer.nav_label')}</div>
-            <a href="#features" className="hover:text-accent transition-colors text-lg">What We Build</a>
-            <a href="#projects" className="hover:text-accent transition-colors text-lg">Platforms</a>
-            <a href="#protocol" className="hover:text-accent transition-colors text-lg">Our Process</a>
+            <a href="#features" className="hover:text-accent transition-colors text-lg">{t('nav.features')}</a>
+            <a href="#projects" className="hover:text-accent transition-colors text-lg">{t('nav.projects')}</a>
+            <a href="#protocol" className="hover:text-accent transition-colors text-lg">{t('nav.protocol')}</a>
           </div>
           <div className="flex flex-col gap-6">
             <div className="text-white/20 uppercase tracking-[0.2em] text-xs font-bold">{t('footer.legal_label')}</div>

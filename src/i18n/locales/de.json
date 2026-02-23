@@ -53,13 +53,14 @@
         "line1": "Die meisten Agenturen liefern eine Webseite und {{focus}}.",
         "focus1": "verschwinden",
         "line2": "Wir bauen langfristige digitale Systeme und bleiben an Ihrer Seite, {{focus}}.",
-        "focus2": "während Ihr Unternehmen wächst"
+        "focus2": "während Ihr Unternehmen wächst",
+        "supporting": "Wir arbeiten mit Unternehmen in Kroatien zusammen, die langfristig wachsen möchten."
     },
     "protocol": {
         "label": "Der Prozess",
         "phase1": {
             "name": "Entdeckung & Konzept",
-            "desc": "Wir kartographieren Ihre gesamte operative Landschaft, bevor wir eine einzige Zeile Code schreiben."
+            "desc": "Wir verstehen Ihr Geschäft, Ihre Prozesse und Ihre Ziele vor der Entwicklung."
         },
         "phase2": {
             "name": "Präzisionsarchitektur",
@@ -110,7 +111,8 @@
             "feat1": "Fortgeschrittene Architektur",
             "feat2": "Buchungsmaschine",
             "feat3": "Kundenverwaltung",
-            "feat4": "Individuelle Automatisierung"
+            "feat4": "Individuelle Automatisierung",
+            "choice": "Häufigste Wahl für Unternehmen, die Buchungen oder Systeme benötigen."
         },
         "tier3": {
             "name": "Individuelle Plattformen",
@@ -150,7 +152,10 @@
         "tagline": "Webseiten und digitale Systeme für Dienstleistungsunternehmen, Gastronomie und wachsende Unternehmen in Kroatien.",
         "status": "System Betriebsbereit",
         "nav_label": "Navigation",
-        "legal_label": "Rechtliches"
+        "legal_label": "Rechtliches",
+        "address": "Zagreb, Kroatien",
+        "email": "hello@aoraagency.com",
+        "region": "Zusammenarbeit mit Unternehmen in Kroatien und der Region."
     },
     "contact": {
         "title": "Lass uns reden",

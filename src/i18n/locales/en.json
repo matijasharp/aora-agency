@@ -53,13 +53,14 @@
         "line1": "Most agencies deliver a website and {{focus}}.",
         "focus1": "disappear",
         "line2": "We build long-term digital systems and stay with you {{focus}}.",
-        "focus2": "as your business grows"
+        "focus2": "as your business grows",
+        "supporting": "We work with companies in Croatia that want to grow long-term."
     },
     "protocol": {
         "label": "The Protocol",
         "phase1": {
             "name": "Discovery & Blueprint",
-            "desc": "We map your entire operational landscape before writing a single line of code."
+            "desc": "We understand your business, processes, and goals before development."
         },
         "phase2": {
             "name": "Precision Architecture",
@@ -95,6 +96,7 @@
     "pricing": {
         "title": "Project Investment",
         "subtitle": "Transparent investments for precision-engineered outcomes.",
+        "duration": "Most projects completed within 7–14 days.",
         "tier1": {
             "name": "Websites",
             "price": "€1,500",
@@ -110,7 +112,8 @@
             "feat1": "Advanced Architecture",
             "feat2": "Booking Engine",
             "feat3": "Client Management",
-            "feat4": "Custom Automations"
+            "feat4": "Custom Automations",
+            "choice": "Most common choice for companies requiring bookings or systems."
         },
         "tier3": {
             "name": "Custom Business Platforms",
@@ -150,7 +153,10 @@
         "tagline": "Websites and digital systems for service businesses, hospitality and growing companies in Croatia.",
         "status": "System Operational",
         "nav_label": "Navigation",
-        "legal_label": "Legal"
+        "legal_label": "Legal",
+        "address": "Zagreb, Croatia",
+        "email": "hello@aoraagency.com",
+        "region": "Working with companies in Croatia and the region."
     },
     "contact": {
         "title": "Let's talk",
