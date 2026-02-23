@@ -132,10 +132,41 @@
         "list3": "Price estimate",
         "btn": "Book a Free Consultation"
     },
+    "inline_cta": {
+        "1": {
+            "title": "Ready to transform your digital presence?",
+            "btn": "Book a Free Consultation"
+        },
+        "2": {
+            "title": "Aligned with our philosophy?",
+            "btn": "Discuss your project"
+        },
+        "3": {
+            "title": "Want results like these?",
+            "btn": "View our pricing"
+        }
+    },
     "footer": {
         "tagline": "Websites and digital systems for service businesses, hospitality and growing companies in Croatia.",
         "status": "System Operational",
         "nav_label": "Navigation",
         "legal_label": "Legal"
+    },
+    "contact": {
+        "title": "Let's talk",
+        "desc": "Discuss your project with our team of experts.",
+        "name": "Name",
+        "name_placeholder": "John Doe",
+        "email": "Email",
+        "email_placeholder": "john@example.com",
+        "type": "Project Type",
+        "type_placeholder": "Select a project type",
+        "type_opt1": "Website Design & Build",
+        "type_opt2": "Booking System",
+        "type_opt3": "Branding",
+        "type_opt4": "Other",
+        "details": "Project Details",
+        "details_placeholder": "Tell us about your goals...",
+        "submit": "Send Request"
     }
 }

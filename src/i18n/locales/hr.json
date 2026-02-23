@@ -132,10 +132,41 @@
         "list3": "Procjenu cijene",
         "btn": "Rezervirajte besplatne konzultacije"
     },
+    "inline_cta": {
+        "1": {
+            "title": "Spremni za transformaciju vaše digitalne prisutnosti?",
+            "btn": "Rezervirajte besplatne konzultacije"
+        },
+        "2": {
+            "title": "Slažete li se s našom filozofijom?",
+            "btn": "Razgovarajte o svom projektu"
+        },
+        "3": {
+            "title": "Želite ovakve rezultate?",
+            "btn": "Pokaži cijene"
+        }
+    },
     "footer": {
         "tagline": "Web stranice i digitalni sustavi za uslužne djelatnosti, ugostiteljstvo i rastuće tvrtke u Hrvatskoj.",
         "status": "Sustav u radu",
         "nav_label": "Navigacija",
         "legal_label": "Pravno"
+    },
+    "contact": {
+        "title": "Razgovarajmo",
+        "desc": "Razgovarajte o svom projektu s našim stručnim timom.",
+        "name": "Ime",
+        "name_placeholder": "Ivan Horvat",
+        "email": "E-mail",
+        "email_placeholder": "ivan@primjer.hr",
+        "type": "Vrsta projekta",
+        "type_placeholder": "Odaberite vrstu projekta",
+        "type_opt1": "Dizajn i izrada web stranica",
+        "type_opt2": "Sustav za rezervacije",
+        "type_opt3": "Brendiranje",
+        "type_opt4": "Ostalo",
+        "details": "Detalji projekta",
+        "details_placeholder": "Recite nam više o svojim ciljevima...",
+        "submit": "Pošaljite upit"
     }
 }

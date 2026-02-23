@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   ArrowRight, Activity, Terminal, Clock, MousePointer2, Check, Languages, Globe2, Building2,
-  Utensils, Scissors, Stethoscope, Ship, Users
+  Utensils, Scissors, Stethoscope, Ship, Users, X
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ownChairLogo from './assets/square-logo-iOwnChair.png';
@@ -21,7 +21,6 @@ const InteractiveGrid = ({ type = 'dark' }) => {
     const handleMouseMove = (e) => {
       if (!containerRef.current || !gridRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      // Only update if mouse is relatively near or inside for performance
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
@@ -45,12 +44,144 @@ const InteractiveGrid = ({ type = 'dark' }) => {
   );
 };
 
+// --- Preloader Component ---
+const Loader = ({ onComplete }) => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        onComplete: onComplete
+      });
+
+      const counter = { value: 0 };
+
+      gsap.set('.logo-rest', { width: 0, opacity: 0, display: 'inline-block', whiteSpace: 'nowrap' });
+      gsap.set('.logo-a', { opacity: 0, y: 30 });
+
+      // Step 1: Fade and slide in 'A'
+      tl.to('.logo-a', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' })
+        // Step 2: Percentage counts up while A stays
+        .to(counter, {
+          value: 100,
+          duration: 1.5,
+          ease: 'power2.inOut',
+          onUpdate: () => {
+            const el = document.querySelector('.loader-counter');
+            if (el) el.textContent = Math.round(counter.value) + '%';
+          }
+        }, "-=0.2")
+        // Step 3: Expand the rest of the logo
+        .to('.logo-rest', { width: 'auto', opacity: 1, duration: 1, ease: 'power3.out' }, "-=0.2")
+        // Step 4: Hide counter, and slide up the whole preloader
+        .to('.loader-counter', { opacity: 0, duration: 0.4 }, "+=0.2")
+        .to(containerRef.current, { yPercent: -100, duration: 1, ease: 'power4.inOut' }, "-=0.2");
+
+    }, containerRef);
+    return () => ctx.revert();
+  }, [onComplete]);
+
+  return (
+    <div ref={containerRef} className="fixed inset-0 z-[100] bg-[#030304] flex flex-col items-center justify-center cursor-wait bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/loading-bg.png')" }}>
+      <div className="absolute inset-0 bg-[#030304]/40 z-0"></div>
+      <div className="relative z-10 flex flex-col items-center justify-center">
+        <div className="font-heading font-bold text-5xl md:text-7xl tracking-tight flex items-center overflow-hidden drop-shadow-2xl">
+          <span className="text-accent inline-block logo-a">A</span>
+          <span className="logo-rest text-white inline-block">or<span className="text-accent">AA</span>gency</span>
+        </div>
+        <div className="loader-counter font-data text-accent mt-8 text-sm tracking-widest drop-shadow-md">0%</div>
+      </div>
+    </div>
+  );
+};
+
+// --- Contact Modal Component ---
+const ContactModal = ({ isOpen, onClose }) => {
+  const modalRef = useRef(null);
+  const containerRef = useRef(null);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      if (isOpen) {
+        gsap.to(modalRef.current, { autoAlpha: 1, duration: 0.4, ease: 'power2.out' });
+        gsap.fromTo(containerRef.current, { y: 40, scale: 0.95, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.5, ease: 'power3.out', delay: 0.1 });
+        document.body.style.overflow = 'hidden';
+      } else {
+        gsap.to(modalRef.current, { autoAlpha: 0, duration: 0.3, ease: 'power2.in' });
+        document.body.style.overflow = '';
+      }
+    });
+    return () => ctx.revert();
+  }, [isOpen]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onClose();
+  };
+
+  return (
+    <div ref={modalRef} className="fixed inset-0 z-[100] invisible opacity-0 flex items-center justify-center px-4 cursor-default">
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-[#030304]/80 backdrop-blur-md" onClick={onClose} />
+
+      {/* Modal Container */}
+      <div ref={containerRef} className="relative z-10 w-full max-w-2xl bg-[#0D0D12]/90 backdrop-blur-3xl border border-white/10 rounded-[2rem] p-8 md:p-12 shadow-[0_0_80px_rgba(201,168,76,0.1)]">
+        <button onClick={onClose} className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors">
+          <X size={24} />
+        </button>
+
+        <h2 className="font-drama italic text-4xl md:text-5xl text-white mb-2">{t('contact.title')}</h2>
+        <p className="font-heading text-white/50 mb-8">{t('contact.desc')}</p>
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6 font-heading">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-col gap-2">
+              <label className="text-xs uppercase tracking-widest text-white/40 font-data">{t('contact.name')}</label>
+              <input type="text" required className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-accent/50 transition-colors" placeholder={t('contact.name_placeholder')} />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-xs uppercase tracking-widest text-white/40 font-data">{t('contact.email')}</label>
+              <input type="email" required className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-accent/50 transition-colors" placeholder={t('contact.email_placeholder')} />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-xs uppercase tracking-widest text-white/40 font-data">{t('contact.type')}</label>
+            <select className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent/50 transition-colors appearance-none">
+              <option value="" className="bg-[#0D0D12]">{t('contact.type_placeholder')}</option>
+              <option value="website" className="bg-[#0D0D12]">{t('contact.type_opt1')}</option>
+              <option value="booking" className="bg-[#0D0D12]">{t('contact.type_opt2')}</option>
+              <option value="branding" className="bg-[#0D0D12]">{t('contact.type_opt3')}</option>
+              <option value="other" className="bg-[#0D0D12]">{t('contact.type_opt4')}</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-xs uppercase tracking-widest text-white/40 font-data">{t('contact.details')}</label>
+            <textarea required rows="4" className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-accent/50 transition-colors resize-none" placeholder={t('contact.details_placeholder')}></textarea>
+          </div>
+
+          <button type="submit" className="btn-magnetic mt-4 bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg w-full hover:shadow-[0_0_30px_rgba(201,168,76,0.3)] transition-shadow">
+            {t('contact.submit')}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
 // --- Component Architecture ---
 
-const Navbar = () => {
+const Navbar = ({ onConsultationClick }) => {
   const navRef = useRef(null);
+  const menuRef = useRef(null);
   const { t, i18n } = useTranslation();
   const [isLangOpen, setIsLangOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // GSAP timeline for mobile menu
+  const tlMenu = useRef(null);
 
   const languages = [
     { code: 'en', label: 'EN' },
@@ -68,65 +199,127 @@ const Navbar = () => {
           targets: navRef.current
         }
       });
+
+      // Setup mobile menu animation timeline
+      tlMenu.current = gsap.timeline({ paused: true })
+        .to(menuRef.current, { autoAlpha: 1, duration: 0.4, ease: 'power2.out' })
+        .from('.mobile-menu-link', {
+          y: 60,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'power3.out'
+        }, "-=0.2");
+
     });
     return () => ctx.revert();
   }, []);
+
+  useEffect(() => {
+    if (tlMenu.current) {
+      if (isMenuOpen) {
+        tlMenu.current.play();
+        document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+      } else {
+        tlMenu.current.reverse();
+        document.body.style.overflow = '';
+      }
+    }
+  }, [isMenuOpen]);
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     setIsLangOpen(false);
   };
 
+  const handleMenuClick = () => {
+    setIsMenuOpen(false);
+  }
+
   return (
-    <nav
-      ref={navRef}
-      className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 rounded-full px-6 py-3 flex items-center gap-4 md:gap-8 text-background
-        [&.scrolled]:bg-background/80 [&.scrolled]:backdrop-blur-xl [&.scrolled]:text-primary [&.scrolled]:border [&.scrolled]:border-slate/10 [&.scrolled]:shadow-lg`}
-    >
-      <div className="font-heading font-bold text-xl tracking-tight leading-none pt-1">
-        <span className="text-accent">A</span>or<span className="text-accent">AA</span>gency
-      </div>
-      <div className="hidden lg:flex items-center gap-6 font-heading text-sm font-medium">
-        <a href="#features" className="hover:-translate-y-[1px] transition-transform">{t('nav.features')}</a>
-        <a href="#projects" className="hover:-translate-y-[1px] transition-transform">{t('nav.projects')}</a>
-        <a href="#protocol" className="hover:-translate-y-[1px] transition-transform">{t('nav.protocol')}</a>
-      </div>
+    <>
+      <nav
+        ref={navRef}
+        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 rounded-full px-6 py-3 flex items-center justify-between gap-4 md:gap-8 text-background w-[90%] md:w-auto
+          [&.scrolled]:bg-background/80 [&.scrolled]:backdrop-blur-xl [&.scrolled]:text-primary [&.scrolled]:border [&.scrolled]:border-slate/10 [&.scrolled]:shadow-lg`}
+      >
+        <a href="#top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="font-heading font-bold text-xl tracking-tight leading-none pt-1 shrink-0 hover:opacity-80 transition-opacity">
+          <span className="text-accent">A</span>or<span className="text-accent">AA</span>gency
+        </a>
 
-      <div className="relative">
-        <button
-          onClick={() => setIsLangOpen(!isLangOpen)}
-          className="flex items-center gap-2 hover:opacity-70 transition-opacity font-data text-xs uppercase"
-        >
-          <Languages size={16} />
-          {i18n.language?.split('-')[0].toUpperCase()}
-        </button>
-        {isLangOpen && (
-          <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-white rounded-xl shadow-xl border border-slate/10 p-2 flex flex-col min-w-[60px] text-primary">
-            {languages.map((lang) => (
-              <button
-                key={lang.code}
-                onClick={() => changeLanguage(lang.code)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-data hover:bg-slate/5 transition-colors ${i18n.language === lang.code ? 'text-accent font-bold' : ''}`}
-              >
-                {lang.label}
-              </button>
-            ))}
+        {/* Desktop Links */}
+        <div className="hidden lg:flex items-center gap-6 font-heading text-sm font-medium">
+          <a href="#features" className="hover:-translate-y-[1px] transition-transform">{t('nav.features')}</a>
+          <a href="#projects" className="hover:-translate-y-[1px] transition-transform">{t('nav.projects')}</a>
+          <a href="#protocol" className="hover:-translate-y-[1px] transition-transform">{t('nav.protocol')}</a>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <button
+              onClick={() => setIsLangOpen(!isLangOpen)}
+              className="flex items-center gap-2 hover:opacity-70 transition-opacity font-data text-xs uppercase"
+            >
+              <Languages size={16} />
+              {i18n.language?.split('-')[0].toUpperCase()}
+            </button>
+            {isLangOpen && (
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-white rounded-xl shadow-xl border border-slate/10 p-2 flex flex-col min-w-[60px] text-primary">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => changeLanguage(lang.code)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-data hover:bg-slate/5 transition-colors ${i18n.language === lang.code ? 'text-accent font-bold' : ''}`}
+                  >
+                    {lang.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      <button className="hidden md:block btn-magnetic bg-accent text-primary px-5 py-2 rounded-full font-heading font-semibold text-sm">
-        {t('nav.consultation')}
-      </button>
-    </nav>
+          <button onClick={onConsultationClick} className="hidden md:block btn-magnetic bg-accent text-primary px-5 py-2 rounded-full font-heading font-semibold text-sm shrink-0">
+            {t('nav.consultation')}
+          </button>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className="lg:hidden flex flex-col justify-center items-center w-8 h-8 focus:outline-none z-50 shrink-0 relative"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <span className={`bg-current h-0.5 w-6 rounded-sm transition-all duration-300 ease-out ${isMenuOpen ? 'rotate-45 translate-y-1' : '-translate-y-1'}`}></span>
+            <span className={`bg-current h-0.5 w-6 rounded-sm transition-all duration-300 ease-out ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+            <span className={`bg-current h-0.5 w-6 rounded-sm transition-all duration-300 ease-out ${isMenuOpen ? '-rotate-45 -translate-y-1' : 'translate-y-1'}`}></span>
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <div
+        ref={menuRef}
+        className="fixed inset-0 z-40 bg-[#030304]/95 backdrop-blur-2xl flex flex-col items-center justify-center invisible opacity-0"
+      >
+        <div className="flex flex-col items-center gap-8 w-full px-8 text-center">
+          <a href="#features" onClick={handleMenuClick} className="mobile-menu-link font-drama italic text-5xl text-white hover:text-accent transition-colors w-full">{t('nav.features')}</a>
+          <a href="#projects" onClick={handleMenuClick} className="mobile-menu-link font-drama italic text-5xl text-white hover:text-accent transition-colors w-full">{t('nav.projects')}</a>
+          <a href="#protocol" onClick={handleMenuClick} className="mobile-menu-link font-drama italic text-5xl text-white hover:text-accent transition-colors w-full">{t('nav.protocol')}</a>
+
+          <button onClick={() => { handleMenuClick(); onConsultationClick(); }} className="mobile-menu-link mt-8 btn-magnetic w-full max-w-xs bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg flex items-center justify-center gap-3">
+            {t('nav.consultation')}
+            <ArrowRight size={20} />
+          </button>
+        </div>
+      </div>
+    </>
   );
 };
 
-const Hero = () => {
+const Hero = ({ appLoaded, onConsultationClick }) => {
   const container = useRef(null);
   const { t } = useTranslation();
 
   useEffect(() => {
+    if (!appLoaded) return;
     let ctx = gsap.context(() => {
       gsap.from('.hero-elem', {
         y: 40,
@@ -167,12 +360,9 @@ const Hero = () => {
         </p>
 
         <div className="hero-elem mt-12 flex flex-col sm:flex-row gap-4 items-start sm:items-center pointer-events-auto">
-          <button className="btn-magnetic bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg flex items-center justify-center gap-3 group w-full sm:w-auto">
+          <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg flex items-center justify-center gap-3 group w-full sm:w-auto">
             <span>{t('hero.cta')}</span>
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-          </button>
-          <button className="btn-magnetic bg-white/5 border border-white/10 text-white px-8 py-4 rounded-full font-heading font-bold text-lg hover:bg-white/10 transition-colors w-full sm:w-auto text-center">
-            {t('hero.cta2')}
           </button>
         </div>
 
@@ -216,6 +406,25 @@ const WhoWeAre = () => {
             </div>
           ))}
         </div>
+      </div>
+    </section>
+  );
+};
+
+const InlineCta = ({ variant, theme = 'light', onConsultationClick }) => {
+  const { t } = useTranslation();
+  const isDark = theme === 'dark';
+
+  return (
+    <section className={`py-12 px-8 md:px-16 relative z-20 ${isDark ? 'bg-[#030304] text-white' : 'bg-background text-primary'}`}>
+      <div className={`max-w-5xl mx-auto rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm border ${isDark ? 'bg-white/5 border-white/10' : 'bg-primary/5 border-slate/10'}`}>
+        <h3 className="font-heading font-medium text-2xl md:text-3xl max-w-lg text-balance text-center md:text-left">
+          {t(`inline_cta.${variant}.title`)}
+        </h3>
+        <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg flex items-center gap-3 transition-transform hover:scale-105 shrink-0">
+          <span>{t(`inline_cta.${variant}.btn`)}</span>
+          <ArrowRight size={20} />
+        </button>
       </div>
     </section>
   );
@@ -478,7 +687,7 @@ const PlatformsAndProjects = () => {
               <p className="font-data text-accent/60 text-xs uppercase tracking-widest mb-4">{t('projects.proj1.subtitle')}</p>
               <p className="font-heading text-lg text-white/60 mb-8">{t('projects.proj1.desc')}</p>
             </div>
-            <a href="#" className="mt-auto flex items-center gap-3 text-accent text-lg font-bold hover:gap-6 transition-all">{t('projects.proj1.link')} <ArrowRight size={24} /></a>
+            <a href="https://iownchair.com" target="_blank" rel="noopener noreferrer" className="mt-auto flex items-center gap-3 text-accent text-lg font-bold hover:gap-6 transition-all">{t('projects.proj1.link')} <ArrowRight size={24} /></a>
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-[3rem] p-10 hover:bg-white/10 transition-all duration-500 group flex flex-col justify-between">
@@ -490,7 +699,7 @@ const PlatformsAndProjects = () => {
               <p className="font-data text-accent/60 text-xs uppercase tracking-widest mb-4">{t('projects.proj3.subtitle')}</p>
               <p className="font-heading text-lg text-white/60 mb-8">{t('projects.proj3.desc')}</p>
             </div>
-            <button className="mt-auto w-fit flex items-center gap-3 text-accent text-lg font-bold hover:gap-6 transition-all">{t('projects.proj3.link')} <ArrowRight size={24} /></button>
+            <a href="https://horeca-optimizer.com" target="_blank" rel="noopener noreferrer" className="mt-auto w-fit flex items-center gap-3 text-accent text-lg font-bold hover:gap-6 transition-all">{t('projects.proj3.link')} <ArrowRight size={24} /></a>
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-[3rem] p-10 hover:bg-white/10 transition-all duration-500 group flex flex-col justify-between">
@@ -539,7 +748,7 @@ const Philosophy = () => {
   );
 };
 
-const Pricing = () => {
+const Pricing = ({ onConsultationClick }) => {
   const { t } = useTranslation();
   return (
     <section className="min-h-screen py-32 bg-background text-primary px-8 rounded-[4rem] relative z-20 flex items-center overflow-hidden">
@@ -559,7 +768,7 @@ const Pricing = () => {
             <ul className="flex flex-col gap-6 mb-12 flex-1 font-heading text-lg">
               {[1, 2, 3].map(i => <li key={i} className="flex items-center gap-4"><Check size={20} className="text-accent" /> {t(`pricing.tier1.feat${i}`)}</li>)}
             </ul>
-            <button className="w-full py-5 rounded-full border border-slate/20 font-heading font-bold hover:bg-primary hover:text-white transition-all">{t('pricing.select')}</button>
+            <button onClick={onConsultationClick} className="w-full py-5 rounded-full border border-slate/20 font-heading font-bold hover:bg-primary hover:text-white transition-all">{t('pricing.select')}</button>
           </div>
           <div className="bg-primary rounded-[3rem] p-12 text-background lg:scale-110 shadow-2xl relative overflow-hidden flex flex-col z-10 border border-white/5">
             <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-[100px] -mr-20 -mt-20" />
@@ -568,7 +777,7 @@ const Pricing = () => {
             <ul className="flex flex-col gap-6 mb-12 flex-1 font-heading text-lg text-white/80">
               {[1, 2, 3, 4].map(i => <li key={i} className="flex items-center gap-4"><Check size={20} className="text-accent" /> {t(`pricing.tier2.feat${i}`)}</li>)}
             </ul>
-            <button className="btn-magnetic w-full py-5 bg-accent text-primary rounded-full font-heading font-bold shadow-xl">{t('pricing.select')}</button>
+            <button onClick={onConsultationClick} className="btn-magnetic w-full py-5 bg-accent text-primary rounded-full font-heading font-bold shadow-xl">{t('pricing.select')}</button>
           </div>
           <div className="bg-white/80 backdrop-blur-md border border-slate/10 shadow-sm rounded-[3rem] p-12 flex flex-col">
             <h3 className="font-heading font-bold text-2xl mb-4">{t('pricing.tier3.name')}</h3>
@@ -576,7 +785,7 @@ const Pricing = () => {
             <ul className="flex flex-col gap-6 mb-12 flex-1 font-heading text-lg">
               {[1, 2, 3].map(i => <li key={i} className="flex items-center gap-4"><Check size={20} className="text-accent" /> {t(`pricing.tier3.feat${i}`)}</li>)}
             </ul>
-            <button className="w-full py-5 rounded-full border border-slate/20 font-heading font-bold hover:bg-primary hover:text-white transition-all">{t('pricing.contact')}</button>
+            <button onClick={onConsultationClick} className="w-full py-5 rounded-full border border-slate/20 font-heading font-bold hover:bg-primary hover:text-white transition-all">{t('pricing.contact')}</button>
           </div>
         </div>
       </div>
@@ -584,7 +793,7 @@ const Pricing = () => {
   );
 };
 
-const FinalCta = () => {
+const FinalCta = ({ onConsultationClick }) => {
   const { t } = useTranslation();
   return (
     <section className="min-h-screen bg-primary text-background flex items-center justify-center p-8 relative z-0 overflow-hidden">
@@ -595,7 +804,7 @@ const FinalCta = () => {
         <div className="flex flex-wrap justify-center gap-6 mb-20 max-w-3xl pointer-events-auto">
           {[1, 2, 3].map(i => <div key={i} className="bg-white/5 px-8 py-5 rounded-2xl border border-white/10 flex items-center gap-4 font-heading text-lg"><Check size={24} className="text-accent" /> {t(`final_cta.list${i}`)}</div>)}
         </div>
-        <button className="btn-magnetic bg-accent text-primary px-12 py-6 rounded-full font-heading font-bold text-2xl flex items-center gap-4 group pointer-events-auto">
+        <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-12 py-6 rounded-full font-heading font-bold text-2xl flex items-center gap-4 group pointer-events-auto">
           <span>{t('final_cta.btn')}</span>
           <ArrowRight size={32} className="group-hover:translate-x-2 transition-transform" />
         </button>
@@ -662,20 +871,147 @@ const CustomPointer = () => {
   );
 }
 
+const BrandGuidelines = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="bg-[#030304] min-h-screen text-white selection:bg-accent selection:text-primary pt-32 pb-24 px-8 md:px-16 relative">
+      <InteractiveGrid type="dark" />
+
+      <div className="max-w-5xl mx-auto relative z-10">
+        <a href="/" className="inline-flex items-center gap-2 text-white/50 hover:text-accent transition-colors font-data text-xs uppercase tracking-widest mb-16">
+          <ArrowRight className="rotate-180" size={16} /> Back to Home
+        </a>
+
+        <header className="mb-24">
+          <h1 className="font-drama italic text-6xl md:text-8xl text-accent mb-6 leading-none">Brand Identity</h1>
+          <p className="font-heading text-xl text-white/60 max-w-2xl">The official design system and brand guidelines for Aora Agency. Built to convey precision, luxury, and relentless performance.</p>
+        </header>
+
+        <section className="mb-32">
+          <h2 className="font-heading font-medium text-white/30 text-sm uppercase tracking-widest mb-12 flex items-center gap-4">
+            <span className="w-12 h-px bg-white/20"></span> Logs & Wordmark
+          </h2>
+          <div className="bg-[#0D0D12] border border-white/10 rounded-[3rem] p-12 md:p-24 shadow-2xl flex flex-col items-center justify-center">
+            <div className="font-heading font-bold text-6xl md:text-8xl tracking-tight leading-none">
+              <span className="text-accent">A</span>or<span className="text-accent">AA</span>gency
+            </div>
+            <p className="font-data text-white/40 mt-12 text-sm text-center max-w-md">Primary wordmark. The capital 'A's must always be rendered in the primary accent gold color.</p>
+          </div>
+        </section>
+
+        <section className="mb-32">
+          <h2 className="font-heading font-medium text-white/30 text-sm uppercase tracking-widest mb-12 flex items-center gap-4">
+            <span className="w-12 h-px bg-white/20"></span> Color Palette
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="flex flex-col gap-4">
+              <div className="w-full aspect-square rounded-[2rem] bg-[#030304] border border-white/10 shadow-lg" />
+              <div>
+                <h3 className="font-heading font-bold text-xl">Void Black</h3>
+                <p className="font-data text-white/50 text-sm">#030304 — Primary Background</p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="w-full aspect-square rounded-[2rem] bg-[#0D0D12] border border-white/10 shadow-lg" />
+              <div>
+                <h3 className="font-heading font-bold text-xl">Deep Onyx</h3>
+                <p className="font-data text-white/50 text-sm">#0D0D12 — Elevated Surfaces</p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="w-full aspect-square rounded-[2rem] bg-[#C9A84C] shadow-[0_0_40px_rgba(201,168,76,0.2)]" />
+              <div>
+                <h3 className="font-heading font-bold text-xl text-accent">Signature Gold</h3>
+                <p className="font-data text-white/50 text-sm">#C9A84C — Accents & Actions</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-32">
+          <h2 className="font-heading font-medium text-white/30 text-sm uppercase tracking-widest mb-12 flex items-center gap-4">
+            <span className="w-12 h-px bg-white/20"></span> Typography
+          </h2>
+          <div className="flex flex-col gap-16">
+            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+              <div className="font-data text-accent text-sm mb-4">Display — Editorial New (Italic)</div>
+              <div className="font-drama italic text-5xl md:text-7xl">Cinematic & Elegant.</div>
+              <p className="font-heading text-white/50 mt-4 max-w-xl">Used exclusively for large, impactful statements, hero sections, and section titles.</p>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+              <div className="font-data text-accent text-sm mb-4">Heading & Body — Clash Display / Inter</div>
+              <div className="font-heading font-bold text-4xl md:text-5xl">Structural and Bold.</div>
+              <div className="font-heading text-xl mt-4">Clean body copy that remains highly readable.</div>
+              <p className="font-heading text-white/50 mt-4 max-w-xl">Primarily used for navigation, paragraphs, features, and buttons.</p>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+              <div className="font-data text-accent text-sm mb-4">Technical — JetBrains Mono</div>
+              <div className="font-data text-lg uppercase tracking-[0.2em]">ENGINEERED PRECISION.</div>
+              <p className="font-heading text-white/50 mt-4 max-w-xl">Used for labels, code snippets, micro-copy, and technical data points.</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  );
+};
+
 export default function App() {
+  const [appLoaded, setAppLoaded] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setCurrentPath(window.location.pathname);
+    };
+
+    window.addEventListener('popstate', handleLocationChange);
+    // Monkey patch pushState to detect local navigation
+    const originalPushState = window.history.pushState;
+    window.history.pushState = function (...args) {
+      originalPushState.apply(window.history, args);
+      handleLocationChange();
+    };
+
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.history.pushState = originalPushState;
+    };
+  }, []);
+
+  if (currentPath === '/brand') {
+    return (
+      <>
+        <CustomPointer />
+        <BrandGuidelines />
+      </>
+    );
+  }
+
   return (
     <div className="bg-background min-h-screen text-primary selection:bg-accent selection:text-primary overflow-x-hidden cursor-none">
+      {!appLoaded && <Loader onComplete={() => setAppLoaded(true)} />}
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+
       <CustomPointer />
-      <Navbar />
+      <Navbar onConsultationClick={() => setIsContactOpen(true)} />
       <main>
-        <Hero />
+        <Hero appLoaded={appLoaded} onConsultationClick={() => setIsContactOpen(true)} />
         <WhoWeAre />
+        <InlineCta variant="1" theme="light" onConsultationClick={() => setIsContactOpen(true)} />
         <Features />
         <Philosophy />
+        <InlineCta variant="2" theme="light" onConsultationClick={() => setIsContactOpen(true)} />
         <ProtocolSection />
         <PlatformsAndProjects />
-        <Pricing />
-        <FinalCta />
+        <InlineCta variant="3" theme="dark" onConsultationClick={() => setIsContactOpen(true)} />
+        <Pricing onConsultationClick={() => setIsContactOpen(true)} />
+        <FinalCta onConsultationClick={() => setIsContactOpen(true)} />
       </main>
       <Footer />
     </div>

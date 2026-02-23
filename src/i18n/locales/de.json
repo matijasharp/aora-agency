@@ -132,10 +132,41 @@
         "list3": "Preiseinschätzung",
         "btn": "Kostenlose Beratung buchen"
     },
+    "inline_cta": {
+        "1": {
+            "title": "Bereit, Ihre digitale Präsenz zu transformieren?",
+            "btn": "Kostenlose Beratung buchen"
+        },
+        "2": {
+            "title": "Einverstanden mit unserer Philosophie?",
+            "btn": "Besprechen Sie Ihr Projekt"
+        },
+        "3": {
+            "title": "Möchten Sie solche Ergebnisse?",
+            "btn": "Unsere Preise ansehen"
+        }
+    },
     "footer": {
         "tagline": "Webseiten und digitale Systeme für Dienstleistungsunternehmen, Gastronomie und wachsende Unternehmen in Kroatien.",
         "status": "System Betriebsbereit",
         "nav_label": "Navigation",
         "legal_label": "Rechtliches"
+    },
+    "contact": {
+        "title": "Lass uns reden",
+        "desc": "Besprechen Sie Ihr Projekt mit unserem Expertenteam.",
+        "name": "Name",
+        "name_placeholder": "Max Mustermann",
+        "email": "E-Mail",
+        "email_placeholder": "max@beispiel.de",
+        "type": "Projekttyp",
+        "type_placeholder": "Wählen Sie einen Projekttyp",
+        "type_opt1": "Webdesign & Entwicklung",
+        "type_opt2": "Buchungssystem",
+        "type_opt3": "Branding",
+        "type_opt4": "Andere",
+        "details": "Projektdetails",
+        "details_placeholder": "Erzählen Sie uns von Ihren Zielen...",
+        "submit": "Anfrage senden"
     }
 }
