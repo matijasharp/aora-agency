@@ -7,10 +7,11 @@
         "consultation": "Beratung"
     },
     "hero": {
-        "subtitle": "Webseiten, die Ihnen Kunden bringen",
-        "title": "und Prozesse unterstützen.",
+        "subtitle": "Webseiten, die Ihnen Kunden bringen und",
+        "title": "Prozesse unterstützen.",
         "description": "Für Dienstleistungsunternehmen, Gastronomie, Beauty und wachsende lokale Unternehmen in Kroatien. Wir entwerfen und bauen moderne Webseiten, Buchungssysteme und digitale Werkzeuge, die Ihrem Unternehmen helfen, schnell zu wachsen.",
         "cta": "Kostenlose Beratung buchen",
+        "cta_mobile": "Kostenlose Beratung",
         "cta2": "Projektangebot einholen",
         "trust": "Gebaut für echte Unternehmen. Keine Vorlagen. Keine Verzögerungen."
     },
@@ -132,20 +133,24 @@
         "list1": "Webseiten- oder Systemempfehlung",
         "list2": "Zeitlicher Ablauf",
         "list3": "Preiseinschätzung",
-        "btn": "Kostenlose Beratung buchen"
+        "btn": "Kostenlose Beratung buchen",
+        "btn_mobile": "Kostenlose Beratung"
     },
     "inline_cta": {
         "1": {
             "title": "Bereit, Ihre digitale Präsenz zu transformieren?",
-            "btn": "Kostenlose Beratung buchen"
+            "btn": "Kostenlose Beratung buchen",
+            "btn_mobile": "Kostenlose Beratung"
         },
         "2": {
             "title": "Einverstanden mit unserer Philosophie?",
-            "btn": "Besprechen Sie Ihr Projekt"
+            "btn": "Besprechen Sie Ihr Projekt",
+            "btn_mobile": "Projekt besprechen"
         },
         "3": {
             "title": "Möchten Sie solche Ergebnisse?",
-            "btn": "Unsere Preise ansehen"
+            "btn": "Investition ansehen",
+            "btn_mobile": "Investition ansehen"
         }
     },
     "footer": {

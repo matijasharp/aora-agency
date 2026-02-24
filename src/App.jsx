@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ownChairLogo from './assets/square-logo-iOwnChair.png';
-import horecaLogo from './assets/2.png';
+import horecaLogo from './assets/1.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -361,7 +361,8 @@ const Hero = ({ appLoaded, onConsultationClick }) => {
 
         <div className="hero-elem mt-12 flex flex-col sm:flex-row gap-4 items-start sm:items-center pointer-events-auto">
           <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg flex items-center justify-center gap-3 group w-full sm:w-auto whitespace-nowrap">
-            <span>{t('hero.cta')}</span>
+            <span className="hidden sm:inline">{t('hero.cta')}</span>
+            <span className="sm:hidden">{t('hero.cta_mobile')}</span>
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
@@ -378,6 +379,39 @@ const Hero = ({ appLoaded, onConsultationClick }) => {
 const WhoWeAre = () => {
   const { t } = useTranslation();
   const icons = [<Utensils />, <Scissors />, <Stethoscope />, <Ship />, <Users />];
+  const industryImages = [
+    "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1000&auto=format&fit=crop", // HoReCa
+    "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=1000&auto=format&fit=crop", // Barbers
+    "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1000&auto=format&fit=crop", // Clinics
+    "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1000&auto=format&fit=crop", // Tourism/Marine
+    "https://images.unsplash.com/photo-1554224155-1696413565d3?q=80&w=1000&auto=format&fit=crop"  // Booking/Business
+  ];
+
+  const handleCardEnter = (e) => {
+    const card = e.currentTarget;
+    const bg = card.querySelector('.card-hover-bg');
+    const overlay = card.querySelector('.card-hover-overlay');
+    const content = card.querySelector('.card-text');
+    const icon = card.querySelector('.card-icon-container');
+
+    gsap.to(bg, { opacity: 1, scale: 1.1, duration: 0.8, ease: 'power2.out' });
+    gsap.to(overlay, { opacity: 0.8, duration: 0.8 });
+    gsap.to(content, { color: '#ffffff', y: -5, duration: 0.4 });
+    gsap.to(icon, { scale: 1.1, duration: 0.4 });
+  };
+
+  const handleCardLeave = (e) => {
+    const card = e.currentTarget;
+    const bg = card.querySelector('.card-hover-bg');
+    const overlay = card.querySelector('.card-hover-overlay');
+    const content = card.querySelector('.card-text');
+    const icon = card.querySelector('.card-icon-container');
+
+    gsap.to(bg, { opacity: 0, scale: 1, duration: 0.8, ease: 'power2.inOut' });
+    gsap.to(overlay, { opacity: 0, duration: 0.8 });
+    gsap.to(content, { color: '#030304', y: 0, duration: 0.4 });
+    gsap.to(icon, { scale: 1, duration: 0.4 });
+  };
 
   return (
     <section className="min-h-screen py-24 px-8 md:px-16 bg-background rounded-t-[3rem] -mt-8 relative z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] overflow-hidden flex items-center">
@@ -398,11 +432,26 @@ const WhoWeAre = () => {
         </div>
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
           {[1, 2, 3, 4, 5].map(i => (
-            <div key={i} className={`p-8 bg-white/80 backdrop-blur-sm border border-slate/5 rounded-2xl flex flex-col gap-4 shadow-sm hover:border-accent/30 transition-colors group ${i === 5 ? 'sm:col-span-2 bg-gradient-to-br from-white to-slate/5' : ''}`}>
-              <div className="text-accent group-hover:scale-110 transition-transform duration-300">
-                {React.cloneElement(icons[i - 1], { size: 32 })}
+            <div
+              key={i}
+              onMouseEnter={handleCardEnter}
+              onMouseLeave={handleCardLeave}
+              className={`p-10 bg-white/80 backdrop-blur-sm border border-slate/5 rounded-[2.5rem] flex flex-col gap-6 shadow-sm hover:border-accent/30 transition-all duration-500 group relative overflow-hidden cursor-none ${i === 5 ? 'sm:col-span-2' : ''}`}
+            >
+              {/* Hover Background Layer */}
+              <div className="card-hover-bg absolute inset-0 opacity-0 z-0">
+                <img src={industryImages[i - 1]} alt="" className="w-full h-full object-cover" />
               </div>
-              <p className="font-heading font-bold text-primary text-xl">{t(`who_we_are.item${i}`)}</p>
+              <div className="card-hover-overlay absolute inset-0 bg-[#030304] opacity-0 z-10 transition-opacity duration-500"></div>
+
+              <div className="relative z-20 flex flex-col gap-6">
+                <div className="card-icon-container text-accent transition-transform duration-500 w-fit">
+                  {React.cloneElement(icons[i - 1], { size: 40, strokeWidth: 1.5 })}
+                </div>
+                <p className="card-text font-heading font-bold text-primary text-2xl leading-tight transition-all duration-500">
+                  {t(`who_we_are.item${i}`)}
+                </p>
+              </div>
             </div>
           ))}
         </div>
@@ -421,8 +470,27 @@ const InlineCta = ({ variant, theme = 'light', onConsultationClick }) => {
         <h3 className="font-heading font-medium text-2xl md:text-3xl max-w-lg text-balance text-center md:text-left">
           {t(`inline_cta.${variant}.title`)}
         </h3>
-        <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg flex items-center gap-3 transition-transform hover:scale-105 shrink-0 whitespace-nowrap">
-          <span>{t(`inline_cta.${variant}.btn`)}</span>
+        <button
+          onClick={(e) => {
+            if (variant === '3') {
+              const element = document.getElementById('pricing');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                return;
+              }
+            }
+            onConsultationClick(e);
+          }}
+          className="btn-magnetic bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg flex items-center gap-3 transition-transform hover:scale-105 shrink-0 whitespace-nowrap"
+        >
+          {t(`inline_cta.${variant}.btn_mobile`) ? (
+            <>
+              <span className="hidden sm:inline">{t(`inline_cta.${variant}.btn`)}</span>
+              <span className="sm:hidden">{t(`inline_cta.${variant}.btn_mobile`)}</span>
+            </>
+          ) : (
+            <span>{t(`inline_cta.${variant}.btn`)}</span>
+          )}
           <ArrowRight size={20} />
         </button>
       </div>
@@ -562,7 +630,7 @@ const ProtocolSection = () => {
           start: "top top",
           pin: true,
           pinSpacing: isLast,
-          end: () => `+=${window.innerHeight}`,
+          end: () => `+=${isLast ? (window.innerWidth < 768 ? 50 : window.innerHeight * 0.4) : window.innerHeight}`,
         });
 
         // Animation for the card UNDERNEATH as the next one comes in
@@ -648,15 +716,15 @@ const ProtocolSection = () => {
       </div>
 
       {protocols.map((p, i) => (
-        <div key={i} className="protocol-card w-full h-screen flex items-center justify-center bg-transparent px-8 md:px-16 overflow-hidden">
-          <div className="max-w-6xl w-full flex flex-col lg:flex-row items-center gap-16 bg-[#0D0D12] border border-white/5 rounded-[4rem] p-12 md:p-24 shadow-2xl relative">
-            <div className="absolute top-12 right-12 font-data text-accent/20 text-8xl font-bold opacity-10">{p.step}</div>
-            <div className="w-full lg:w-1/2 flex flex-col gap-6 relative z-10">
-              <div className="font-data text-accent text-sm uppercase tracking-widest px-4 py-1 border border-accent/20 rounded-full w-fit">Phase {p.step}</div>
-              <h3 className="font-heading font-bold text-5xl md:text-7xl text-white leading-tight">{p.title}</h3>
-              <p className="font-heading text-white/50 text-xl max-w-lg leading-relaxed">{p.desc}</p>
+        <div key={i} className="protocol-card w-full h-[100dvh] md:h-screen flex items-center justify-center bg-transparent px-4 md:px-16 overflow-hidden pt-24 pb-4 md:py-0">
+          <div className="max-w-6xl w-full flex flex-col lg:flex-row items-center justify-center gap-4 md:gap-16 bg-[#0D0D12] border border-white/5 rounded-[2.5rem] md:rounded-[4rem] p-6 md:p-24 shadow-2xl relative h-full md:h-auto my-auto overflow-hidden">
+            <div className="absolute top-4 right-6 md:top-8 md:right-8 font-data text-accent/20 text-5xl md:text-8xl font-bold opacity-10">{p.step}</div>
+            <div className="w-full lg:w-1/2 flex flex-col justify-center gap-4 md:gap-6 relative z-10">
+              <div className="font-data text-accent text-sm uppercase tracking-widest px-3 md:px-4 py-1 border border-accent/20 rounded-full w-fit mt-4 md:mt-0">Phase {p.step}</div>
+              <h3 className="font-heading font-bold text-4xl md:text-7xl text-white leading-tight">{p.title}</h3>
+              <p className="font-heading text-white/50 text-base md:text-xl max-w-lg leading-snug md:leading-relaxed">{p.desc}</p>
             </div>
-            <div className="w-full lg:w-1/2 aspect-square flex items-center justify-center relative">
+            <div className="w-full lg:w-1/2 aspect-square max-h-[30vh] md:max-h-none flex items-center justify-center relative mt-auto md:mt-0 pb-4 md:pb-0">
               <div className="absolute inset-0 bg-accent/5 rounded-full blur-[120px]" />
               {p.anim}
             </div>
@@ -754,7 +822,7 @@ const Philosophy = () => {
 const Pricing = ({ onConsultationClick }) => {
   const { t } = useTranslation();
   return (
-    <section className="min-h-screen py-32 bg-background text-primary px-8 rounded-[4rem] relative z-20 flex items-center overflow-hidden">
+    <section id="pricing" className="min-h-screen py-32 bg-background text-primary px-8 rounded-[4rem] relative z-20 flex items-center overflow-hidden">
       <div className="absolute inset-0 light-grid-layer opacity-40"></div>
 
       <InteractiveGrid type="light" />
@@ -810,7 +878,8 @@ const FinalCta = ({ onConsultationClick }) => {
           {[1, 2, 3].map(i => <div key={i} className="bg-white/5 px-8 py-5 rounded-2xl border border-white/10 flex items-center gap-4 font-heading text-lg"><Check size={24} className="text-accent" /> {t(`final_cta.list${i}`)}</div>)}
         </div>
         <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-12 py-6 rounded-full font-heading font-bold text-2xl flex items-center gap-4 group pointer-events-auto whitespace-nowrap">
-          <span>{t('final_cta.btn')}</span>
+          <span className="hidden sm:inline">{t('final_cta.btn')}</span>
+          <span className="sm:hidden">{t('final_cta.btn_mobile')}</span>
           <ArrowRight size={32} className="group-hover:translate-x-2 transition-transform" />
         </button>
       </div>

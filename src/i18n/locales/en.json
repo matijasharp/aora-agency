@@ -7,10 +7,11 @@
         "consultation": "Consultation"
     },
     "hero": {
-        "subtitle": "Websites that bring you clients",
-        "title": "and support operations.",
+        "subtitle": "Websites that bring you clients and",
+        "title": "support operations.",
         "description": "For service businesses, hospitality, beauty and growing local companies in Croatia. We design and build modern websites, booking systems and digital tools that help your business grow — fast.",
         "cta": "Book a Free Consultation",
+        "cta_mobile": "Free Consultation",
         "cta2": "Get a Project Estimate",
         "trust": "Built for real businesses. No templates. No delays."
     },
@@ -133,20 +134,24 @@
         "list1": "Website or system recommendation",
         "list2": "Timeline",
         "list3": "Price estimate",
-        "btn": "Book a Free Consultation"
+        "btn": "Book a Free Consultation",
+        "btn_mobile": "Free Consultation"
     },
     "inline_cta": {
         "1": {
             "title": "Ready to transform your digital presence?",
-            "btn": "Book a Free Consultation"
+            "btn": "Book a Free Consultation",
+            "btn_mobile": "Free Consultation"
         },
         "2": {
             "title": "Aligned with our philosophy?",
-            "btn": "Discuss your project"
+            "btn": "Discuss your project",
+            "btn_mobile": "Discuss project"
         },
         "3": {
             "title": "Want results like these?",
-            "btn": "View our pricing"
+            "btn": "See Investment",
+            "btn_mobile": "See Investment"
         }
     },
     "footer": {

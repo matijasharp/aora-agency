@@ -7,10 +7,11 @@
         "consultation": "Konzultacije"
     },
     "hero": {
-        "subtitle": "Web stranice koje vam donose klijente",
-        "title": "i olakšavaju poslovanje.",
+        "subtitle": "Web stranice koje vam donose klijente i",
+        "title": "olakšavaju poslovanje.",
         "description": "Za uslužne djelatnosti, ugostiteljstvo, beauty sektor i rastuće lokalne tvrtke u Hrvatskoj. Dizajniramo i gradimo moderne web stranice, sustave za rezervacije i digitalne alate koji pomažu vašem poslovanju da brzo raste.",
         "cta": "Rezervirajte besplatne konzultacije",
+        "cta_mobile": "Besplatne konzultacije",
         "cta2": "Zatražite procjenu projekta",
         "trust": "Izgrađeno za stvarne tvrtke. Bez predložaka. Bez odgoda."
     },
@@ -133,20 +134,24 @@
         "list1": "Preporuku za web stranicu ili sustav",
         "list2": "Vremenski raspored",
         "list3": "Procjenu cijene",
-        "btn": "Rezervirajte besplatne konzultacije"
+        "btn": "Rezervirajte besplatne konzultacije",
+        "btn_mobile": "Besplatne konzultacije"
     },
     "inline_cta": {
         "1": {
             "title": "Spremni za transformaciju vaše digitalne prisutnosti?",
-            "btn": "Rezervirajte besplatne konzultacije"
+            "btn": "Rezervirajte besplatne konzultacije",
+            "btn_mobile": "Besplatne konzultacije"
         },
         "2": {
             "title": "Slažete li se s našom filozofijom?",
-            "btn": "Razgovarajte o svom projektu"
+            "btn": "Razgovarajte o svom projektu",
+            "btn_mobile": "Razgovarajmo"
         },
         "3": {
             "title": "Želite ovakve rezultate?",
-            "btn": "Pokaži cijene"
+            "btn": "Prikaži investiciju",
+            "btn_mobile": "Prikaži investiciju"
         }
     },
     "footer": {
