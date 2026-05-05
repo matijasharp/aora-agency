@@ -1,13 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   ArrowRight, Activity, Terminal, Clock, MousePointer2, Check, Languages, Globe2, Building2,
-  Utensils, Scissors, Stethoscope, Ship, Users, X
+  Utensils, Scissors, Stethoscope, Ship, Users, X, ExternalLink, HardHat
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ownChairLogo from './assets/square-logo-iOwnChair.png';
 import horecaLogo from './assets/1.png';
+import gradevinskiLogo from './assets/gradevinski dnevnik online logo.jpeg';
+import delightAtelierLogo from './assets/logo-transparent-delight-atelier.png';
+import elektroLightLogo from './assets/elektrolight transparent logo.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -96,10 +100,18 @@ const Loader = ({ onComplete }) => {
 };
 
 // --- Contact Modal Component ---
+// EmailJS config — fill in your IDs from emailjs.com dashboard
+const EMAILJS_SERVICE_ID  = 'service_646meli';
+const EMAILJS_TEMPLATE_ID = 'template_jkl3ryk';
+const EMAILJS_PUBLIC_KEY  = 'ZZKGUGTZMcmNIbher';
+
 const ContactModal = ({ isOpen, onClose }) => {
   const modalRef = useRef(null);
   const containerRef = useRef(null);
   const { t } = useTranslation();
+
+  const [form, setForm] = useState({ name: '', email: '', type: '', details: '' });
+  const [status, setStatus] = useState('idle'); // idle | sending | success | error
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -110,22 +122,43 @@ const ContactModal = ({ isOpen, onClose }) => {
       } else {
         gsap.to(modalRef.current, { autoAlpha: 0, duration: 0.3, ease: 'power2.in' });
         document.body.style.overflow = '';
+        setTimeout(() => setStatus('idle'), 400);
       }
     });
     return () => ctx.revert();
   }, [isOpen]);
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onClose();
+    setStatus('sending');
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name:    form.name,
+          from_email:   form.email,
+          project_type: form.type,
+          message:      form.details,
+          to_email:     'aoraagency.cro@gmail.com',
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+      setStatus('success');
+      setForm({ name: '', email: '', type: '', details: '' });
+    } catch {
+      setStatus('error');
+    }
   };
+
+  const inputCls = "bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-accent/50 transition-colors";
 
   return (
     <div ref={modalRef} className="fixed inset-0 z-[100] invisible opacity-0 flex items-center justify-center px-4 cursor-default">
-      {/* Backdrop */}
       <div className="absolute inset-0 bg-[#030304]/80 backdrop-blur-md" onClick={onClose} />
 
-      {/* Modal Container */}
       <div ref={containerRef} className="relative z-10 w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#0D0D12]/90 backdrop-blur-3xl border border-white/10 rounded-[2rem] p-6 md:p-12 shadow-[0_0_80px_rgba(201,168,76,0.1)]">
         <button onClick={onClose} className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors">
           <X size={24} />
@@ -134,38 +167,56 @@ const ContactModal = ({ isOpen, onClose }) => {
         <h2 className="font-drama italic text-3xl md:text-5xl text-white mb-2">{t('contact.title')}</h2>
         <p className="font-heading text-white/50 mb-8">{t('contact.desc')}</p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6 font-heading">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex flex-col gap-2">
-              <label className="text-xs uppercase tracking-widest text-white/40 font-data">{t('contact.name')}</label>
-              <input type="text" required className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-accent/50 transition-colors" placeholder={t('contact.name_placeholder')} />
+        {status === 'success' ? (
+          <div className="text-center py-12">
+            <div className="w-16 h-16 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-6">
+              <Check size={28} className="text-accent" />
             </div>
-            <div className="flex flex-col gap-2">
-              <label className="text-xs uppercase tracking-widest text-white/40 font-data">{t('contact.email')}</label>
-              <input type="email" required className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-accent/50 transition-colors" placeholder={t('contact.email_placeholder')} />
+            <p className="font-drama italic text-3xl text-white mb-3">Hvala!</p>
+            <p className="font-heading text-white/50">Javit ćemo se uskoro.</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6 font-heading">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex flex-col gap-2">
+                <label className="text-xs uppercase tracking-widest text-white/40 font-data">{t('contact.name')}</label>
+                <input name="name" type="text" required value={form.name} onChange={handleChange} className={inputCls} placeholder={t('contact.name_placeholder')} />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-xs uppercase tracking-widest text-white/40 font-data">{t('contact.email')}</label>
+                <input name="email" type="email" required value={form.email} onChange={handleChange} className={inputCls} placeholder={t('contact.email_placeholder')} />
+              </div>
             </div>
-          </div>
 
-          <div className="flex flex-col gap-2">
-            <label className="text-xs uppercase tracking-widest text-white/40 font-data">{t('contact.type')}</label>
-            <select className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent/50 transition-colors appearance-none">
-              <option value="" className="bg-[#0D0D12]">{t('contact.type_placeholder')}</option>
-              <option value="website" className="bg-[#0D0D12]">{t('contact.type_opt1')}</option>
-              <option value="booking" className="bg-[#0D0D12]">{t('contact.type_opt2')}</option>
-              <option value="branding" className="bg-[#0D0D12]">{t('contact.type_opt3')}</option>
-              <option value="other" className="bg-[#0D0D12]">{t('contact.type_opt4')}</option>
-            </select>
-          </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-xs uppercase tracking-widest text-white/40 font-data">{t('contact.type')}</label>
+              <select name="type" value={form.type} onChange={handleChange} className={`${inputCls} bg-[#0D0D12] appearance-none`}>
+                <option value="" className="bg-[#0D0D12]">{t('contact.type_placeholder')}</option>
+                <option value="website" className="bg-[#0D0D12]">{t('contact.type_opt1')}</option>
+                <option value="booking" className="bg-[#0D0D12]">{t('contact.type_opt2')}</option>
+                <option value="branding" className="bg-[#0D0D12]">{t('contact.type_opt3')}</option>
+                <option value="other" className="bg-[#0D0D12]">{t('contact.type_opt4')}</option>
+              </select>
+            </div>
 
-          <div className="flex flex-col gap-2">
-            <label className="text-xs uppercase tracking-widest text-white/40 font-data">{t('contact.details')}</label>
-            <textarea required rows="4" className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-accent/50 transition-colors resize-none" placeholder={t('contact.details_placeholder')}></textarea>
-          </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-xs uppercase tracking-widest text-white/40 font-data">{t('contact.details')}</label>
+              <textarea name="details" required rows="4" value={form.details} onChange={handleChange} className={`${inputCls} resize-none`} placeholder={t('contact.details_placeholder')} />
+            </div>
 
-          <button type="submit" className="btn-magnetic mt-4 bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg w-full hover:shadow-[0_0_30px_rgba(201,168,76,0.3)] transition-shadow whitespace-nowrap">
-            {t('contact.submit')}
-          </button>
-        </form>
+            {status === 'error' && (
+              <p className="text-red-400 text-sm font-heading">Greška pri slanju. Pokušajte ponovo ili nas kontaktirajte direktno.</p>
+            )}
+
+            <button
+              type="submit"
+              disabled={status === 'sending'}
+              className="btn-magnetic mt-4 bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-lg w-full hover:shadow-[0_0_30px_rgba(201,168,76,0.3)] transition-shadow whitespace-nowrap disabled:opacity-60"
+            >
+              {status === 'sending' ? '...' : t('contact.submit')}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );
@@ -735,52 +786,413 @@ const ProtocolSection = () => {
   );
 };
 
-const PlatformsAndProjects = () => {
-  const { t } = useTranslation();
+// --- Client Work Data ---
+
+// WORK_DATA — non-translatable fields only.
+// Translatable content (category, tagline, shortDesc, overview, challenge, deliverables, metrics)
+// lives in src/i18n/locales/{en,hr,de}.json under the "work_projects" key.
+//
+// To add a video: set video to '/videos/your-file.mp4' (place the file in /public/videos/)
+// To update logos: replace the logo image in src/assets/ with the same filename
+const WORK_DATA = {
+  'pecenjara-slon': {
+    name: 'Pečenjara Slon',
+    year: '2025',
+    url: 'https://pecenjaraslon.com/',
+    heroImage: new URL('./assets/hero-pecenjara-slon.png', import.meta.url).href,
+    fullPageImage: new URL('./assets/fullpage-pecenjara-slon.png', import.meta.url).href,
+    logo: new URL('./assets/favicon-pecenjara-slon.png', import.meta.url).href,
+    video: '/videos/pecenjara-slon-video.mp4',
+    tags: ['Web Design', 'Development', 'Brand Experience'],
+  },
+  'talentosphere': {
+    name: 'TalentoSphere',
+    year: '2025',
+    url: 'https://www.talentosphere.com/',
+    heroImage: new URL('./assets/hero-talentosphere.png', import.meta.url).href,
+    fullPageImage: new URL('./assets/fullpage-talentosphere.png', import.meta.url).href,
+    logo: new URL('./assets/favicon-talentosphere.png', import.meta.url).href,
+    video: '/videos/talentosphere-video.mp4',
+    tags: ['Web Design', 'Development', 'Multilingual'],
+  },
+  'delight-atelier': {
+    name: 'Delight Atelier',
+    year: '2025',
+    url: 'https://delight-atelier.aoraagency.com/',
+    heroImage: new URL('./assets/hero-delight-atelier.png', import.meta.url).href,
+    fullPageImage: new URL('./assets/fullpage-delight-atelier.png', import.meta.url).href,
+    logo: delightAtelierLogo,
+    video: '/videos/delight-atelier-video.mp4',
+    tags: ['Premium Design', 'Editorial Web', 'Multilingual', 'Brand Identity'],
+  },
+  'elektro-light': {
+    name: 'Elektro Light',
+    year: '2025',
+    url: 'https://elektro-light.aoraagency.com/hr',
+    heroImage: new URL('./assets/hero-elektro-light.png', import.meta.url).href,
+    fullPageImage: new URL('./assets/fullpage-elektro-light.png', import.meta.url).href,
+    logo: elektroLightLogo,
+    video: '/videos/elektro-light-video.mp4',
+    tags: ['Web Design', 'Development', 'Multilingual', 'Lead Generation'],
+  },
+};
+
+// --- Site Preview Component (browser mockup — screenshot pan or video, no iframe) ---
+
+const SitePreview = ({ url, projectName, fullPageImage, video, visitLabel }) => {
   return (
-    <section id="projects" className="min-h-screen py-32 px-8 md:px-16 bg-[#030304] text-background flex items-center">
-      <div className="max-w-6xl mx-auto w-full">
-        <h2 className="font-heading font-medium text-white/30 text-sm uppercase tracking-widest mb-16 flex items-center gap-4">
+    <div className="relative group">
+      <div className="bg-[#0D0D12] rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl">
+        {/* Browser chrome */}
+        <div className="px-5 py-3.5 flex items-center gap-3 border-b border-white/5 bg-[#0a0a10]">
+          <div className="flex gap-1.5 shrink-0">
+            <div className="w-3 h-3 rounded-full bg-white/10" />
+            <div className="w-3 h-3 rounded-full bg-white/10" />
+            <div className="w-3 h-3 rounded-full bg-white/10" />
+          </div>
+          <div className="flex-1 min-w-0 bg-white/5 rounded-full px-4 py-1 font-data text-xs text-white/30 truncate">{url}</div>
+          <a href={url} target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-accent transition-colors shrink-0">
+            <ExternalLink size={14} />
+          </a>
+        </div>
+        {/* Content window — aspect ratio matches 1900×940 source videos, no side cropping */}
+        <div className="overflow-hidden relative w-full" style={{ aspectRatio: '1900 / 940' }}>
+          {video ? (
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              onLoadedMetadata={(e) => { e.target.playbackRate = 1.5; }}
+            >
+              <source src={video} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              src={fullPageImage}
+              alt={projectName}
+              className="w-full object-cover object-top"
+              style={{ animation: 'pagePan 18s ease-in-out infinite alternate' }}
+            />
+          )}
+        </div>
+      </div>
+      {/* Hover CTA */}
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute bottom-6 right-6 bg-accent text-primary px-5 py-2.5 rounded-full font-heading font-bold text-sm flex items-center gap-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:gap-3 shadow-xl"
+      >
+        {visitLabel} <ExternalLink size={14} />
+      </a>
+    </div>
+  );
+};
+
+// --- Work Detail Page ---
+
+const WorkDetailPage = ({ slug, onConsultationClick }) => {
+  const project = WORK_DATA[slug];
+  const { t } = useTranslation();
+  const heroRef = useRef(null);
+
+  // All translatable content comes from i18n so the page follows the selected language
+  const pt = project ? t(`work_projects.${slug}`, { returnObjects: true }) : null;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    let ctx = gsap.context(() => {
+      gsap.from('.work-hero-el', {
+        y: 60,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.12,
+        ease: 'power4.out',
+        delay: 0.1,
+      });
+    }, heroRef);
+    return () => ctx.revert();
+  }, [slug]);
+
+  const navigateHome = (e) => {
+    e.preventDefault();
+    window.history.pushState({}, '', '/');
+    window.scrollTo(0, 0);
+  };
+
+  if (!project) {
+    return (
+      <div className="bg-[#030304] min-h-screen flex items-center justify-center text-white">
+        <div className="text-center">
+          <p className="font-data text-accent text-xs uppercase tracking-widest mb-4">404</p>
+          <h1 className="font-drama italic text-6xl mb-8">Project not found</h1>
+          <a href="/" onClick={navigateHome} className="text-accent hover:underline font-heading">← {t('work.back')}</a>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-[#030304] min-h-screen text-white selection:bg-accent selection:text-primary overflow-x-hidden cursor-none">
+      <CustomPointer />
+      <InteractiveGrid type="dark" />
+
+      {/* Fixed top bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4 md:py-5 flex items-center justify-between bg-[#030304]/80 backdrop-blur-md border-b border-white/5">
+        <a href="/" onClick={navigateHome} className="font-heading font-bold text-lg md:text-xl tracking-tight hover:opacity-80 transition-opacity">
+          <span className="text-accent">A</span>or<span className="text-accent">AA</span>gency
+        </a>
+        <a
+          href="/"
+          onClick={navigateHome}
+          className="flex items-center gap-2 text-white/50 hover:text-white transition-colors font-data text-xs uppercase tracking-widest"
+        >
+          <ArrowRight className="rotate-180" size={14} />
+          <span className="hidden sm:inline">{t('work.back')}</span>
+          <span className="sm:hidden">Home</span>
+        </a>
+      </div>
+
+      <div ref={heroRef} className="max-w-5xl mx-auto px-4 md:px-8 pt-28 md:pt-40 pb-16 md:pb-32 relative z-10">
+
+        {/* Hero */}
+        <div className="mb-12 md:mb-20">
+          <div className="work-hero-el flex items-center gap-3 mb-6 md:mb-8 flex-wrap">
+            <img src={project.logo} alt="" className="w-5 h-5 rounded object-contain" />
+            <span className="font-data text-accent text-xs uppercase tracking-widest px-3 py-1 border border-accent/20 rounded-full">{pt.category}</span>
+            <span className="font-data text-white/30 text-xs uppercase tracking-widest">{project.year}</span>
+          </div>
+          <h1 className="work-hero-el font-drama italic text-5xl sm:text-7xl md:text-[8rem] text-white leading-none mb-6 md:mb-8">{project.name}</h1>
+          <p className="work-hero-el font-heading text-xl md:text-2xl text-white/50 max-w-2xl leading-relaxed">{pt.tagline}</p>
+        </div>
+
+        {/* Metrics strip */}
+        <div className="work-hero-el grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mb-16 md:mb-24">
+          {pt.metrics.map((m, i) => (
+            <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 flex flex-col gap-2">
+              <p className="font-data text-accent text-xs uppercase tracking-widest">{m.label}</p>
+              <p className="font-heading font-bold text-xl md:text-2xl text-white">{m.value}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Overview + Deliverables */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 mb-16 md:mb-24">
+          <div>
+            <h2 className="font-heading font-medium text-white/30 text-xs uppercase tracking-widest mb-8 flex items-center gap-4">
+              <span className="w-8 h-px bg-white/20"></span> {t('work.overview')}
+            </h2>
+            <p className="font-heading text-base md:text-xl text-white/70 leading-relaxed mb-6 md:mb-8">{pt.overview}</p>
+            <p className="font-heading text-sm md:text-lg text-white/45 leading-relaxed italic">{pt.challenge}</p>
+          </div>
+          <div>
+            <h2 className="font-heading font-medium text-white/30 text-xs uppercase tracking-widest mb-8 flex items-center gap-4">
+              <span className="w-8 h-px bg-white/20"></span> {t('work.what_we_built')}
+            </h2>
+            <ul className="flex flex-col gap-5 mb-10">
+              {pt.deliverables.map((d, i) => (
+                <li key={i} className="flex items-start gap-3 md:gap-4 font-heading text-base md:text-lg text-white/70">
+                  <Check size={18} className="text-accent mt-0.5 shrink-0" />
+                  {d}
+                </li>
+              ))}
+            </ul>
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map((tag, i) => (
+                <span key={i} className="font-data text-xs text-white/35 uppercase tracking-widest px-3 py-1.5 bg-white/5 border border-white/10 rounded-full">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Site Preview */}
+        <div className="mb-16 md:mb-24">
+          <h2 className="font-heading font-medium text-white/30 text-xs uppercase tracking-widest mb-6 md:mb-8 flex items-center gap-4">
+            <span className="w-8 h-px bg-white/20"></span> {t('work.live_preview')}
+          </h2>
+          <SitePreview
+            url={project.url}
+            projectName={project.name}
+            fullPageImage={project.fullPageImage}
+            video={project.video}
+            visitLabel={t('work.visit_live')}
+          />
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="text-center bg-white/5 border border-white/10 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-20 overflow-hidden relative">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-accent/5 rounded-full blur-[80px] -mt-20" />
+          <h2 className="font-drama italic text-4xl md:text-7xl text-white mb-4 md:mb-6 leading-tight relative z-10">{t('work.cta_title')}</h2>
+          <p className="font-heading text-white/50 text-base md:text-xl mb-8 md:mb-12 max-w-lg mx-auto relative z-10">{t('work.cta_desc')}</p>
+          <button
+            onClick={onConsultationClick}
+            className="btn-magnetic bg-accent text-primary px-6 md:px-10 py-4 md:py-5 rounded-full font-heading font-bold text-base md:text-xl inline-flex items-center gap-3 md:gap-4 group hover:shadow-[0_0_40px_rgba(201,168,76,0.35)] transition-shadow relative z-10 whitespace-nowrap"
+          >
+            {t('work.cta_btn')} <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const PlatformsAndProjects = ({ onConsultationClick }) => {
+  const { t } = useTranslation();
+
+  const navigateToWork = (e, slug) => {
+    e.preventDefault();
+    window.history.pushState({}, '', `/work/${slug}`);
+    window.scrollTo(0, 0);
+  };
+
+  const workEntries = Object.entries(WORK_DATA);
+
+  return (
+    <section id="projects" className="py-16 md:py-32 bg-[#030304] text-background overflow-hidden">
+
+      {/* Padded content */}
+      <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-16 w-full">
+
+        {/* Section header */}
+        <h2 className="font-heading font-medium text-white/30 text-sm uppercase tracking-widest mb-10 md:mb-16 flex items-center gap-4">
           <span className="w-12 h-px bg-white/20"></span>
           {t('projects.subtitle')}
         </h2>
-        <h3 className="font-drama italic text-5xl md:text-8xl text-white mb-20">{t('projects.title')}</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="bg-white/5 border border-white/10 rounded-[3rem] p-10 hover:bg-white/10 transition-all duration-500 group flex flex-col justify-between">
+        <h3 className="font-drama italic text-4xl sm:text-5xl md:text-8xl text-white mb-12 md:mb-20">{t('projects.title')}</h3>
+
+        {/* Platforms grid — 1×3 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+
+          {/* iOwnChair */}
+          <div className="bg-white/5 border border-white/10 rounded-[2rem] p-6 md:p-8 hover:bg-white/8 transition-all duration-500 group flex flex-col justify-between">
             <div>
-              <div className="w-20 h-20 rounded-3xl bg-[#0D0D12] border border-white/10 flex items-center justify-center mb-10 overflow-hidden shadow-xl group-hover:scale-110 transition-transform p-4">
+              <div className="w-14 h-14 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <img src={ownChairLogo} alt="iOwnChair Logo" className="w-full h-full object-contain" />
               </div>
-              <h4 className="font-heading font-bold text-3xl text-white mb-2">{t('projects.proj1.name')}</h4>
-              <p className="font-data text-accent/60 text-xs uppercase tracking-widest mb-4">{t('projects.proj1.subtitle')}</p>
-              <p className="font-heading text-lg text-white/60 mb-8">{t('projects.proj1.desc')}</p>
+              <h4 className="font-heading font-bold text-xl md:text-2xl text-white mb-1">{t('projects.proj1.name')}</h4>
+              <p className="font-data text-accent/60 text-xs uppercase tracking-widest mb-3">{t('projects.proj1.subtitle')}</p>
+              <p className="font-heading text-sm md:text-base text-white/55 mb-6 leading-relaxed">{t('projects.proj1.desc')}</p>
             </div>
-            <a href="https://iownchair.com" target="_blank" rel="noopener noreferrer" className="mt-auto flex items-center gap-3 text-accent text-lg font-bold hover:gap-6 transition-all">{t('projects.proj1.link')} <ArrowRight size={24} /></a>
+            <a href="https://iownchair.com" target="_blank" rel="noopener noreferrer" className="mt-auto flex items-center gap-2 text-accent text-sm font-bold hover:gap-4 transition-all">{t('projects.proj1.link')} <ArrowRight size={16} /></a>
           </div>
 
-          <div className="bg-white/5 border border-white/10 rounded-[3rem] p-10 hover:bg-white/10 transition-all duration-500 group flex flex-col justify-between">
+          {/* HoReCa Optimizer */}
+          <div className="bg-white/5 border border-white/10 rounded-[2rem] p-6 md:p-8 hover:bg-white/8 transition-all duration-500 group flex flex-col justify-between">
             <div>
-              <div className="w-20 h-20 rounded-3xl bg-[#0D0D12] border border-white/10 flex items-center justify-center mb-10 overflow-hidden shadow-xl group-hover:scale-110 transition-transform p-1">
-                <img src={horecaLogo} alt="HoReCa Optimizer Logo" className="w-full h-full object-contain" />
+              <div className="w-14 h-14 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <img src={horecaLogo} alt="HoReCa Optimizer Logo" className="w-full h-full object-contain" style={{ mixBlendMode: 'screen' }} />
               </div>
-              <h4 className="font-heading font-bold text-3xl text-white mb-2">{t('projects.proj3.name')}</h4>
-              <p className="font-data text-accent/60 text-xs uppercase tracking-widest mb-4">{t('projects.proj3.subtitle')}</p>
-              <p className="font-heading text-lg text-white/60 mb-8">{t('projects.proj3.desc')}</p>
+              <h4 className="font-heading font-bold text-xl md:text-2xl text-white mb-1">{t('projects.proj3.name')}</h4>
+              <p className="font-data text-accent/60 text-xs uppercase tracking-widest mb-3">{t('projects.proj3.subtitle')}</p>
+              <p className="font-heading text-sm md:text-base text-white/55 mb-6 leading-relaxed">{t('projects.proj3.desc')}</p>
             </div>
-            <a href="https://horeca-optimizer.com" target="_blank" rel="noopener noreferrer" className="mt-auto w-fit flex items-center gap-3 text-accent text-lg font-bold hover:gap-6 transition-all">{t('projects.proj3.link')} <ArrowRight size={24} /></a>
+            <a href="https://horeca-optimizer.com" target="_blank" rel="noopener noreferrer" className="mt-auto w-fit flex items-center gap-2 text-accent text-sm font-bold hover:gap-4 transition-all">{t('projects.proj3.link')} <ArrowRight size={16} /></a>
           </div>
 
-          <div className="bg-white/5 border border-white/10 rounded-[3rem] p-10 hover:bg-white/10 transition-all duration-500 group flex flex-col justify-between">
+          {/* Građevinski Dnevnik */}
+          <div className="bg-white/5 border border-white/10 rounded-[2rem] p-6 md:p-8 hover:bg-white/8 transition-all duration-500 group flex flex-col justify-between">
             <div>
-              <div className="w-20 h-20 rounded-3xl bg-white/10 text-white flex items-center justify-center mb-10 shadow-xl group-hover:scale-110 transition-transform"><Terminal size={40} /></div>
-              <h4 className="font-heading font-bold text-3xl text-white mb-2">{t('projects.proj2.name')}</h4>
-              <p className="font-data text-accent/60 text-xs uppercase tracking-widest mb-4">{t('projects.proj2.subtitle')}</p>
-              <p className="font-heading text-lg text-white/60 mb-8">{t('projects.proj2.desc')}</p>
+              <div className="w-14 h-14 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <img src={gradevinskiLogo} alt="Građevinski Dnevnik Logo" className="w-full h-full object-contain" style={{ mixBlendMode: 'screen' }} />
+              </div>
+              <h4 className="font-heading font-bold text-xl md:text-2xl text-white mb-1">{t('projects.proj4.name')}</h4>
+              <p className="font-data text-accent/60 text-xs uppercase tracking-widest mb-3">{t('projects.proj4.subtitle')}</p>
+              <p className="font-heading text-sm md:text-base text-white/55 mb-6 leading-relaxed">{t('projects.proj4.desc')}</p>
             </div>
-            <button className="mt-auto w-fit flex items-center gap-3 text-accent text-lg font-bold hover:gap-6 transition-all">{t('projects.proj2.link')} <ArrowRight size={24} /></button>
+            <a href="https://gradevinskidnevnik.online" target="_blank" rel="noopener noreferrer" className="mt-auto w-fit flex items-center gap-2 text-accent text-sm font-bold hover:gap-4 transition-all">{t('projects.proj4.link')} <ArrowRight size={16} /></a>
+          </div>
+        </div>
+
+        {/* Custom Systems — full-width CTA card */}
+        <div className="mt-6 md:mt-8 bg-white/5 border border-white/10 rounded-[2rem] p-6 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-12 hover:bg-white/8 transition-all duration-500 group">
+          <div className="w-14 h-14 rounded-2xl bg-white/10 text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+            <Terminal size={28} />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h4 className="font-heading font-bold text-xl md:text-2xl text-white mb-1">{t('projects.proj2.name')}</h4>
+            <p className="font-data text-accent/60 text-xs uppercase tracking-widest mb-2">{t('projects.proj2.subtitle')}</p>
+            <p className="font-heading text-sm md:text-base text-white/55 leading-relaxed">{t('projects.proj2.desc')}</p>
+          </div>
+          <button
+            onClick={onConsultationClick}
+            className="shrink-0 btn-magnetic flex items-center gap-3 bg-accent text-primary px-6 py-3 rounded-full font-heading font-bold text-sm md:text-base whitespace-nowrap hover:shadow-[0_0_30px_rgba(201,168,76,0.25)] transition-shadow"
+          >
+            {t('projects.proj2.link')} <ArrowRight size={16} />
+          </button>
+        </div>
+
+      </div>
+
+      {/* Client Work Marquee — full viewport width */}
+      <div className="mt-16 md:mt-24">
+
+        {/* Label */}
+        <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-16 mb-8 flex items-center gap-6">
+          <div className="flex-1 h-px bg-white/10"></div>
+          <span className="font-data text-white/20 text-xs uppercase tracking-widest shrink-0">{t('work.client_work')}</span>
+          <div className="flex-1 h-px bg-white/10"></div>
+        </div>
+
+        {/* Marquee — videos maintain 1900×940 aspect ratio, no gaps at loop point */}
+        <div className="marquee-wrapper overflow-hidden">
+          <div className="marquee-track" style={{ gap: '20px' }}>
+            {[...workEntries, ...workEntries].map(([slug, project], i) => {
+              const cardT = t(`work_projects.${slug}`, { returnObjects: true });
+              return (
+                <a
+                  key={i}
+                  href={`/work/${slug}`}
+                  onClick={(e) => navigateToWork(e, slug)}
+                  className="relative flex-shrink-0 rounded-[1.5rem] overflow-hidden group cursor-none"
+                  style={{ width: '520px', aspectRatio: '1900/940' }}
+                >
+                  {/* Video or hero image — object-contain keeps native ratio */}
+                  {project.video ? (
+                    <video
+                      autoPlay muted loop playsInline
+                      className="absolute inset-0 w-full h-full"
+                      style={{ objectFit: 'cover' }}
+                      onLoadedMetadata={(e) => { e.target.playbackRate = 1.5; }}
+                    >
+                      <source src={project.video} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <img
+                      src={project.heroImage}
+                      alt={project.name}
+                      className="absolute inset-0 w-full h-full object-cover object-top"
+                    />
+                  )}
+
+                  {/* Overlay: fully opaque dark at bottom, fades to transparent above text area */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background: 'linear-gradient(to top, #030504 0%, #030504 35%, rgba(3,5,4,0.6) 55%, rgba(3,5,4,0) 75%)',
+                    }}
+                  />
+
+                  {/* Text content — sits above the solid dark band */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <img src={project.logo} alt="" className="w-4 h-4 rounded object-contain shrink-0" />
+                      <span className="font-data text-accent/70 text-xs uppercase tracking-widest truncate">{cardT.category}</span>
+                    </div>
+                    <h4 className="font-heading font-bold text-lg text-white mb-1 leading-tight">{project.name}</h4>
+                    <p className="font-heading text-xs text-white/50 leading-relaxed line-clamp-2 mb-3">{cardT.shortDesc}</p>
+                    <div className="flex items-center gap-2 text-accent text-sm font-bold opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
+                      {t('work.view_case_study')} <ArrowRight size={14} />
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>
+
     </section>
   );
 };
@@ -887,6 +1299,11 @@ const FinalCta = ({ onConsultationClick }) => {
   );
 };
 
+const navigateTo = (path) => {
+  window.history.pushState({}, '', path);
+  window.scrollTo(0, 0);
+};
+
 const Footer = () => {
   const { t } = useTranslation();
   return (
@@ -916,14 +1333,188 @@ const Footer = () => {
           </div>
           <div className="flex flex-col gap-6">
             <div className="text-white/20 uppercase tracking-[0.2em] text-xs font-bold">{t('footer.legal_label')}</div>
-            <a href="#" className="hover:text-accent transition-colors text-lg">Privacy</a>
-            <a href="#" className="hover:text-accent transition-colors text-lg">Terms</a>
+            <a href="/privacy-policy" onClick={(e) => { e.preventDefault(); navigateTo('/privacy-policy'); }} className="hover:text-accent transition-colors text-lg cursor-none">{t('footer.privacy')}</a>
+            <a href="/terms" onClick={(e) => { e.preventDefault(); navigateTo('/terms'); }} className="hover:text-accent transition-colors text-lg cursor-none">{t('footer.terms')}</a>
           </div>
         </div>
       </div>
     </footer>
   );
 };
+
+// --- Legal Pages ---
+
+const LegalPageShell = ({ children }) => {
+  const { t } = useTranslation();
+  const navigateHome = (e) => { e.preventDefault(); navigateTo('/'); };
+  return (
+    <div className="bg-[#030304] min-h-screen text-white selection:bg-accent selection:text-primary overflow-x-hidden cursor-none">
+      <CustomPointer />
+      <div className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4 md:py-5 flex items-center justify-between bg-[#030304]/80 backdrop-blur-md border-b border-white/5">
+        <a href="/" onClick={navigateHome} className="font-heading font-bold text-lg tracking-tight hover:opacity-80 transition-opacity">
+          <span className="text-accent">A</span>or<span className="text-accent">AA</span>gency
+        </a>
+        <a href="/" onClick={navigateHome} className="flex items-center gap-2 text-white/50 hover:text-white transition-colors font-data text-xs uppercase tracking-widest">
+          <ArrowRight className="rotate-180" size={14} /> Home
+        </a>
+      </div>
+      <div className="max-w-3xl mx-auto px-4 md:px-8 pt-28 md:pt-36 pb-24">
+        {children}
+      </div>
+    </div>
+  );
+};
+
+const PrivacyPolicyPage = () => (
+  <LegalPageShell>
+    <p className="font-data text-accent text-xs uppercase tracking-widest mb-4">Pravni dokumenti</p>
+    <h1 className="font-drama italic text-5xl md:text-7xl text-white leading-none mb-4">Politika privatnosti</h1>
+    <p className="font-heading text-white/40 text-sm mb-16">Zadnja izmjena: 1. siječnja 2025.</p>
+
+    <div className="flex flex-col gap-12 font-heading text-white/70 leading-relaxed">
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">1. Voditelj obrade podataka</h2>
+        <p>Aora Agency, obrt za web dizajn i razvoj, Zagreb, Hrvatska<br />
+        E-mail: <a href="mailto:hello@aoraagency.com" className="text-accent hover:underline">hello@aoraagency.com</a></p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">2. Koje podatke prikupljamo</h2>
+        <p className="mb-3">Putem kontaktnog obrasca na ovoj web stranici prikupljamo sljedeće osobne podatke koje nam dobrovoljno dostavljate:</p>
+        <ul className="flex flex-col gap-2 list-disc list-inside text-white/60">
+          <li>Ime i prezime</li>
+          <li>E-mail adresa</li>
+          <li>Vrsta projekta i detalji upita</li>
+        </ul>
+        <p className="mt-3">Web stranica ne koristi analitičke kolačiće niti alate za praćenje posjetitelja. Ne prikupljamo nikakve tehničke podatke osim onih nužnih za funkcioniranje stranice.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">3. Svrha i pravna osnova obrade</h2>
+        <p>Vaše podatke obrađujemo isključivo u svrhu odgovora na vaš upit i moguće uspostave poslovne suradnje. Pravna osnova obrade je vaš pristanak koji dajete slanjem kontaktnog obrasca (čl. 6. st. 1. toč. a) GDPR-a) te legitimni interes za odgovaranje na poslovne upite (čl. 6. st. 1. toč. f) GDPR-a).</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">4. Rok čuvanja podataka</h2>
+        <p>Vaše podatke čuvamo onoliko dugo koliko je potrebno za obradu upita, odnosno najdulje do završetka eventualnog poslovnog odnosa. Podatke koji nisu rezultirali suradnjom brišemo u roku od 12 mjeseci od primitka upita.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">5. Dijeljenje podataka s trećim stranama</h2>
+        <p className="mb-3">Koristimo uslugu EmailJS (emailjs.com) kao tehničkog posrednika za dostavu kontaktnih poruka. EmailJS djeluje kao izvršitelj obrade u skladu s GDPR-om. Vaše podatke ne prodajemo niti dijelimo s trećim stranama u marketinške svrhe.</p>
+        <p>Web stranica je pohranjena na platformi Netlify (netlify.com). Netlify može pohraniti tehničke podatke o pristupu u skladu sa svojom politikom privatnosti.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">6. Vaša prava</h2>
+        <p className="mb-3">Sukladno GDPR-u, imate sljedeća prava u pogledu svojih osobnih podataka:</p>
+        <ul className="flex flex-col gap-2 list-disc list-inside text-white/60">
+          <li>Pravo na pristup — možete zatražiti uvid u podatke koje čuvamo o vama</li>
+          <li>Pravo na ispravak — možete zatražiti ispravak netočnih podataka</li>
+          <li>Pravo na brisanje — možete zatražiti brisanje vaših podataka</li>
+          <li>Pravo na ograničenje obrade — možete zatražiti privremenu obustavu obrade</li>
+          <li>Pravo na prenosivost podataka — možete zatražiti dostavu podataka u strojno čitljivom formatu</li>
+          <li>Pravo na prigovor — možete uložiti prigovor na obradu temeljenu na legitimnom interesu</li>
+          <li>Pravo na povlačenje pristanka — u svakom trenutku možete povući pristanak bez utjecaja na zakonitost prethodne obrade</li>
+        </ul>
+        <p className="mt-4">Zahtjeve možete uputiti na: <a href="mailto:hello@aoraagency.com" className="text-accent hover:underline">hello@aoraagency.com</a></p>
+        <p className="mt-3">Imate i pravo podnijeti pritužbu nadležnom nadzornom tijelu — Agenciji za zaštitu osobnih podataka (AZOP), Selska cesta 136, 10 000 Zagreb, <a href="https://azop.hr" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">azop.hr</a>.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">7. Kolačići</h2>
+        <p>Ova web stranica ne koristi marketinške niti analitičke kolačiće. Koriste se isključivo tehnički nužni kolačići koji su potrebni za ispravno funkcioniranje stranice i koji ne zahtijevaju vaš pristanak.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">8. Sigurnost podataka</h2>
+        <p>Poduzimamo odgovarajuće tehničke i organizacijske mjere zaštite kako bismo osigurali sigurnost vaših osobnih podataka od neovlaštenog pristupa, izmjene, otkrivanja ili uništenja.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">9. Izmjene ove politike</h2>
+        <p>Zadržavamo pravo izmjene ove Politike privatnosti. Sve izmjene bit će objavljene na ovoj stranici s ažuriranim datumom zadnje izmjene. Preporučujemo povremenu provjeru ove stranice.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">10. Kontakt</h2>
+        <p>Za sva pitanja vezana uz obradu vaših osobnih podataka obratite nam se na:<br />
+        <a href="mailto:hello@aoraagency.com" className="text-accent hover:underline">hello@aoraagency.com</a></p>
+      </section>
+    </div>
+  </LegalPageShell>
+);
+
+const TermsOfUsePage = () => (
+  <LegalPageShell>
+    <p className="font-data text-accent text-xs uppercase tracking-widest mb-4">Pravni dokumenti</p>
+    <h1 className="font-drama italic text-5xl md:text-7xl text-white leading-none mb-4">Uvjeti korištenja</h1>
+    <p className="font-heading text-white/40 text-sm mb-16">Zadnja izmjena: 1. siječnja 2025.</p>
+
+    <div className="flex flex-col gap-12 font-heading text-white/70 leading-relaxed">
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">1. Prihvaćanje uvjeta</h2>
+        <p>Korištenjem ove web stranice (aoraagency.com) prihvaćate ove Uvjete korištenja u cijelosti. Ako se ne slažete s bilo kojim dijelom ovih uvjeta, molimo vas da prestanete koristiti stranicu. Vlasnik i upravitelj stranice je Aora Agency, Zagreb, Hrvatska.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">2. Intelektualno vlasništvo</h2>
+        <p className="mb-3">Sav sadržaj na ovoj web stranici — uključujući tekstove, grafike, logotipe, fotografije, videa, dizajn i kod — vlasništvo je Aora Agency ili odgovarajućih nositelja prava, te je zaštićen primjenjivim zakonima o autorskim pravima i intelektualnom vlasništvu.</p>
+        <p>Nije dozvoljeno kopiranje, reproduciranje, distribucija, javno prikazivanje niti stvaranje izvedenih djela temeljenih na sadržaju ove stranice bez prethodne pisane suglasnosti Aora Agency.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">3. Korištenje stranice</h2>
+        <p className="mb-3">Suglasni ste da ćete koristiti ovu stranicu isključivo u zakonite svrhe i na način koji ne krši prava trećih osoba. Zabranjeno je:</p>
+        <ul className="flex flex-col gap-2 list-disc list-inside text-white/60">
+          <li>Korištenje stranice za bilo kakvu nezakonitu svrhu</li>
+          <li>Pokušaj neovlaštenog pristupa sustavima ili podacima</li>
+          <li>Slanje neželjenih poruka ili spam sadržaja putem kontaktnog obrasca</li>
+          <li>Lažno predstavljanje ili navođenje na pogrešan zaključak o identitetu ili namjeri</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">4. Sadržaj i točnost informacija</h2>
+        <p>Nastojimo osigurati točnost i ažurnost svih informacija na ovoj stranici, no ne jamčimo potpunost, točnost ni prikladnost sadržaja za određenu svrhu. Zadržavamo pravo izmjene, dopune ili uklanjanja sadržaja u bilo koje vrijeme bez prethodne najave.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">5. Poveznice na vanjske stranice</h2>
+        <p>Ova stranica može sadržavati poveznice na vanjske web stranice. Te stranice nisu pod našom kontrolom i ne odgovaramo za njihov sadržaj, politiku privatnosti ni prakse. Preporučujemo da pregledate uvjete korištenja i politiku privatnosti svake stranice koju posjetite.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">6. Ograničenje odgovornosti</h2>
+        <p>U najvećoj mjeri dopuštenoj primjenjivim zakonima, Aora Agency neće biti odgovorna za bilo kakvu izravnu, neizravnu, slučajnu, posebnu ili posljedičnu štetu koja nastane iz korištenja ili nemogućnosti korištenja ove web stranice ili njezinog sadržaja, uključujući ali ne ograničavajući se na gubitak podataka, poslovne prilike ili prihoda.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">7. Dostupnost stranice</h2>
+        <p>Ne jamčimo neprekidnu dostupnost web stranice. Stranica može biti privremeno nedostupna zbog tehničkih radova, nadogradnji ili okolnosti izvan naše kontrole. Ne odgovaramo za štetu nastalu zbog privremene nedostupnosti.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">8. Mjerodavno pravo i nadležnost</h2>
+        <p>Ovi Uvjeti korištenja podliježu pravu Republike Hrvatske. Za sve sporove koji mogu nastati iz ili u vezi s korištenjem ove web stranice nadležan je sud u Zagrebu, Republika Hrvatska.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">9. Izmjene uvjeta</h2>
+        <p>Zadržavamo pravo izmjene ovih Uvjeta korištenja u bilo koje vrijeme. Izmijenjeni uvjeti stupaju na snagu objavom na ovoj stranici. Nastavak korištenja stranice nakon objave izmjena smatra se prihvaćanjem novih uvjeta.</p>
+      </section>
+
+      <section>
+        <h2 className="font-heading font-bold text-white text-xl mb-4">10. Kontakt</h2>
+        <p>Za sva pitanja vezana uz ove Uvjete korištenja obratite nam se na:<br />
+        <a href="mailto:hello@aoraagency.com" className="text-accent hover:underline">hello@aoraagency.com</a></p>
+      </section>
+
+    </div>
+  </LegalPageShell>
+);
 
 const CustomPointer = () => {
   const dotRef = useRef(null);
@@ -1063,11 +1654,29 @@ export default function App() {
     };
   }, []);
 
+  if (currentPath === '/privacy-policy') {
+    return <PrivacyPolicyPage />;
+  }
+
+  if (currentPath === '/terms') {
+    return <TermsOfUsePage />;
+  }
+
   if (currentPath === '/brand') {
     return (
       <>
         <CustomPointer />
         <BrandGuidelines />
+      </>
+    );
+  }
+
+  if (currentPath.startsWith('/work/')) {
+    const slug = currentPath.replace('/work/', '');
+    return (
+      <>
+        <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+        <WorkDetailPage slug={slug} onConsultationClick={() => setIsContactOpen(true)} />
       </>
     );
   }
@@ -1087,7 +1696,7 @@ export default function App() {
         <Philosophy />
         <InlineCta variant="2" theme="light" onConsultationClick={() => setIsContactOpen(true)} />
         <ProtocolSection />
-        <PlatformsAndProjects />
+        <PlatformsAndProjects onConsultationClick={() => setIsContactOpen(true)} />
         <InlineCta variant="3" theme="dark" onConsultationClick={() => setIsContactOpen(true)} />
         <Pricing onConsultationClick={() => setIsContactOpen(true)} />
         <FinalCta onConsultationClick={() => setIsContactOpen(true)} />

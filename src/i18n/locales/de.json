@@ -92,6 +92,12 @@
             "subtitle": "Personalplanung und operative Kontrolle für Gastronomie und Hotellerie.",
             "desc": "Optimieren Sie Personalpläne, kontrollieren Sie Arbeitskosten und erhalten Sie klare Einblicke in den täglichen Betrieb — speziell für HoReCa-Unternehmen entwickelt.",
             "link": "Frühzeitigen Zugang anfordern"
+        },
+        "proj4": {
+            "name": "Građevinski Dnevnik",
+            "subtitle": "Bauarbeiten dokumentieren. Berichte sofort generieren.",
+            "desc": "Mobile-first Plattform zur Echtzeit-Dokumentation von Baustellen — Spracheingabe, automatische Wettererfassung und PDF-Berichte mit einem Klick.",
+            "link": "Plattform besuchen"
         }
     },
     "pricing": {
@@ -160,7 +166,99 @@
         "legal_label": "Rechtliches",
         "address": "Zagreb, Kroatien",
         "email": "hello@aoraagency.com",
-        "region": "Zusammenarbeit mit Unternehmen in Kroatien und der Region."
+        "region": "Zusammenarbeit mit Unternehmen in Kroatien und der Region.",
+        "privacy": "Datenschutzerklärung",
+        "terms": "Nutzungsbedingungen"
+    },
+    "work": {
+        "client_work": "Kundenarbeiten",
+        "view_case_study": "Fallstudie ansehen",
+        "back": "Zurück zur Startseite",
+        "overview": "Übersicht",
+        "what_we_built": "Was wir gebaut haben",
+        "live_preview": "Live-Vorschau",
+        "visit_live": "Website besuchen",
+        "cta_title": "Möchten Sie ähnliche Ergebnisse?",
+        "cta_desc": "Buchen Sie eine kostenlose Beratung und lassen Sie uns besprechen, was wir für Ihr Unternehmen bauen können.",
+        "cta_btn": "Kostenlose Beratung buchen"
+    },
+    "work_projects": {
+        "pecenjara-slon": {
+            "category": "Restaurant & HoReCa",
+            "tagline": "Premium-Grillkultur, online gebracht.",
+            "shortDesc": "Moderne Website für ein Premium-Grillrestaurant, das eine starke digitale Präsenz passend zur Qualität seiner Speisen brauchte.",
+            "overview": "Pečenjara Slon ist ein Premium-Grillrestaurant, bekannt für erstklassig gegrilltes Fleisch und moderne Burger-Angebote. Ohne digitale Präsenz verpassten sie potenzielle Gäste, die online nach einem echten Grillerlebnis suchen.",
+            "challenge": "Eine Website zu gestalten, die gleichzeitig mutig und einladend ist — Atmosphäre, Menü und Qualität so präsentiert, dass Gäste angesprochen werden und die Marke klar kommuniziert wird, ohne generische Lösungen.",
+            "deliverables": [
+                "Maßgeschneidertes Webdesign passend zur Markenidentität",
+                "Menü-Präsentation mit Fotointegration",
+                "Mobile-first responsives Design",
+                "Standort- und Kontaktintegration",
+                "SEO-Optimierung"
+            ],
+            "metrics": [
+                { "label": "Launch", "value": "5 Tage" },
+                { "label": "Design", "value": "Individuell" },
+                { "label": "Responsiv", "value": "✓" }
+            ]
+        },
+        "talentosphere": {
+            "category": "Personalvermittlung",
+            "tagline": "Träume verbinden, Karrieren aufbauen.",
+            "shortDesc": "Professionelle mehrsprachige Website für eine kroatische Agentur, die internationale Arbeitskräfte vermittelt.",
+            "overview": "TalentoSphere ist eine kroatische Agentur, spezialisiert auf die Vermittlung von Arbeitnehmern aus Drittländern an kroatische Unternehmen. Sie brauchten eine glaubwürdige Online-Plattform, die das Vertrauen von Arbeitgebern und Kandidaten gewinnt.",
+            "challenge": "Eine Website aufzubauen, die gleichermaßen kroatische Unternehmen, die Arbeitskräfte suchen, und internationale Kandidaten, die Chancen suchen, anspricht — komplexe Dienstleistungen klar und intuitiv präsentiert.",
+            "deliverables": [
+                "Mehrsprachige Plattform (HR/EN)",
+                "Visualisierung des 5-stufigen Rekrutierungsprozesses",
+                "Branchen- und Kundenpräsentation",
+                "FAQ-System für Genehmigungen und Verfahren",
+                "Kontakt- und Anfrageformulare"
+            ],
+            "metrics": [
+                { "label": "Sprachen", "value": "2" },
+                { "label": "Launch", "value": "7 Tage" },
+                { "label": "Conversion", "value": "Optimiert" }
+            ]
+        },
+        "delight-atelier": {
+            "category": "Luxuriöse Handwerksmarke",
+            "tagline": "Meisterschaft bedeutet nicht Komplexität hinzufügen — es ist die Disziplin des Weglassens.",
+            "shortDesc": "Redaktionelle Luxus-Website für ein handwerkliches Schokoladenatelier mit mehrsprachiger Unterstützung.",
+            "overview": "Delight Atelier ist ein handwerkliches Süßwarenatelier, spezialisiert auf handgefertigte Schokoladen aus Single-Origin Valrhona-Schokolade. Jedes Detail — von den Zutaten bis zur Verpackung — spiegelt ein kompromissloses Engagement für Qualität wider.",
+            "challenge": "Das Gefühl luxuriöser Handwerkskunst in den digitalen Raum zu übersetzen. Jedes Designelement musste Premium-Positionierung kommunizieren — ohne Übermaß, mit der disziplinierten Eleganz, die zum Produkt passt.",
+            "deliverables": [
+                "Redaktionelles dunkel-luxuriöses Webdesign",
+                "Mehrsprachige Unterstützung (HR/DE/EN)",
+                "Nummerierte redaktionelle Abschnitte (001–005)",
+                "Benutzerdefiniertes Bestell- und Anfragensystem",
+                "Premium visuelle Markensprache und Typografie"
+            ],
+            "metrics": [
+                { "label": "Sprachen", "value": "3" },
+                { "label": "Design", "value": "Redaktionell" },
+                { "label": "Launch", "value": "10 Tage" }
+            ]
+        },
+        "elektro-light": {
+            "category": "Elektrodienstleistungen",
+            "tagline": "Schnell. Professionell. Sicher.",
+            "shortDesc": "Mehrsprachige Website für ein lizenziertes Elektrounternehmen in Zagreb mit Lead-Generierungssystem.",
+            "overview": "Elektro Light ist ein lizenziertes Elektrounternehmen, das 24/7 Not- und Planelektroarbeiten für Wohn- und Gewerbeimmobilien in Zagreb anbietet. Transparenz und Zuverlässigkeit sind die Grundlagen ihrer Marke.",
+            "challenge": "Eine Website aufzubauen, die Vertrauen schafft — kritisch in der Dienstleistungsbranche — Dienstleistungen klar präsentiert und aktiv Leads generiert, mit mehrsprachiger Unterstützung für die internationale Kundschaft in Zagreb.",
+            "deliverables": [
+                "Mehrsprachige Plattform (HR/EN/DE)",
+                "Dienstleistungs- und Projektpräsentation",
+                "Lead-Generierungssystem mit Kontaktformularen",
+                "Kundenbewertungen und Testimonials",
+                "FAQ und 24/7-Notfallkontaktintegration"
+            ],
+            "metrics": [
+                { "label": "Sprachen", "value": "3" },
+                { "label": "Verfügbarkeit", "value": "24/7" },
+                { "label": "Launch", "value": "7 Tage" }
+            ]
+        }
     },
     "contact": {
         "title": "Lass uns reden",

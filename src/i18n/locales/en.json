@@ -92,6 +92,12 @@
             "subtitle": "Workforce planning and operational control for restaurants and hospitality.",
             "desc": "Optimize staff schedules, control labor costs and get clear insights into daily operations — built specifically for HoReCa businesses.",
             "link": "Request Early Access"
+        },
+        "proj4": {
+            "name": "Građevinski Dnevnik",
+            "subtitle": "Document construction work. Generate reports instantly.",
+            "desc": "Mobile-first platform for real-time construction site documentation — voice input, automatic weather capture, and one-click client-ready PDF reports.",
+            "link": "Visit platform"
         }
     },
     "pricing": {
@@ -161,7 +167,99 @@
         "legal_label": "Legal",
         "address": "Zagreb, Croatia",
         "email": "hello@aoraagency.com",
-        "region": "Working with companies in Croatia and the region."
+        "region": "Working with companies in Croatia and the region.",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Use"
+    },
+    "work": {
+        "client_work": "Client Work",
+        "view_case_study": "View Case Study",
+        "back": "Back to Home",
+        "overview": "Overview",
+        "what_we_built": "What We Built",
+        "live_preview": "Live Preview",
+        "visit_live": "Visit Live Site",
+        "cta_title": "Want results like these?",
+        "cta_desc": "Book a free consultation and let's discuss what we can build for your business.",
+        "cta_btn": "Book a Free Consultation"
+    },
+    "work_projects": {
+        "pecenjara-slon": {
+            "category": "Restaurant & HoReCa",
+            "tagline": "Premium grill culture, brought online.",
+            "shortDesc": "Modern website for a premium grill restaurant that needed a strong digital presence aligned with the quality of their food.",
+            "overview": "Pečenjara Slon is a premium grill restaurant known for top-quality roasted meats and modern burger offerings. Without a digital presence, they were missing potential guests who search online for a real grilling experience.",
+            "challenge": "Create a website that is bold and welcoming at the same time — showcasing atmosphere, menu and quality in a way that attracts guests and communicates the brand clearly, without generic solutions.",
+            "deliverables": [
+                "Custom web design aligned with brand identity",
+                "Menu showcase with photography integration",
+                "Mobile-first responsive design",
+                "Location and contact integration",
+                "SEO optimisation"
+            ],
+            "metrics": [
+                { "label": "Launch", "value": "5 days" },
+                { "label": "Design", "value": "Custom" },
+                { "label": "Responsive", "value": "✓" }
+            ]
+        },
+        "talentosphere": {
+            "category": "Recruitment Agency",
+            "tagline": "Connecting Dreams, Building Careers.",
+            "shortDesc": "Professional multilingual website for a Croatian agency recruiting international workers.",
+            "overview": "TalentoSphere is a Croatian agency specialising in placing workers from third countries with Croatian businesses. They needed a credible online platform that earns the trust of both employers and candidates.",
+            "challenge": "Build a website that speaks equally to Croatian companies seeking workforce and international candidates seeking opportunities — presenting complex services in a clear, intuitive way.",
+            "deliverables": [
+                "Multilingual platform (HR/EN)",
+                "5-step recruitment process visualisation",
+                "Industry & client showcase",
+                "FAQ system for permits and procedures",
+                "Contact and inquiry forms"
+            ],
+            "metrics": [
+                { "label": "Languages", "value": "2" },
+                { "label": "Launch", "value": "7 days" },
+                { "label": "Conversion", "value": "Optimised" }
+            ]
+        },
+        "delight-atelier": {
+            "category": "Luxury Artisan Brand",
+            "tagline": "Mastery isn't adding complexity — it's the discipline of subtraction.",
+            "shortDesc": "Editorial luxury website for an artisan chocolate atelier with multilingual support.",
+            "overview": "Delight Atelier is an artisan confectionery atelier specialising in handcrafted chocolates made from single-origin Valrhona chocolate. Every detail — from ingredients to packaging — reflects an uncompromising commitment to quality.",
+            "challenge": "Translate the feeling of luxury craftsmanship into the digital space. Every design element had to communicate premium positioning — without excess, with the disciplined elegance that matches the product.",
+            "deliverables": [
+                "Editorial dark-luxury web design",
+                "Multilingual support (HR/DE/EN)",
+                "Numbered editorial sections (001–005)",
+                "Custom ordering and inquiry system",
+                "Premium brand visual language and typography"
+            ],
+            "metrics": [
+                { "label": "Languages", "value": "3" },
+                { "label": "Design", "value": "Editorial" },
+                { "label": "Launch", "value": "10 days" }
+            ]
+        },
+        "elektro-light": {
+            "category": "Electrical Services",
+            "tagline": "Fast. Professional. Safe.",
+            "shortDesc": "Multilingual website for a licensed electrical services company in Zagreb with a lead generation system.",
+            "overview": "Elektro Light is a licensed electrical services company offering 24/7 emergency and scheduled electrical work for residential and commercial properties in Zagreb. Transparency and reliability are the foundations of their brand.",
+            "challenge": "Build a website that establishes trust — critical in the service industry — clearly presents services and actively generates leads, with multilingual support for the international clientele in Zagreb.",
+            "deliverables": [
+                "Multilingual platform (HR/EN/DE)",
+                "Service and project showcase",
+                "Lead generation system with contact forms",
+                "Client reviews and testimonials",
+                "FAQ and 24/7 emergency contact integration"
+            ],
+            "metrics": [
+                { "label": "Languages", "value": "3" },
+                { "label": "Availability", "value": "24/7" },
+                { "label": "Launch", "value": "7 days" }
+            ]
+        }
     },
     "contact": {
         "title": "Let's talk",

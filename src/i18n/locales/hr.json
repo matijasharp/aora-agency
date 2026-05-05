@@ -92,6 +92,12 @@
             "subtitle": "Planiranje radne snage i operativna kontrola za restorane i ugostiteljstvo.",
             "desc": "Optimizirajte rasporede osoblja, kontrolirajte troškove rada i ostvarite jasan uvid u svakodnevno poslovanje — izgrađeno posebno za HoReCa tvrtke.",
             "link": "Zatražite rani pristup"
+        },
+        "proj4": {
+            "name": "Građevinski Dnevnik",
+            "subtitle": "Dokumentirajte radove. Generirajte izvještaje odmah.",
+            "desc": "Mobilna platforma za dokumentiranje građevinskih radova u realnom vremenu — glasovni unos, automatsko bilježenje vremenskih uvjeta i PDF izvještaji jednim klikom.",
+            "link": "Posjetite platformu"
         }
     },
     "pricing": {
@@ -161,7 +167,99 @@
         "legal_label": "Pravno",
         "address": "Zagreb, Hrvatska",
         "email": "hello@aoraagency.com",
-        "region": "Radimo s tvrtkama u Hrvatskoj i regiji."
+        "region": "Radimo s tvrtkama u Hrvatskoj i regiji.",
+        "privacy": "Politika privatnosti",
+        "terms": "Uvjeti korištenja"
+    },
+    "work": {
+        "client_work": "Klijentski radovi",
+        "view_case_study": "Pogledajte studiju slučaja",
+        "back": "Povratak na početnu",
+        "overview": "Pregled",
+        "what_we_built": "Što smo izgradili",
+        "live_preview": "Pregled stranice",
+        "visit_live": "Posjetite stranicu",
+        "cta_title": "Želite ovakve rezultate?",
+        "cta_desc": "Rezervirajte besplatne konzultacije i razgovarajmo o tome što možemo izgraditi za vaše poslovanje.",
+        "cta_btn": "Rezervirajte besplatne konzultacije"
+    },
+    "work_projects": {
+        "pecenjara-slon": {
+            "category": "Restoran & HoReCa",
+            "tagline": "Premium grill kultura, dovedena online.",
+            "shortDesc": "Moderna web stranica za premium grill restoran koji je trebao snažnu digitalnu prisutnost u skladu s kvalitetom hrane.",
+            "overview": "Pečenjara Slon je premium grill restoran poznat po vrhunski pečenom mesu i modernoj burger ponudi. Bez digitalne prisutnosti, propuštali su potencijalne goste koji online traže pravo iskustvo pečenja.",
+            "challenge": "Izraditi web stranicu koja je istovremeno smjela i gostoljubiva — predstavljajući atmosferu, meni i kvalitetu na način koji privlači goste i jasno komunicira brend, bez generičkih rješenja.",
+            "deliverables": [
+                "Prilagođeni web dizajn usklađen s identitetom brenda",
+                "Prikaz menija s integracijom fotografija",
+                "Responsivni dizajn prilagođen mobilnim uređajima",
+                "Integracija lokacije i kontakta",
+                "SEO optimizacija"
+            ],
+            "metrics": [
+                { "label": "Lansiranje", "value": "5 dana" },
+                { "label": "Dizajn", "value": "Prilagođen" },
+                { "label": "Responsivno", "value": "✓" }
+            ]
+        },
+        "talentosphere": {
+            "category": "Agencija za zapošljavanje",
+            "tagline": "Povezujemo snove, gradimo karijere.",
+            "shortDesc": "Profesionalna višejezična web stranica za hrvatsku agenciju koja zapošljava međunarodne radnike.",
+            "overview": "TalentoSphere je hrvatska agencija specijalizirana za posredovanje radnika iz trećih zemalja prema hrvatskim tvrtkama. Trebali su vjerodostojnu online platformu koja osvaja povjerenje poslodavaca i kandidata.",
+            "challenge": "Izgraditi web stranicu koja jednako govori hrvatskim tvrtkama koje traže radnu snagu i međunarodnim kandidatima koji traže prilike — predstavljajući složene usluge na jasan i intuitivan način.",
+            "deliverables": [
+                "Višejezična platforma (HR/EN)",
+                "Vizualizacija procesa zapošljavanja u 5 koraka",
+                "Prikaz industrija i klijenata",
+                "FAQ sustav za dozvole i procedure",
+                "Kontakt i upitni obrasci"
+            ],
+            "metrics": [
+                { "label": "Jezici", "value": "2" },
+                { "label": "Lansiranje", "value": "7 dana" },
+                { "label": "Konverzija", "value": "Optimizirana" }
+            ]
+        },
+        "delight-atelier": {
+            "category": "Luksuzni artizanski brend",
+            "tagline": "Majstorstvo nije dodavanje složenosti — to je disciplina oduzimanja.",
+            "shortDesc": "Editorijalna luksuzna web stranica za atelje artizanske čokolade s višejezičnom podrškom.",
+            "overview": "Delight Atelier je artizanski slastičarski atelje specijaliziran za ručno izrađene čokolade od single-origin Valrhona čokolade. Svaki detalj — od sastojaka do ambalaže — odražava beskompromisnu predanost kvaliteti.",
+            "challenge": "Prevesti osjećaj luksuzne rukotvorine u digitalni prostor. Svaki dizajnerski element morao je komunicirati premium pozicioniranje — bez viška, s discipliniranom elegancijom koja odgovara proizvodu.",
+            "deliverables": [
+                "Editorijalni tamno-luksuzni web dizajn",
+                "Višejezična podrška (HR/DE/EN)",
+                "Numerirani editorijalni odjeljci (001–005)",
+                "Prilagođeni sustav narudžbi i upita",
+                "Premium vizualni jezik i tipografija brenda"
+            ],
+            "metrics": [
+                { "label": "Jezici", "value": "3" },
+                { "label": "Dizajn", "value": "Editorijalni" },
+                { "label": "Lansiranje", "value": "10 dana" }
+            ]
+        },
+        "elektro-light": {
+            "category": "Elektro usluge",
+            "tagline": "Brzo. Profesionalno. Sigurno.",
+            "shortDesc": "Višejezična web stranica za licenciranu tvrtku za električne usluge u Zagrebu s lead generacija sustavom.",
+            "overview": "Elektro Light je licencirana tvrtka za električne usluge koja nudi 24/7 hitne i planirane električne radove za stambene i poslovne objekte u Zagrebu. Transparentnost i pouzdanost su temelji njihovog brenda.",
+            "challenge": "Izgraditi web stranicu koja gradi povjerenje — kritično u usluženoj industriji — jasno predstavlja usluge i aktivno generira leadove, s višejezičnom podrškom za međunarodnu klijentelu u Zagrebu.",
+            "deliverables": [
+                "Višejezična platforma (HR/EN/DE)",
+                "Prikaz usluga i projekata",
+                "Lead generacija sustav s kontakt obrascima",
+                "Recenzije i svjedočanstva klijenata",
+                "FAQ i integracija 24/7 hitnog kontakta"
+            ],
+            "metrics": [
+                { "label": "Jezici", "value": "3" },
+                { "label": "Dostupnost", "value": "24/7" },
+                { "label": "Lansiranje", "value": "7 dana" }
+            ]
+        }
     },
     "contact": {
         "title": "Razgovarajmo",
