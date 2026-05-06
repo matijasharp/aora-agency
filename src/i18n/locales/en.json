@@ -181,7 +181,9 @@
         "visit_live": "Visit Live Site",
         "cta_title": "Want results like these?",
         "cta_desc": "Book a free consultation and let's discuss what we can build for your business.",
-        "cta_btn": "Book a Free Consultation"
+        "cta_btn": "Book a Free Consultation",
+        "back_mobile": "Home",
+        "cta_btn_mobile": "Free Consultation"
     },
     "work_projects": {
         "pecenjara-slon": {

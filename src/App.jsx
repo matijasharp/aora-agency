@@ -4,7 +4,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   ArrowRight, Activity, Terminal, Clock, MousePointer2, Check, Languages, Globe2, Building2,
-  Utensils, Scissors, Stethoscope, Ship, Users, X, ExternalLink, HardHat
+  Utensils, Scissors, Stethoscope, Ship, Users, X, ExternalLink, HardHat,
+  Globe, Zap, Shield, ChevronDown
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ownChairLogo from './assets/square-logo-iOwnChair.png';
@@ -951,7 +952,7 @@ const WorkDetailPage = ({ slug, onConsultationClick }) => {
         >
           <ArrowRight className="rotate-180" size={14} />
           <span className="hidden sm:inline">{t('work.back')}</span>
-          <span className="sm:hidden">Home</span>
+          <span className="sm:hidden">{t('work.back_mobile')}</span>
         </a>
       </div>
 
@@ -1024,13 +1025,15 @@ const WorkDetailPage = ({ slug, onConsultationClick }) => {
         {/* Bottom CTA */}
         <div className="text-center bg-white/5 border border-white/10 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-20 overflow-hidden relative">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-accent/5 rounded-full blur-[80px] -mt-20" />
-          <h2 className="font-drama italic text-4xl md:text-7xl text-white mb-4 md:mb-6 leading-tight relative z-10">{t('work.cta_title')}</h2>
-          <p className="font-heading text-white/50 text-base md:text-xl mb-8 md:mb-12 max-w-lg mx-auto relative z-10">{t('work.cta_desc')}</p>
+          <h2 className="font-drama italic text-3xl sm:text-4xl md:text-7xl text-white mb-4 md:mb-6 leading-tight relative z-10">{t('work.cta_title')}</h2>
+          <p className="font-heading text-white/50 text-sm sm:text-base md:text-xl mb-8 md:mb-12 max-w-lg mx-auto relative z-10">{t('work.cta_desc')}</p>
           <button
             onClick={onConsultationClick}
-            className="btn-magnetic bg-accent text-primary px-6 md:px-10 py-4 md:py-5 rounded-full font-heading font-bold text-base md:text-xl inline-flex items-center gap-3 md:gap-4 group hover:shadow-[0_0_40px_rgba(201,168,76,0.35)] transition-shadow relative z-10 whitespace-nowrap"
+            className="btn-magnetic bg-accent text-primary px-6 md:px-10 py-4 md:py-5 rounded-full font-heading font-bold text-sm sm:text-base md:text-xl inline-flex items-center gap-2 md:gap-4 group hover:shadow-[0_0_40px_rgba(201,168,76,0.35)] transition-shadow relative z-10"
           >
-            {t('work.cta_btn')} <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            <span className="hidden sm:inline">{t('work.cta_btn')}</span>
+            <span className="sm:hidden">{t('work.cta_btn_mobile')}</span>
+            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform md:w-5 md:h-5 shrink-0" />
           </button>
         </div>
       </div>
@@ -1145,8 +1148,8 @@ const PlatformsAndProjects = ({ onConsultationClick }) => {
                   key={i}
                   href={`/work/${slug}`}
                   onClick={(e) => navigateToWork(e, slug)}
-                  className="relative flex-shrink-0 rounded-[1.5rem] overflow-hidden group cursor-none"
-                  style={{ width: '520px', aspectRatio: '1900/940' }}
+                  className="relative flex-shrink-0 group cursor-none outline-none border-0 bg-[#030304]"
+                  style={{ width: '520px', aspectRatio: '1900/940', clipPath: 'inset(0 round 1.5rem)', WebkitClipPath: 'inset(0 round 1.5rem)', transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)' }}
                 >
                   {/* Video or hero image — object-contain keeps native ratio */}
                   {project.video ? (
@@ -1166,11 +1169,13 @@ const PlatformsAndProjects = ({ onConsultationClick }) => {
                     />
                   )}
 
-                  {/* Overlay: fully opaque dark at bottom, fades to transparent above text area */}
+                  {/* Base dark overlay across entire card */}
+                  <div className="absolute inset-0 bg-[#030504]/50" />
+                  {/* Stronger gradient at bottom for text legibility */}
                   <div
                     className="absolute inset-0"
                     style={{
-                      background: 'linear-gradient(to top, #030504 0%, #030504 35%, rgba(3,5,4,0.6) 55%, rgba(3,5,4,0) 75%)',
+                      background: 'linear-gradient(to top, #030504 0%, #030504 38%, rgba(3,5,4,0.55) 58%, rgba(3,5,4,0.2) 80%, rgba(3,5,4,0.2) 100%)',
                     }}
                   />
 
@@ -1285,14 +1290,18 @@ const FinalCta = ({ onConsultationClick }) => {
       <InteractiveGrid type="dark" />
 
       <div className="max-w-5xl mx-auto text-center flex flex-col items-center relative z-10 pointer-events-none">
-        <h2 className="font-drama italic text-6xl md:text-9xl mb-12 leading-tight">{t('final_cta.title')}</h2>
-        <div className="flex flex-wrap justify-center gap-6 mb-20 max-w-3xl pointer-events-auto">
-          {[1, 2, 3].map(i => <div key={i} className="bg-white/5 px-8 py-5 rounded-2xl border border-white/10 flex items-center gap-4 font-heading text-lg"><Check size={24} className="text-accent" /> {t(`final_cta.list${i}`)}</div>)}
+        <h2 className="font-drama italic text-5xl sm:text-6xl md:text-9xl mb-8 md:mb-12 leading-tight">{t('final_cta.title')}</h2>
+        <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-6 mb-12 md:mb-20 w-full max-w-3xl pointer-events-auto">
+          {[1, 2, 3].map(i => (
+            <div key={i} className="bg-white/5 px-5 py-3.5 sm:px-8 sm:py-5 rounded-2xl border border-white/10 flex items-center gap-3 sm:gap-4 font-heading text-base sm:text-lg w-full sm:w-auto justify-center sm:justify-start">
+              <Check size={20} className="text-accent shrink-0 sm:w-6 sm:h-6" /> {t(`final_cta.list${i}`)}
+            </div>
+          ))}
         </div>
-        <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-12 py-6 rounded-full font-heading font-bold text-2xl flex items-center gap-4 group pointer-events-auto whitespace-nowrap">
+        <button onClick={onConsultationClick} className="btn-magnetic bg-accent text-primary px-8 py-4 sm:px-12 sm:py-6 rounded-full font-heading font-bold text-xl sm:text-2xl flex items-center gap-3 sm:gap-4 group pointer-events-auto whitespace-nowrap">
           <span className="hidden sm:inline">{t('final_cta.btn')}</span>
           <span className="sm:hidden">{t('final_cta.btn_mobile')}</span>
-          <ArrowRight size={32} className="group-hover:translate-x-2 transition-transform" />
+          <ArrowRight size={28} className="group-hover:translate-x-2 transition-transform sm:w-8 sm:h-8" />
         </button>
       </div>
     </section>
@@ -1542,89 +1551,437 @@ const CustomPointer = () => {
 }
 
 const BrandGuidelines = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const SectionLabel = ({ children }) => (
+    <h2 className="font-heading font-medium text-white/30 text-sm uppercase tracking-widest mb-12 flex items-center gap-4">
+      <span className="w-12 h-px bg-white/20 shrink-0" /> {children}
+    </h2>
+  );
 
   return (
     <div className="bg-[#030304] min-h-screen text-white selection:bg-accent selection:text-primary pt-32 pb-24 px-8 md:px-16 relative">
       <InteractiveGrid type="dark" />
 
       <div className="max-w-5xl mx-auto relative z-10">
-        <a href="/" className="inline-flex items-center gap-2 text-white/50 hover:text-accent transition-colors font-data text-xs uppercase tracking-widest mb-16">
+        {/* Back link */}
+        <a href="/" onClick={(e) => { e.preventDefault(); navigateTo('/'); }} className="inline-flex items-center gap-2 text-white/50 hover:text-accent transition-colors font-data text-xs uppercase tracking-widest mb-16">
           <ArrowRight className="rotate-180" size={16} /> Back to Home
         </a>
 
+        {/* Header */}
         <header className="mb-24">
-          <h1 className="font-drama italic text-6xl md:text-8xl text-accent mb-6 leading-none">Brand Identity</h1>
-          <p className="font-heading text-xl text-white/60 max-w-2xl">The official design system and brand guidelines for Aora Agency. Built to convey precision, luxury, and relentless performance.</p>
+          <p className="font-data text-accent text-xs uppercase tracking-widest mb-6">AorAAgency — Brand Identity System</p>
+          <h1 className="font-drama italic text-6xl md:text-8xl text-white mb-6 leading-none">Brand <span className="text-accent">Identity.</span></h1>
+          <p className="font-heading text-xl text-white/60 max-w-2xl leading-relaxed">The official design system and brand guidelines for AorAAgency. Every decision here reflects one principle: precision over decoration.</p>
         </header>
 
+        {/* 1. Brand Philosophy */}
         <section className="mb-32">
-          <h2 className="font-heading font-medium text-white/30 text-sm uppercase tracking-widest mb-12 flex items-center gap-4">
-            <span className="w-12 h-px bg-white/20"></span> Logs & Wordmark
-          </h2>
-          <div className="bg-[#0D0D12] border border-white/10 rounded-[3rem] p-12 md:p-24 shadow-2xl flex flex-col items-center justify-center">
-            <div className="font-heading font-bold text-6xl md:text-8xl tracking-tight leading-none">
-              <span className="text-accent">A</span>or<span className="text-accent">AA</span>gency
-            </div>
-            <p className="font-data text-white/40 mt-12 text-sm text-center max-w-md">Primary wordmark. The capital 'A's must always be rendered in the primary accent gold color.</p>
+          <SectionLabel>Brand Philosophy</SectionLabel>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {[
+              { n: '01', title: 'Precision over decoration', desc: 'Every element earns its place. No gradients for aesthetics alone, no copy that says nothing.' },
+              { n: '02', title: 'Long-term over short-term', desc: 'We build systems that last. The brand should feel relevant in 5 years, not just trend-forward today.' },
+              { n: '03', title: 'Premium without excess', desc: 'Restraint is the luxury. White space, sharp type, and gold used sparingly — not liberally.' },
+            ].map(({ n, title, desc }) => (
+              <div key={n} className="bg-white/5 border border-white/10 rounded-[2.5rem] p-10 flex flex-col gap-6">
+                <span className="font-drama italic text-5xl text-accent/40 leading-none">{n}</span>
+                <div>
+                  <h3 className="font-heading font-bold text-lg mb-2">{title}</h3>
+                  <p className="font-heading text-white/50 text-base leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+            <p className="font-data text-accent text-xs uppercase tracking-widest mb-4">Brand Voice</p>
+            <p className="font-heading text-white/70 text-lg leading-relaxed max-w-3xl">Direct and confident — never salesy. The copy starts with what we do, not how great we are. Sentences are short. Claims are backed by numbers. We don't use the word <em className="text-white/40">"innovative"</em>.</p>
           </div>
         </section>
 
+        {/* 2. Logo & Wordmark */}
         <section className="mb-32">
-          <h2 className="font-heading font-medium text-white/30 text-sm uppercase tracking-widest mb-12 flex items-center gap-4">
-            <span className="w-12 h-px bg-white/20"></span> Color Palette
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <SectionLabel>Logo & Wordmark</SectionLabel>
+
+          {/* Dark variant */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="flex flex-col gap-4">
-              <div className="w-full aspect-square rounded-[2rem] bg-[#030304] border border-white/10 shadow-lg" />
-              <div>
-                <h3 className="font-heading font-bold text-xl">Void Black</h3>
-                <p className="font-data text-white/50 text-sm">#030304 — Primary Background</p>
+              <div className="bg-[#0D0D12] border border-white/10 rounded-[2.5rem] p-12 flex items-center justify-center">
+                <div className="font-heading font-bold text-5xl md:text-6xl tracking-tight leading-none">
+                  <span className="text-accent">A</span>or<span className="text-accent">AA</span>gency
+                </div>
               </div>
+              <p className="font-data text-white/30 text-xs uppercase tracking-widest text-center">Dark background — primary use</p>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="w-full aspect-square rounded-[2rem] bg-[#0D0D12] border border-white/10 shadow-lg" />
-              <div>
-                <h3 className="font-heading font-bold text-xl">Deep Onyx</h3>
-                <p className="font-data text-white/50 text-sm">#0D0D12 — Elevated Surfaces</p>
+              <div className="bg-[#FAF8F5] border border-black/5 rounded-[2.5rem] p-12 flex items-center justify-center">
+                <div className="font-heading font-bold text-5xl md:text-6xl tracking-tight leading-none text-[#0D0D12]">
+                  <span className="text-[#C9A84C]">A</span>or<span className="text-[#C9A84C]">AA</span>gency
+                </div>
+              </div>
+              <p className="font-data text-white/30 text-xs uppercase tracking-widest text-center">Light background — secondary use</p>
+            </div>
+          </div>
+
+          {/* Rules */}
+          <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+            <p className="font-data text-accent text-xs uppercase tracking-widest mb-6">Usage Rules</p>
+            <ul className="flex flex-col gap-4">
+              {[
+                'The two A\'s ("A" and "AA") must always render in Signature Gold (#C9A84C).',
+                'Never stretch, rotate, recolor, or add effects to the wordmark.',
+                'Minimum digital size: 120px wide. Never render below this threshold.',
+                'Never place the wordmark on medium-gray (#888–#CCC range) backgrounds — contrast fails.',
+                'Maintain clear space of at least 1× the cap-height of the "A" on all four sides.',
+                'Font used: Inter, 700 (bold), tracking-tight. Do not substitute.',
+              ].map((rule, i) => (
+                <li key={i} className="flex items-start gap-4 font-heading text-white/60 text-base">
+                  <Check size={16} className="text-accent mt-1 shrink-0" /> {rule}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* 3. Color Palette */}
+        <section className="mb-32">
+          <SectionLabel>Color Palette</SectionLabel>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+            {[
+              { bg: 'bg-[#030304]', border: 'border-white/10', name: 'Void Black', hex: '#030304', token: 'bg-[#030304]', use: 'Page background, overlays' },
+              { bg: 'bg-[#0D0D12]', border: 'border-white/10', name: 'Deep Onyx', hex: '#0D0D12', token: 'bg-primary', use: 'Elevated surfaces, cards' },
+              { bg: 'bg-[#2A2A35]', border: 'border-white/10', name: 'Graphite', hex: '#2A2A35', token: 'bg-slate', use: 'Borders, secondary text' },
+              { bg: 'bg-[#FAF8F5]', border: 'border-black/10', name: 'Cream', hex: '#FAF8F5', token: 'bg-background', use: 'Light section backgrounds', dark: true },
+              { bg: 'bg-[#C9A84C]', border: '', name: 'Signature Gold', hex: '#C9A84C', token: 'bg-accent', use: 'CTAs, highlights, the two A\'s', glow: true },
+            ].map(({ bg, border, name, hex, token, use, dark, glow }) => (
+              <div key={hex} className="flex flex-col gap-4">
+                <div className={`w-full aspect-square rounded-[2rem] ${bg} ${border ? `border ${border}` : ''} ${glow ? 'shadow-[0_0_40px_rgba(201,168,76,0.25)]' : 'shadow-lg'}`} />
+                <div>
+                  <h3 className={`font-heading font-bold text-lg ${name === 'Signature Gold' ? 'text-accent' : ''}`}>{name}</h3>
+                  <p className="font-data text-white/40 text-xs mt-1">{hex} — <span className="text-white/25">{token}</span></p>
+                  <p className="font-heading text-white/40 text-sm mt-1">{use}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Gold opacity scale */}
+          <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+            <p className="font-data text-accent text-xs uppercase tracking-widest mb-6">Signature Gold — Opacity Scale</p>
+            <div className="flex gap-4 flex-wrap">
+              {[
+                { label: 'Full', cls: 'bg-[#C9A84C]', opacity: '100%' },
+                { label: '/80', cls: 'bg-[#C9A84C]/80', opacity: '80%' },
+                { label: '/50', cls: 'bg-[#C9A84C]/50', opacity: '50%' },
+                { label: '/20', cls: 'bg-[#C9A84C]/20', opacity: '20%' },
+                { label: '/10', cls: 'bg-[#C9A84C]/10', opacity: '10%' },
+                { label: '/5', cls: 'bg-[#C9A84C]/5', opacity: '5%' },
+              ].map(({ label, cls, opacity }) => (
+                <div key={label} className="flex flex-col items-center gap-2">
+                  <div className={`w-16 h-16 rounded-2xl ${cls} border border-white/10`} />
+                  <span className="font-data text-white/30 text-xs">{opacity}</span>
+                </div>
+              ))}
+            </div>
+            <p className="font-heading text-white/40 text-sm mt-6">Use lower opacities for backgrounds, glows, and subtle tints. Reserve full opacity for interactive elements and the wordmark.</p>
+          </div>
+        </section>
+
+        {/* 4. Typography */}
+        <section className="mb-32">
+          <SectionLabel>Typography</SectionLabel>
+          <div className="flex flex-col gap-8">
+            {/* Display */}
+            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+                <div>
+                  <p className="font-data text-accent text-xs uppercase tracking-widest mb-1">Display</p>
+                  <p className="font-heading font-bold text-white text-lg">Playfair Display — Italic</p>
+                </div>
+                <p className="font-data text-white/30 text-xs">Class: <span className="text-white/50">font-drama italic</span></p>
+              </div>
+              <div className="font-drama italic text-5xl md:text-7xl mb-6 leading-tight">Cinematic & Elegant.</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-white/10">
+                <div>
+                  <p className="font-data text-white/30 text-xs uppercase tracking-widest mb-2">Sizes used</p>
+                  <p className="font-heading text-white/60 text-sm">text-5xl → text-9xl (hero, FinalCta, section titles)</p>
+                </div>
+                <div>
+                  <p className="font-data text-white/30 text-xs uppercase tracking-widest mb-2">Rules</p>
+                  <p className="font-heading text-white/60 text-sm">Always italic. Never upright. Never body text. Never below text-4xl.</p>
+                </div>
               </div>
             </div>
-            <div className="flex flex-col gap-4">
-              <div className="w-full aspect-square rounded-[2rem] bg-[#C9A84C] shadow-[0_0_40px_rgba(201,168,76,0.2)]" />
-              <div>
-                <h3 className="font-heading font-bold text-xl text-accent">Signature Gold</h3>
-                <p className="font-data text-white/50 text-sm">#C9A84C — Accents & Actions</p>
+
+            {/* Heading & Body */}
+            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+                <div>
+                  <p className="font-data text-accent text-xs uppercase tracking-widest mb-1">Heading & Body</p>
+                  <p className="font-heading font-bold text-white text-lg">Inter</p>
+                </div>
+                <p className="font-data text-white/30 text-xs">Class: <span className="text-white/50">font-heading</span></p>
+              </div>
+              <div className="font-heading font-bold text-4xl md:text-5xl mb-2">Structural and Bold.</div>
+              <div className="font-heading text-xl text-white/60 mb-6">Clean body copy that remains highly readable at any size.</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-white/10">
+                <div>
+                  <p className="font-data text-white/30 text-xs uppercase tracking-widest mb-2">Weights used</p>
+                  <p className="font-heading text-white/60 text-sm">400 (body), 500 (medium), 600 (semibold), 700 (bold / headings)</p>
+                </div>
+                <div>
+                  <p className="font-data text-white/30 text-xs uppercase tracking-widest mb-2">Rules</p>
+                  <p className="font-heading text-white/60 text-sm">Default for all UI text. Navigation, paragraphs, buttons, form labels, and most headings.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Technical */}
+            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+                <div>
+                  <p className="font-data text-accent text-xs uppercase tracking-widest mb-1">Technical</p>
+                  <p className="font-heading font-bold text-white text-lg">JetBrains Mono</p>
+                </div>
+                <p className="font-data text-white/30 text-xs">Class: <span className="text-white/50">font-data</span></p>
+              </div>
+              <div className="font-data text-2xl uppercase tracking-[0.2em] mb-6">ENGINEERED PRECISION.</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-white/10">
+                <div>
+                  <p className="font-data text-white/30 text-xs uppercase tracking-widest mb-2">Sizes used</p>
+                  <p className="font-heading text-white/60 text-sm">text-xs → text-sm (labels, badges, metadata, section prefixes)</p>
+                </div>
+                <div>
+                  <p className="font-data text-white/30 text-xs uppercase tracking-widest mb-2">Rules</p>
+                  <p className="font-heading text-white/60 text-sm">Always uppercase. Letter spacing: tracking-widest or tracking-[0.15em]+. Never for body text.</p>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
+        {/* 5. Type Scale */}
         <section className="mb-32">
-          <h2 className="font-heading font-medium text-white/30 text-sm uppercase tracking-widest mb-12 flex items-center gap-4">
-            <span className="w-12 h-px bg-white/20"></span> Typography
-          </h2>
-          <div className="flex flex-col gap-16">
-            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
-              <div className="font-data text-accent text-sm mb-4">Display — Editorial New (Italic)</div>
-              <div className="font-drama italic text-5xl md:text-7xl">Cinematic & Elegant.</div>
-              <p className="font-heading text-white/50 mt-4 max-w-xl">Used exclusively for large, impactful statements, hero sections, and section titles.</p>
+          <SectionLabel>Type Scale</SectionLabel>
+          <div className="bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden">
+            {[
+              { cls: 'text-xs', px: '12px', font: 'font-data', use: 'Micro-labels, section prefixes' },
+              { cls: 'text-sm', px: '14px', font: 'font-data / font-heading', use: 'Badges, captions, secondary copy' },
+              { cls: 'text-base', px: '16px', font: 'font-heading', use: 'Body text, button labels' },
+              { cls: 'text-lg', px: '18px', font: 'font-heading', use: 'Feature descriptions, list items' },
+              { cls: 'text-xl', px: '20px', font: 'font-heading', use: 'Sub-headings, card titles' },
+              { cls: 'text-2xl', px: '24px', font: 'font-heading', use: 'Primary CTA button, card headers' },
+              { cls: 'text-3xl', px: '30px', font: 'font-heading / font-drama', use: 'Section sub-titles' },
+              { cls: 'text-4xl', px: '36px', font: 'font-drama italic', use: 'Mobile hero headings' },
+              { cls: 'text-5xl', px: '48px', font: 'font-drama italic', use: 'Section titles (mobile)' },
+              { cls: 'text-6xl', px: '60px', font: 'font-drama italic', use: 'FinalCta title (mobile)' },
+              { cls: 'text-7xl', px: '72px', font: 'font-drama italic', use: 'Section titles (desktop)' },
+              { cls: 'text-9xl', px: '128px', font: 'font-drama italic', use: 'Hero / FinalCta (desktop)' },
+            ].map(({ cls, px, font, use }, i) => (
+              <div key={cls} className={`flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 px-8 py-5 ${i % 2 === 0 ? 'bg-white/[0.02]' : ''} border-b border-white/5 last:border-0`}>
+                <div className="w-24 shrink-0">
+                  <span className="font-data text-accent text-xs">{cls}</span>
+                </div>
+                <div className="w-16 shrink-0">
+                  <span className="font-data text-white/30 text-xs">{px}</span>
+                </div>
+                <div className="flex-1">
+                  <span className="font-data text-white/25 text-xs">{font}</span>
+                </div>
+                <div className="flex-1">
+                  <span className="font-heading text-white/50 text-sm">{use}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 6. Spacing & Border Radius */}
+        <section className="mb-32">
+          <SectionLabel>Spacing & Border Radius</SectionLabel>
+
+          <div className="mb-12">
+            <p className="font-data text-white/30 text-xs uppercase tracking-widest mb-8">Border Radius Scale</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+              {[
+                { cls: 'rounded-xl', label: 'rounded-xl', use: 'Inputs, tags' },
+                { cls: 'rounded-2xl', label: 'rounded-2xl', use: 'Pills, list cards' },
+                { cls: 'rounded-3xl', label: 'rounded-3xl', use: 'Inline CTAs' },
+                { cls: 'rounded-[2rem]', label: 'rounded-[2rem]', use: 'Standard cards' },
+                { cls: 'rounded-[2.5rem]', label: 'rounded-[2.5rem]', use: 'Feature cards' },
+                { cls: 'rounded-[4rem]', label: 'rounded-[4rem]', use: 'Large sections' },
+              ].map(({ cls, label, use }) => (
+                <div key={label} className="flex flex-col items-center gap-3">
+                  <div className={`w-full aspect-square bg-white/10 border border-white/10 ${cls}`} />
+                  <div className="text-center">
+                    <p className="font-data text-accent text-xs">{label}</p>
+                    <p className="font-heading text-white/40 text-xs mt-0.5">{use}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
-              <div className="font-data text-accent text-sm mb-4">Heading & Body — Clash Display / Inter</div>
-              <div className="font-heading font-bold text-4xl md:text-5xl">Structural and Bold.</div>
-              <div className="font-heading text-xl mt-4">Clean body copy that remains highly readable.</div>
-              <p className="font-heading text-white/50 mt-4 max-w-xl">Primarily used for navigation, paragraphs, features, and buttons.</p>
-            </div>
-            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
-              <div className="font-data text-accent text-sm mb-4">Technical — JetBrains Mono</div>
-              <div className="font-data text-lg uppercase tracking-[0.2em]">ENGINEERED PRECISION.</div>
-              <p className="font-heading text-white/50 mt-4 max-w-xl">Used for labels, code snippets, micro-copy, and technical data points.</p>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+            <p className="font-data text-white/30 text-xs uppercase tracking-widest mb-8">Spacing Rhythm</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                { value: '12px', cls: 'gap-3 / p-3', use: 'Tight: icon + label, badge internals' },
+                { value: '24px', cls: 'gap-6 / p-6', use: 'Standard: list items, nav links' },
+                { value: '48px', cls: 'gap-12 / p-12', use: 'Medium: section sub-parts, card padding' },
+                { value: '96px', cls: 'gap-24 / mb-24', use: 'Large: between major sections' },
+              ].map(({ value, cls, use }) => (
+                <div key={value} className="flex flex-col gap-3">
+                  <div className="font-drama italic text-3xl text-accent">{value}</div>
+                  <p className="font-data text-white/50 text-xs">{cls}</p>
+                  <p className="font-heading text-white/40 text-sm">{use}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
+        {/* 7. Component Library */}
+        <section className="mb-32">
+          <SectionLabel>Component Library</SectionLabel>
+          <div className="flex flex-col gap-8">
+
+            {/* Buttons */}
+            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+              <p className="font-data text-accent text-xs uppercase tracking-widest mb-8">Buttons</p>
+              <div className="flex flex-wrap gap-6 items-center mb-6">
+                <button className="btn-magnetic bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold text-base flex items-center gap-3">
+                  Book a Free Consultation <ArrowRight size={18} />
+                </button>
+                <button className="py-4 px-8 rounded-full border border-white/20 font-heading font-bold text-base hover:bg-white/5 transition-all">
+                  Secondary Action
+                </button>
+                <button className="py-3 px-6 rounded-full border border-accent/30 font-heading font-bold text-sm text-accent hover:bg-accent/10 transition-all">
+                  Tertiary / Outline
+                </button>
+              </div>
+              <div className="flex flex-col gap-2 pt-6 border-t border-white/10">
+                <p className="font-data text-white/30 text-xs">Primary: <span className="text-white/50">btn-magnetic bg-accent text-primary px-8 py-4 rounded-full font-heading font-bold</span></p>
+                <p className="font-data text-white/30 text-xs">Secondary: <span className="text-white/50">border border-white/20 rounded-full font-heading font-bold hover:bg-white/5</span></p>
+                <p className="font-data text-white/30 text-xs">Tertiary: <span className="text-white/50">border border-accent/30 text-accent rounded-full font-heading font-bold hover:bg-accent/10</span></p>
+              </div>
+            </div>
+
+            {/* Section Label */}
+            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+              <p className="font-data text-accent text-xs uppercase tracking-widest mb-8">Section Label</p>
+              <div className="mb-6">
+                <h2 className="font-heading font-medium text-white/30 text-sm uppercase tracking-widest flex items-center gap-4">
+                  <span className="w-12 h-px bg-white/20 shrink-0" /> Section Name
+                </h2>
+              </div>
+              <p className="font-data text-white/30 text-xs pt-6 border-t border-white/10">font-heading font-medium text-white/30 text-sm uppercase tracking-widest + w-12 h-px bg-white/20 rule</p>
+            </div>
+
+            {/* Tags / Badges */}
+            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+              <p className="font-data text-accent text-xs uppercase tracking-widest mb-8">Tags & Badges</p>
+              <div className="flex flex-wrap gap-3 mb-6">
+                {['Web Design', 'Development', 'Brand Experience', 'Booking System', 'Multilingual'].map(tag => (
+                  <span key={tag} className="font-data text-xs bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-white/60 uppercase tracking-wider">{tag}</span>
+                ))}
+                <span className="font-data text-xs bg-accent/10 border border-accent/20 rounded-full px-4 py-1.5 text-accent uppercase tracking-wider">Featured</span>
+              </div>
+              <p className="font-data text-white/30 text-xs pt-6 border-t border-white/10">font-data text-xs bg-white/5 border border-white/10 rounded-full px-4 py-1.5 uppercase tracking-wider</p>
+            </div>
+
+            {/* Card */}
+            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+              <p className="font-data text-accent text-xs uppercase tracking-widest mb-8">Feature Card</p>
+              <div className="bg-[#0D0D12] border border-white/10 rounded-[2.5rem] p-10 max-w-sm">
+                <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mb-6">
+                  <Zap size={20} className="text-accent" />
+                </div>
+                <h3 className="font-heading font-bold text-xl mb-3">Card Title</h3>
+                <p className="font-heading text-white/50 text-base leading-relaxed">Supporting description that explains the feature or benefit clearly and concisely.</p>
+              </div>
+              <p className="font-data text-white/30 text-xs mt-6 pt-6 border-t border-white/10">bg-[#0D0D12] border border-white/10 rounded-[2.5rem] p-10</p>
+            </div>
+          </div>
+        </section>
+
+        {/* 8. Iconography */}
+        <section className="mb-32">
+          <SectionLabel>Iconography</SectionLabel>
+          <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10 mb-8">
+            <p className="font-data text-accent text-xs uppercase tracking-widest mb-6">Library: Lucide React</p>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+              {[
+                { label: 'Action / CTA', color: 'text-accent', size: 24, icons: [<ArrowRight key="a" size={24} />, <ExternalLink key="b" size={24} />, <Check key="c" size={24} />] },
+                { label: 'Informational', color: 'text-white/50', size: 24, icons: [<Globe key="a" size={24} />, <Shield key="b" size={24} />, <Activity key="c" size={24} />] },
+                { label: 'Decorative / Large', color: 'text-white/20', size: 32, icons: [<Zap key="a" size={32} />, <Terminal key="b" size={32} />, <ChevronDown key="c" size={32} />] },
+              ].map(({ label, color, icons }) => (
+                <div key={label}>
+                  <p className="font-data text-white/30 text-xs uppercase tracking-widest mb-4">{label}</p>
+                  <div className={`flex gap-6 ${color}`}>{icons}</div>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col gap-2 pt-6 border-t border-white/10">
+              <p className="font-heading text-white/50 text-sm"><span className="text-accent">Action icons:</span> size=16–24, text-accent — use on CTAs, confirmations, navigation arrows</p>
+              <p className="font-heading text-white/50 text-sm"><span className="text-white/70">Informational:</span> size=16–24, text-white/50 — use for feature icons, status, metadata</p>
+              <p className="font-heading text-white/50 text-sm"><span className="text-white/40">Decorative:</span> size=28–32, text-white/20 — large background or section-break icons only</p>
+            </div>
+          </div>
+        </section>
+
+        {/* 9. Voice & Copy */}
+        <section className="mb-32">
+          <SectionLabel>Voice & Copy</SectionLabel>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                rule: 'Be direct, not clever.',
+                good: '"We build websites and booking systems for service businesses."',
+                bad: '"We craft transformative digital experiences that elevate your brand ecosystem."',
+              },
+              {
+                rule: 'Numbers over claims.',
+                good: '"Most projects launch in 5 days. 3 languages. 24/7 support."',
+                bad: '"Fast delivery. Multilingual. Always available."',
+              },
+              {
+                rule: 'Action-first headlines.',
+                good: '"Book. Build. Launch. Grow."',
+                bad: '"Our innovative solutions help you achieve your goals."',
+              },
+              {
+                rule: 'Confident, never arrogant.',
+                good: '"We stay with you as your business grows."',
+                bad: '"We are the #1 agency in Croatia with unmatched expertise."',
+              },
+            ].map(({ rule, good, bad }) => (
+              <div key={rule} className="bg-white/5 border border-white/10 rounded-[2.5rem] p-10 flex flex-col gap-6">
+                <h3 className="font-heading font-bold text-lg">{rule}</h3>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-start gap-3">
+                    <Check size={16} className="text-accent mt-1 shrink-0" />
+                    <p className="font-heading text-white/70 text-sm leading-relaxed italic">{good}</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <X size={16} className="text-white/20 mt-1 shrink-0" />
+                    <p className="font-heading text-white/30 text-sm leading-relaxed italic line-through">{bad}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Footer note */}
+        <div className="border-t border-white/10 pt-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <p className="font-data text-white/20 text-xs uppercase tracking-widest">AorAAgency Brand Identity System — Internal Reference</p>
+          <a href="/" onClick={(e) => { e.preventDefault(); navigateTo('/'); }} className="inline-flex items-center gap-2 text-white/40 hover:text-accent transition-colors font-data text-xs uppercase tracking-widest">
+            <ArrowRight className="rotate-180" size={14} /> Back to Home
+          </a>
+        </div>
       </div>
     </div>
   );

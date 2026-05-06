@@ -180,7 +180,9 @@
         "visit_live": "Website besuchen",
         "cta_title": "Möchten Sie ähnliche Ergebnisse?",
         "cta_desc": "Buchen Sie eine kostenlose Beratung und lassen Sie uns besprechen, was wir für Ihr Unternehmen bauen können.",
-        "cta_btn": "Kostenlose Beratung buchen"
+        "cta_btn": "Kostenlose Beratung buchen",
+        "back_mobile": "Start",
+        "cta_btn_mobile": "Kostenlose Beratung"
     },
     "work_projects": {
         "pecenjara-slon": {

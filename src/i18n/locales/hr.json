@@ -181,7 +181,9 @@
         "visit_live": "Posjetite stranicu",
         "cta_title": "Želite ovakve rezultate?",
         "cta_desc": "Rezervirajte besplatne konzultacije i razgovarajmo o tome što možemo izgraditi za vaše poslovanje.",
-        "cta_btn": "Rezervirajte besplatne konzultacije"
+        "cta_btn": "Rezervirajte besplatne konzultacije",
+        "back_mobile": "Početna",
+        "cta_btn_mobile": "Besplatne konzultacije"
     },
     "work_projects": {
         "pecenjara-slon": {
