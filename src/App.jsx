@@ -829,7 +829,7 @@ const WORK_DATA = {
   'elektro-light': {
     name: 'Elektro Light',
     year: '2025',
-    url: 'https://elektro-light.aoraagency.com/hr',
+    url: 'https://elektrolight.hr',
     heroImage: new URL('./assets/hero-elektro-light.png', import.meta.url).href,
     fullPageImage: new URL('./assets/fullpage-elektro-light.png', import.meta.url).href,
     logo: elektroLightLogo,
@@ -1081,18 +1081,7 @@ const PlatformsAndProjects = ({ onConsultationClick }) => {
             <a href="https://iownchair.com" target="_blank" rel="noopener noreferrer" className="mt-auto flex items-center gap-2 text-accent text-sm font-bold hover:gap-4 transition-all">{t('projects.proj1.link')} <ArrowRight size={16} /></a>
           </div>
 
-          {/* HoReCa Optimizer */}
-          <div className="bg-white/5 border border-white/10 rounded-[2rem] p-6 md:p-8 hover:bg-white/8 transition-all duration-500 group flex flex-col justify-between">
-            <div>
-              <div className="w-14 h-14 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <img src={horecaLogo} alt="HoReCa Optimizer Logo" className="w-full h-full object-contain" style={{ mixBlendMode: 'screen' }} />
-              </div>
-              <h4 className="font-heading font-bold text-xl md:text-2xl text-white mb-1">{t('projects.proj3.name')}</h4>
-              <p className="font-data text-accent/60 text-xs uppercase tracking-widest mb-3">{t('projects.proj3.subtitle')}</p>
-              <p className="font-heading text-sm md:text-base text-white/55 mb-6 leading-relaxed">{t('projects.proj3.desc')}</p>
-            </div>
-            <a href="https://horeca-optimizer.com" target="_blank" rel="noopener noreferrer" className="mt-auto w-fit flex items-center gap-2 text-accent text-sm font-bold hover:gap-4 transition-all">{t('projects.proj3.link')} <ArrowRight size={16} /></a>
-          </div>
+          {/* HoReCa Optimizer — temporarily hidden */}
 
           {/* Građevinski Dnevnik */}
           <div className="bg-white/5 border border-white/10 rounded-[2rem] p-6 md:p-8 hover:bg-white/8 transition-all duration-500 group flex flex-col justify-between">
