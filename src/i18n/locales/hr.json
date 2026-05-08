@@ -84,7 +84,7 @@
         "proj2": {
             "name": "Prilagođeni poslovni sustavi",
             "subtitle": "Prilagođena digitalna arhitektura za jedinstvene procese.",
-            "desc": "Raspoređivanje, nadzorne ploče, automatizacija i operativni alati izgrađeni za specifične industrije.",
+            "desc": "AI, raspoređivanje, nadzorne ploče, automatizacija i operativni alati izgrađeni za specifične industrije.",
             "link": "Rezervirajte konzultacije"
         },
         "proj3": {
@@ -183,7 +183,9 @@
         "cta_desc": "Rezervirajte besplatne konzultacije i razgovarajmo o tome što možemo izgraditi za vaše poslovanje.",
         "cta_btn": "Rezervirajte besplatne konzultacije",
         "back_mobile": "Početna",
-        "cta_btn_mobile": "Besplatne konzultacije"
+        "cta_btn_mobile": "Besplatne konzultacije",
+        "live_preview_note": "Ako se stranica ne učita u pregledu,",
+        "live_preview_open": "otvorite je direktno"
     },
     "work_projects": {
         "pecenjara-slon": {

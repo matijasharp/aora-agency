@@ -84,7 +84,7 @@
         "proj2": {
             "name": "Custom Business Systems",
             "subtitle": "Bespoke digital architecture for unique workflows.",
-            "desc": "Scheduling, dashboards, automation and operational tools built for specific industries.",
+            "desc": "AI, scheduling, dashboards, automation and operational tools built for specific industries.",
             "link": "Book a Consultation"
         },
         "proj3": {
@@ -183,7 +183,9 @@
         "cta_desc": "Book a free consultation and let's discuss what we can build for your business.",
         "cta_btn": "Book a Free Consultation",
         "back_mobile": "Home",
-        "cta_btn_mobile": "Free Consultation"
+        "cta_btn_mobile": "Free Consultation",
+        "live_preview_note": "If the site doesn't load in the preview,",
+        "live_preview_open": "open it directly"
     },
     "work_projects": {
         "pecenjara-slon": {

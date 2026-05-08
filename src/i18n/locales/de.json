@@ -84,7 +84,7 @@
         "proj2": {
             "name": "Maßgeschneiderte Geschäftssysteme",
             "subtitle": "Individuelle digitale Architektur für einzigartige Arbeitsabläufe.",
-            "desc": "Terminplanung, Dashboards, Automatisierung und Betriebstools, die für spezifische Branchen entwickelt wurden.",
+            "desc": "KI, Terminplanung, Dashboards, Automatisierung und Betriebstools, die für spezifische Branchen entwickelt wurden.",
             "link": "Beratung buchen"
         },
         "proj3": {
@@ -182,7 +182,9 @@
         "cta_desc": "Buchen Sie eine kostenlose Beratung und lassen Sie uns besprechen, was wir für Ihr Unternehmen bauen können.",
         "cta_btn": "Kostenlose Beratung buchen",
         "back_mobile": "Start",
-        "cta_btn_mobile": "Kostenlose Beratung"
+        "cta_btn_mobile": "Kostenlose Beratung",
+        "live_preview_note": "Falls die Seite nicht lädt,",
+        "live_preview_open": "direkt öffnen"
     },
     "work_projects": {
         "pecenjara-slon": {

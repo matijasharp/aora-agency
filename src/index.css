@@ -118,6 +118,14 @@
   background-size: 40px 40px;
 }
 
+/* Hide scrollbar on horizontal scroll rows */
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 /* Client Work Marquee */
 @keyframes marquee {
   0%   { transform: translateX(0); }

@@ -794,13 +794,15 @@ const ProtocolSection = () => {
 // lives in src/i18n/locales/{en,hr,de}.json under the "work_projects" key.
 //
 // To add a video: set video to '/videos/your-file.mp4' (place the file in /public/videos/)
-// To update logos: replace the logo image in src/assets/ with the same filename
+// To update logos/screenshots: replace files in src/assets/ with the same filename
+// Card screenshots: src/assets/card-{slug}.png (e.g. card-pecenjara-slon.png)
 const WORK_DATA = {
   'pecenjara-slon': {
     name: 'Pečenjara Slon',
     year: '2025',
     url: 'https://pecenjaraslon.com/',
     heroImage: new URL('./assets/hero-pecenjara-slon.png', import.meta.url).href,
+    cardImage: new URL('./assets/card-pecenjara-slon.png', import.meta.url).href,
     fullPageImage: new URL('./assets/fullpage-pecenjara-slon.png', import.meta.url).href,
     logo: new URL('./assets/favicon-pecenjara-slon.png', import.meta.url).href,
     video: '/videos/pecenjara-slon-video.mp4',
@@ -811,6 +813,7 @@ const WORK_DATA = {
     year: '2025',
     url: 'https://www.talentosphere.com/',
     heroImage: new URL('./assets/hero-talentosphere.png', import.meta.url).href,
+    cardImage: new URL('./assets/card-talentosphere.png', import.meta.url).href,
     fullPageImage: new URL('./assets/fullpage-talentosphere.png', import.meta.url).href,
     logo: new URL('./assets/favicon-talentosphere.png', import.meta.url).href,
     video: '/videos/talentosphere-video.mp4',
@@ -821,6 +824,7 @@ const WORK_DATA = {
     year: '2025',
     url: 'https://delight-atelier.aoraagency.com/',
     heroImage: new URL('./assets/hero-delight-atelier.png', import.meta.url).href,
+    cardImage: new URL('./assets/card-delight-atelier.png', import.meta.url).href,
     fullPageImage: new URL('./assets/fullpage-delight-atelier.png', import.meta.url).href,
     logo: delightAtelierLogo,
     video: '/videos/delight-atelier-video.mp4',
@@ -831,6 +835,7 @@ const WORK_DATA = {
     year: '2025',
     url: 'https://elektrolight.hr',
     heroImage: new URL('./assets/hero-elektro-light.png', import.meta.url).href,
+    cardImage: new URL('./assets/card-elektro-light.png', import.meta.url).href,
     fullPageImage: new URL('./assets/fullpage-elektro-light.png', import.meta.url).href,
     logo: elektroLightLogo,
     video: '/videos/elektro-light-video.mp4',
@@ -838,9 +843,9 @@ const WORK_DATA = {
   },
 };
 
-// --- Site Preview Component (browser mockup — screenshot pan or video, no iframe) ---
+// --- Site Preview Component (browser mockup — live interactive iframe) ---
 
-const SitePreview = ({ url, projectName, fullPageImage, video, visitLabel }) => {
+const SitePreview = ({ url, projectName, visitLabel }) => {
   return (
     <div className="relative group">
       <div className="bg-[#0D0D12] rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl">
@@ -856,30 +861,17 @@ const SitePreview = ({ url, projectName, fullPageImage, video, visitLabel }) => 
             <ExternalLink size={14} />
           </a>
         </div>
-        {/* Content window — aspect ratio matches 1900×940 source videos, no side cropping */}
-        <div className="overflow-hidden relative w-full" style={{ aspectRatio: '1900 / 940' }}>
-          {video ? (
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-              onLoadedMetadata={(e) => { e.target.playbackRate = 1.5; }}
-            >
-              <source src={video} type="video/mp4" />
-            </video>
-          ) : (
-            <img
-              src={fullPageImage}
-              alt={projectName}
-              className="w-full object-cover object-top"
-              style={{ animation: 'pagePan 18s ease-in-out infinite alternate' }}
-            />
-          )}
+        {/* Live iframe — full interaction, animations, JS */}
+        <div className="relative w-full" style={{ height: '650px' }}>
+          <iframe
+            src={url}
+            title={projectName}
+            className="w-full h-full border-0"
+            allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          />
         </div>
       </div>
-      {/* Hover CTA */}
+      {/* Visit CTA */}
       <a
         href={url}
         target="_blank"
@@ -1016,10 +1008,11 @@ const WorkDetailPage = ({ slug, onConsultationClick }) => {
           <SitePreview
             url={project.url}
             projectName={project.name}
-            fullPageImage={project.fullPageImage}
-            video={project.video}
             visitLabel={t('work.visit_live')}
           />
+          <p className="font-data text-white/20 text-xs text-center mt-4">
+            {t('work.live_preview_note')} <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-accent/50 hover:text-accent transition-colors">{t('work.live_preview_open')} ↗</a>
+          </p>
         </div>
 
         {/* Bottom CTA */}
@@ -1035,6 +1028,67 @@ const WorkDetailPage = ({ slug, onConsultationClick }) => {
             <span className="sm:hidden">{t('work.cta_btn_mobile')}</span>
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform md:w-5 md:h-5 shrink-0" />
           </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ClientWorkMarquee = () => {
+  const { t } = useTranslation();
+  const workEntries = Object.entries(WORK_DATA);
+
+  const navigateToWork = (e, slug) => {
+    e.preventDefault();
+    window.history.pushState({}, '', `/work/${slug}`);
+    window.scrollTo(0, 0);
+  };
+
+  return (
+    <div className="bg-primary py-12 md:py-16 overflow-hidden">
+      {/* Label */}
+      <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-16 mb-8 flex items-center gap-6">
+        <div className="flex-1 h-px bg-white/10"></div>
+        <span className="font-data text-white/20 text-xs uppercase tracking-widest shrink-0">{t('work.client_work')}</span>
+        <div className="flex-1 h-px bg-white/10"></div>
+      </div>
+
+      {/* Marquee */}
+      <div className="marquee-wrapper overflow-hidden">
+        <div className="marquee-track" style={{ gap: '20px' }}>
+          {[...workEntries, ...workEntries].map(([slug, project], i) => {
+            const cardT = t(`work_projects.${slug}`, { returnObjects: true });
+            return (
+              <a
+                key={i}
+                href={`/work/${slug}`}
+                onClick={(e) => navigateToWork(e, slug)}
+                className="relative flex-shrink-0 group cursor-none outline-none border-0 bg-[#030304]"
+                style={{ width: '520px', aspectRatio: '1900/940', clipPath: 'inset(0 round 1.5rem)', WebkitClipPath: 'inset(0 round 1.5rem)', transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)' }}
+              >
+                {project.video ? (
+                  <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full" style={{ objectFit: 'cover' }} onLoadedMetadata={(e) => { e.target.playbackRate = 1.5; }}>
+                    <source src={project.video} type="video/mp4" />
+                  </video>
+                ) : (
+                  <img src={project.heroImage} alt={project.name} className="absolute inset-0 w-full h-full object-cover object-top" />
+                )}
+                <div className="absolute inset-0 bg-[#030504]/50" />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #030504 0%, #030504 38%, rgba(3,5,4,0.55) 58%, rgba(3,5,4,0.2) 80%, rgba(3,5,4,0.2) 100%)' }} />
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <img src={project.logo} alt="" className="w-4 h-4 rounded object-contain shrink-0" />
+                    <span className="font-data text-accent/70 text-xs uppercase tracking-widest truncate">{cardT.category}</span>
+                  </div>
+                  <h4 className="font-heading font-bold text-lg text-white mb-1 leading-tight">{project.name}</h4>
+                  <p className="font-heading text-xs text-white/50 leading-relaxed line-clamp-2 mb-3">{cardT.shortDesc}</p>
+                  <div className="flex items-center gap-2 text-accent text-sm font-bold opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
+                    {t('work.view_case_study')} <ArrowRight size={14} />
+                  </div>
+                </div>
+              </a>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -1065,8 +1119,8 @@ const PlatformsAndProjects = ({ onConsultationClick }) => {
         </h2>
         <h3 className="font-drama italic text-4xl sm:text-5xl md:text-8xl text-white mb-12 md:mb-20">{t('projects.title')}</h3>
 
-        {/* Platforms grid — 1×3 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        {/* Platforms grid — 1×2 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
 
           {/* iOwnChair */}
           <div className="bg-white/5 border border-white/10 rounded-[2rem] p-6 md:p-8 hover:bg-white/8 transition-all duration-500 group flex flex-col justify-between">
@@ -1117,67 +1171,54 @@ const PlatformsAndProjects = ({ onConsultationClick }) => {
 
       </div>
 
-      {/* Client Work Marquee — full viewport width */}
+      {/* Client Work — static cards */}
       <div className="mt-16 md:mt-24">
 
         {/* Label */}
-        <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-16 mb-8 flex items-center gap-6">
+        <div className="mb-10 flex items-center gap-6">
           <div className="flex-1 h-px bg-white/10"></div>
           <span className="font-data text-white/20 text-xs uppercase tracking-widest shrink-0">{t('work.client_work')}</span>
           <div className="flex-1 h-px bg-white/10"></div>
         </div>
 
-        {/* Marquee — videos maintain 1900×940 aspect ratio, no gaps at loop point */}
-        <div className="marquee-wrapper overflow-hidden">
-          <div className="marquee-track" style={{ gap: '20px' }}>
-            {[...workEntries, ...workEntries].map(([slug, project], i) => {
+        <div className="overflow-x-auto md:overflow-visible pb-4 md:pb-0 -mx-4 md:mx-0 px-4 md:px-0 scrollbar-none">
+          <div className="flex gap-4 md:grid md:grid-cols-4 w-max md:w-auto">
+            {workEntries.map(([slug, project]) => {
               const cardT = t(`work_projects.${slug}`, { returnObjects: true });
               return (
                 <a
-                  key={i}
+                  key={slug}
                   href={`/work/${slug}`}
                   onClick={(e) => navigateToWork(e, slug)}
-                  className="relative flex-shrink-0 group cursor-none outline-none border-0 bg-[#030304]"
-                  style={{ width: '520px', aspectRatio: '1900/940', clipPath: 'inset(0 round 1.5rem)', WebkitClipPath: 'inset(0 round 1.5rem)', transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)' }}
+                  className="relative group cursor-none overflow-hidden rounded-[1.5rem] bg-[#0a0a0c] shrink-0 md:shrink w-72 md:w-auto"
+                  style={{ aspectRatio: '16/10' }}
                 >
-                  {/* Video or hero image — object-contain keeps native ratio */}
-                  {project.video ? (
-                    <video
-                      autoPlay muted loop playsInline
-                      className="absolute inset-0 w-full h-full"
-                      style={{ objectFit: 'cover' }}
-                      onLoadedMetadata={(e) => { e.target.playbackRate = 1.5; }}
-                    >
-                      <source src={project.video} type="video/mp4" />
-                    </video>
-                  ) : (
-                    <img
-                      src={project.heroImage}
-                      alt={project.name}
-                      className="absolute inset-0 w-full h-full object-cover object-top"
-                    />
-                  )}
-
-                  {/* Base dark overlay across entire card */}
-                  <div className="absolute inset-0 bg-[#030504]/50" />
-                  {/* Stronger gradient at bottom for text legibility */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: 'linear-gradient(to top, #030504 0%, #030504 38%, rgba(3,5,4,0.55) 58%, rgba(3,5,4,0.2) 80%, rgba(3,5,4,0.2) 100%)',
-                    }}
+                  <img
+                    src={project.cardImage || project.heroImage}
+                    alt={project.name}
+                    className="absolute inset-0 w-full h-full object-cover object-top"
                   />
 
-                  {/* Text content — sits above the solid dark band */}
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-[#030504]/40 group-hover:bg-[#030504]/25 transition-colors duration-500" />
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #030504 0%, rgba(3,5,4,0.65) 40%, rgba(3,5,4,0.05) 75%, transparent 100%)' }} />
+
+                  {/* Tags — top right */}
+                  <div className="absolute top-3 right-3 flex gap-1.5">
+                    {project.tags.slice(0, 1).map(tag => (
+                      <span key={tag} className="font-data text-xs bg-black/50 backdrop-blur-sm border border-white/10 rounded-full px-2.5 py-1 text-white/50 uppercase tracking-wider">{tag}</span>
+                    ))}
+                  </div>
+
+                  {/* Text — bottom */}
                   <div className="absolute bottom-0 left-0 right-0 p-5">
                     <div className="flex items-center gap-2 mb-1.5">
                       <img src={project.logo} alt="" className="w-4 h-4 rounded object-contain shrink-0" />
-                      <span className="font-data text-accent/70 text-xs uppercase tracking-widest truncate">{cardT.category}</span>
+                      <span className="font-data text-accent/60 text-xs uppercase tracking-widest truncate">{cardT.category}</span>
                     </div>
                     <h4 className="font-heading font-bold text-lg text-white mb-1 leading-tight">{project.name}</h4>
-                    <p className="font-heading text-xs text-white/50 leading-relaxed line-clamp-2 mb-3">{cardT.shortDesc}</p>
-                    <div className="flex items-center gap-2 text-accent text-sm font-bold opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
-                      {t('work.view_case_study')} <ArrowRight size={14} />
+                    <div className="flex items-center gap-1.5 text-accent text-xs font-bold opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
+                      {t('work.view_case_study')} <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
                     </div>
                   </div>
                 </a>
@@ -1185,6 +1226,7 @@ const PlatformsAndProjects = ({ onConsultationClick }) => {
             })}
           </div>
         </div>
+
       </div>
 
     </section>
@@ -2039,6 +2081,7 @@ export default function App() {
         <WhoWeAre />
         <InlineCta variant="1" theme="light" onConsultationClick={() => setIsContactOpen(true)} />
         <Features />
+        <ClientWorkMarquee />
         <Philosophy />
         <InlineCta variant="2" theme="light" onConsultationClick={() => setIsContactOpen(true)} />
         <ProtocolSection />
